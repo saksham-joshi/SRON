@@ -1,0 +1,18 @@
+{
+    name: factorial
+    return: int
+    args : (int val)
+    variables: (int fac=1,int i)
+    forloop:{
+        range: i in [2,val+1]
+        0 : fac = eval(fac*i)
+    }
+    0 : return fac
+}
+
+{
+    name: main
+    return: void
+    args:()
+    0 : print(factorial(5))
+}
