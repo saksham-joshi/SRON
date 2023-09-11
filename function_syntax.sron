@@ -1,9 +1,0 @@
-{
-    name:"function_name"
-    return_type : "datatype to return"
-    arguments : (datatype variable_name1,datatype variable_name2, .... )
-    declaration : (int x , string y)
-
-    0 : x = eval(23*10)
-    1 : print(x)
-}
