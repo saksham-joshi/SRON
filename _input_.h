@@ -1,4 +1,3 @@
-#include <cstdio>
 #include <exception>
 #include <string>
 #include <iostream>
@@ -14,69 +13,74 @@ struct TypeError : public std::exception
     }
 };
 
-inline std::string INPUT_STRING(std::string msg)
+class Input
 {
-    printf("%s", msg.c_str());
-    std::string str = "";
-    try
+public :
+    inline static std::string INPUT_STRING(std::string msg)
     {
-        getline(std::cin, str);
-    }
-    catch (std::exception e)
-    {
-        printf("\nException Caught :\n > While taking string type value from user via console .\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
-        exit(0);
-    }
-    return str;
-}
-inline double INPUT_DOUBLE(std::string msg)
-{
-    printf("%s", msg.c_str());
-    double d = 0;
-    try
-    {
-        if (!scanf("%lf", &d))
+        printf("%s", msg.c_str());
+        std::string str = "";
+        try
         {
-            throw TypeError();
+            getline(std::cin, str);
         }
-    }
-    catch (std::exception e)
-    {
-        printf("\nException Caught :\n > While taking double type value from user via console.\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
-        exit(0);
-    }
-    return d;
-}
-inline int INPUT_INT(std::string msg)
-{
-    printf("%s", msg.c_str());
-    double val = 0;
-    try
-    {
-        if (!scanf("%lf", &val))
+        catch (std::exception e)
         {
-            throw TypeError();
+            printf("\nException Caught :\n > While taking string type value from user via console .\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
+            exit(0);
         }
+        return str;
     }
-    catch (std::exception e)
+    inline static double INPUT_DOUBLE(std::string msg)
     {
-        printf("\nException Caught :\n > While taking int type value from user via console.\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
-        exit(0);
+        printf("%s", msg.c_str());
+        double d = 0;
+        try
+        {
+            if (!scanf("%lf", &d))
+            {
+                throw TypeError();
+            }
+        }
+        catch (std::exception e)
+        {
+            printf("\nException Caught :\n > While taking double type value from user via console.\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
+            exit(0);
+        }
+        return d;
     }
-    return (long long int)val;
-}
-inline char INPUT_CHAR(std::string msg)
-{
-    printf("%s", msg.c_str());
-    char ch;
-    try
+    inline static int INPUT_INT(std::string msg)
     {
-        scanf("%c", &ch);
+        printf("%s", msg.c_str());
+        double val = 0;
+        try
+        {
+            if (!scanf("%lf", &val))
+            {
+                throw TypeError();
+            }
+        }
+        catch (std::exception e)
+        {
+            printf("\nException Caught :\n > While taking int type value from user via console.\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
+            exit(0);
+        }
+        return (long long int)val;
     }
-    catch (std::exception e)
+    inline static char INPUT_CHAR(std::string msg)
     {
-        printf("\nException Caught :\n > While taking char type value from user via console.\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
-        exit(0);
+        printf("%s", msg.c_str());
+        char ch;
+        try
+        {
+            scanf("%c", &ch);
+        }
+        catch (std::exception e)
+        {
+            printf("\nException Caught :\n > While taking char type value from user via console.\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
+            exit(0);
+        }
+        return ch;
     }
-    return ch;
-}
+    ~Input(){ }
+};
