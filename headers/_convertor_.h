@@ -50,13 +50,13 @@ private:
             }
             else{
                 throw TypeConversionError();
-                exit(0);
+                exit(1);
             }
         }
         catch (std::exception e)
         {
             printf("\nException Caught :\n > While Conversion of datatypes.\n\t> Reason : You input Invalid Characters.\n");
-            exit(0);
+            exit(1);
         }
         return -1;
     }
@@ -71,7 +71,7 @@ public :
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While Conversion of string type to double.\n\t> Reason : You input Invalid Characters.\n\t> Solution : Store only numbers(positive & negative) and decimal point in your string.");
-            exit(0);
+            exit(1);
         }
         return 0;
     }
@@ -82,7 +82,7 @@ public :
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While Conversion of Int type to Double.\n\t> Reason : You input Invalid Characters.\n\t> Solution : Store only numbers(positive & negative) and decimal point in your string.");
-            exit(0);
+            exit(1);
         }
         return 0;
     }
@@ -115,7 +115,7 @@ public :
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While Conversion of String type to Int.\n\t> Reason : You input Invalid Characters.\n\t> Solution : Store only numbers(positive & negative) in your string.");
-            exit(0);
+            exit(1);
         }
         return 0;
     }
@@ -132,7 +132,7 @@ public :
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While Conversion of Char type to Int.\n\t> Reason : You input Invalid Characters.\n\t> Solution : Store only single-digit in your string.");
-            exit(0);
+            exit(1);
         }
         return 0;
     }
@@ -153,7 +153,7 @@ public :
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While Conversion of String type to Bool.\n\t> Reason : You input Invalid Characters.\n\t> Solution : Store True and False in any case(upper/lower/camel etc.) in your string.");
-            exit(0);
+            exit(1);
         }
     }
     inline static bool ToBOOL(long long int i){

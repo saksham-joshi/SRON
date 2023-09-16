@@ -3,30 +3,30 @@
 using namespace std;
 
 //====================| Implementing the logical operators
-inline bool OR(bool val1,bool val2){
+inline bool OR(const bool val1,const bool val2){
     return val1 || val2;
 }
-inline bool AND(bool val1 , bool val2){
+inline bool AND(const bool val1 ,const bool val2){
     return val1 && val2;
 }
-inline bool NOT(bool val1){
+inline bool NOT(const bool val1){
     return !val1;
 }
 
 //====================| Implementing the == operator
-inline bool COMPARE(int val1 , int val2){
+inline bool COMPARE(const int val1 , const int val2){
     return val1 == val2;
 }
-inline bool COMPARE(string val1 , string val2){
+inline bool COMPARE(const string val1 , const string val2){
     return val1 == val2;
 }
-inline bool COMPARE(double val1 , double val2){
+inline bool COMPARE(const double val1 ,const double val2){
     return val1 == val2;
 }
-inline bool COMPARE(char ch1,char ch2){
+inline bool COMPARE(const char ch1,const char ch2){
     return ch1 == ch2;
 }
-inline bool COMPARE(bool b1,bool b2){
+inline bool COMPARE(const bool b1,const bool b2){
     return b1 == b2;
 }
 
@@ -34,33 +34,33 @@ inline bool COMPARE(bool b1,bool b2){
 //====================| Implementing < , <= , > , >= for int & double
 
 //      1. > [is greater than]
-inline bool ISGREATER(long long int val1 , long long int val2){
+inline bool ISGREATER(const long long int val1 , const long long int val2){
     return val1>val2;
 }
-inline bool ISGREATER(double val1 , double val2){
+inline bool ISGREATER(const double val1 , const double val2){
     return val1>val2;
 }
 
 //     2. < [is less than]
-inline bool ISLESS(long long int val1 , long long int val2){
+inline bool ISLESS(const long long int val1 , const long long int val2){
     return val1<val2;
 }
-inline bool ISLESS(double val1 , double val2){
+inline bool ISLESS(const double val1 , const double val2){
     return val1<val2;
 }
 
 //      3. >= [is greater than or equal to]
-inline bool ISGREATER_EQUAL(long long int val1 , long long int val2){
+inline bool ISGREATER_EQUAL(const long long int val1 , const long long int val2){
     return val1>=val2;
 }
-inline bool ISGREATER_EQUAL(double val1 , double val2){
+inline bool ISGREATER_EQUAL(const double val1 , const double val2){
     return val1>=val2;
 }
 
 //      4. >= [is less than or equal to]
-inline bool ISLESS_EQUAL(long long int val1,long long int val2){
+inline bool ISLESS_EQUAL(const long long int val1,const long long int val2){
     return val1<=val2;
 }
-inline bool ISLESS_EQUAL(double val1 , double val2){
+inline bool ISLESS_EQUAL(const double val1 , const double val2){
     return val1<=val2;
 }

@@ -50,7 +50,7 @@ public:
     inline static char AT(std::string str,int index){
         if(index < 0 || index >= str.length()){
             printf("\nException Caught :\n > While extracting a element of String type.\n\t> Reason 1: Index is more than or equal to the length of String.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in string and insert index more than 0 and less than the length of the String .\n");
-            exit(0);
+            exit(1);
         }
         return str[index];
     }
@@ -75,7 +75,7 @@ public:
         }
         catch (std::exception e){
             printf("\nException Caught :\n > While extracting a substring from passed string.\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(0);
+            exit(1);
          }
         return fin;
     }
@@ -129,7 +129,7 @@ public:
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While splitting the string.\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(0);
+            exit(1);
         }
     }
 
@@ -154,7 +154,7 @@ public:
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While splitting the string.\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(0);
+            exit(1);
         }    
     }
 
@@ -172,7 +172,7 @@ public:
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While converting String to lowercase .\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(0);
+            exit(1);
         }
         
     }
@@ -186,7 +186,7 @@ public:
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While converting String to uppercase .\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(0);
+            exit(1);
         }     
     }
     ~String(){ }

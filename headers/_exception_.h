@@ -1,5 +1,7 @@
 #include<exception>
 
+#define FileNotFoundException "Exception Caught :\n\t> Reason: Specified file not found !\n\t> Solution: Enter the correct file name."
+
 struct DivisionByZeroException : public std::exception{
     const char* what() const throw(){
         return "Exception Caught :\n > Division by zero leads to infinity !";

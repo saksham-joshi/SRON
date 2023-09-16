@@ -12,7 +12,7 @@ public :
         }
         catch(exception e){
             printf("\nException Caught :\n > While pushing element in vector.\n\t> Reason 1: You inserted the wrong character.\n\t> Reason 2: System is out of memory.\n\t> Solution 1: Insert the valid elements in the vector.\n\t>Solution 2: Remove the background applications running in our system.");
-            exit(0);
+            exit(1);
         }
     }
 
@@ -26,7 +26,7 @@ public :
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While creating vector of type int .\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(0);
+            exit(1);
         }
     }
 
@@ -49,7 +49,7 @@ public :
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While creating vector of type int .\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(0);
+            exit(1);
         }
     }
 
@@ -72,7 +72,7 @@ public :
         }
         catch(exception e){
             printf("\nException Caught :\n > While creating vector of type double .\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(0);
+            exit(1);
         }  
     }
     template<typename t> inline static long long int LEN(const std::vector<t> vec){
@@ -81,7 +81,7 @@ public :
     template<typename t> inline static t AT(const std::vector<t> vec,long long int index){
         if(index < 0 && index>=vec.size()){
             printf("\nException Caught :\n > While extracting a element of Vector type.\n\t> Reason 1: Index is more than or equal to the length of Vector.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in vector and insert index more than 0 and less than the length of the Vector .\n");
-            exit(0);
+            exit(1);
         }
         return vec[index];
     }
@@ -116,7 +116,7 @@ public :
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While adding string.\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(0);
+            exit(1);
         }
         
     }
@@ -150,7 +150,7 @@ public :
     template<typename t> inline static void DELETE_INDEX(std::vector<t> &vec , long long int index){
         if(index < 0 || index >= vec.size()){
             printf("\nException Caught :\n > While deleting an element of Vector type.\n\t> Reason 1: Index is more than or equal to the length of Vector.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in vector and insert index more than 0 and less than the length of the Vector .\n");
-            exit(0);
+            exit(1);
         }
         vec.erase(vec.begin()+index);
     }
@@ -160,14 +160,14 @@ public :
     template<typename t> inline static void ASSIGN(std::vector<t> &vec , long long int index, t val){
         if(index < 0 || index >= vec.size()){
             printf("\nException Caught :\n > While assigning an element to a Vector.\n\t> Reason 1: Index is more than or equal to the length of Vector.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in vector and insert index more than 0 and less than the length of the Vector .\n");
-            exit(0);
+            exit(1);
         }
         vec[index] = val;
     }
     template<typename t> inline static std::vector<t> SUBVECTOR(std::vector<t> vec,long long int start , long long int end){
         if(start < 0 || end>= vec.size()){
             printf("\nException Caught :\n > While creating a subvector.\n\t> Reason 1: Index is more than or equal to the length of Vector.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in vector and insert index more than 0 and less than the length of the Vector .\n");
-            exit(0);
+            exit(1);
         }
         try{
             std::vector<t> temp;
@@ -178,7 +178,7 @@ public :
         }
         catch(std::exception e){
             printf("\nException Caught :\n > While creating a Vector from another Vector.\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(0);
+            exit(1);
         }
     }
     ~Vector(){ } 

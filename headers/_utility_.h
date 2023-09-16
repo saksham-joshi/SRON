@@ -15,4 +15,17 @@ public :
         i = j;
         j = temp;
     }
+private : 
+    inline static string GET_ATTRIBUTE(string str){
+        int i=0;
+        string attribute = "";
+        while(str[i] != ':'){
+            if(str[i] == ' '){
+                ++i;
+                continue;
+            }
+            attribute+=str[i++];
+        }
+    }
+    friend int main(int argc, char **argv);
 };

@@ -27,7 +27,7 @@ public :
         catch (std::exception e)
         {
             printf("\nException Caught :\n > While taking string type value from user via console .\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
-            exit(0);
+            exit(1);
         }
         return str;
     }
@@ -45,7 +45,7 @@ public :
         catch (std::exception e)
         {
             printf("\nException Caught :\n > While taking double type value from user via console.\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
-            exit(0);
+            exit(1);
         }
         return d;
     }
@@ -63,7 +63,7 @@ public :
         catch (std::exception e)
         {
             printf("\nException Caught :\n > While taking int type value from user via console.\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
-            exit(0);
+            exit(1);
         }
         return (long long int)val;
     }
@@ -78,7 +78,7 @@ public :
         catch (std::exception e)
         {
             printf("\nException Caught :\n > While taking char type value from user via console.\n\t> Reason 1 : You input Invalid Characters .\n\t> Reason 2 : Memory Error.\n");
-            exit(0);
+            exit(1);
         }
         return ch;
     }
