@@ -14,8 +14,8 @@ inline bool NOT(const bool val1){
 }
 
 //====================| Implementing the == operator
-inline bool COMPARE(const int val1 , const int val2){
-    return val1 == val2;
+inline bool COMPARE(const long long int val1 , const long long int val2){
+    return val1 == val2; 
 }
 inline bool COMPARE(const string val1 , const string val2){
     return val1 == val2;
