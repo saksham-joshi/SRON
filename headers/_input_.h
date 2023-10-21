@@ -49,7 +49,7 @@ public :
         }
         return d;
     }
-    inline static long long int INPUT_INT(std::string msg)
+    inline static int INPUT_INT(std::string msg)
     {
         printf("%s", msg.c_str());
         double val = 0;

@@ -1,22 +1,24 @@
 #include<vector>
 #include<iostream>
 #include<algorithm>
+#include "_exception_.h"
 
-using namespace std;
+#ifndef VECTOR_H
+#define VECTOR_H
 
 class Vector{
 public :
-    template<typename t> inline static void INSERT(vector<t> &vec,t val){
+    template<typename t> inline static void INSERT(std::vector<t> &vec,t val){
         try{
             vec.push_back(val);
         }
         catch(exception e){
-            printf("\nException Caught :\n > While pushing element in vector.\n\t> Reason 1: You inserted the wrong character.\n\t> Reason 2: System is out of memory.\n\t> Solution 1: Insert the valid elements in the vector.\n\t>Solution 2: Remove the background applications running in our system.");
-            exit(1);
+            DISPLAY_EXCEPTION("pushing element in vector.",5);
+            
         }
     }
 
-    template<typename t> inline static std::vector<t> COPY(vector<t> vec){
+    template<typename t> inline static std::vector<t> COPY(std::vector<t> vec){
         try{
             std::vector<t> copy;
             for(typename std::vector<t>::iterator it = vec.begin() ; it != vec.end() ; ++it ){
@@ -25,8 +27,8 @@ public :
             return copy;
         }
         catch(std::exception e){
-            printf("\nException Caught :\n > While creating vector of type int .\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(1);
+            DISPLAY_EXCEPTION("creating vector.",3);
+            
         }
     }
 
@@ -48,8 +50,8 @@ public :
             return vec;
         }
         catch(std::exception e){
-            printf("\nException Caught :\n > While creating vector of type int .\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(1);
+            DISPLAY_EXCEPTION("creating vector of type Int.",3);
+            
         }
     }
 
@@ -70,9 +72,9 @@ public :
             }
             return vec;
         }
-        catch(exception e){
-            printf("\nException Caught :\n > While creating vector of type double .\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(1);
+        catch(std::exception e){
+            DISPLAY_EXCEPTION("creating vector of type Double.",3);
+            
         }  
     }
     template<typename t> inline static long long int LEN(const std::vector<t> vec){
@@ -80,8 +82,8 @@ public :
     }
     template<typename t> inline static t AT(const std::vector<t> vec,long long int index){
         if(index < 0 && index>=vec.size()){
-            printf("\nException Caught :\n > While extracting a element of Vector type.\n\t> Reason 1: Index is more than or equal to the length of Vector.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in vector and insert index more than 0 and less than the length of the Vector .\n");
-            exit(1);
+            DISPLAY_EXCEPTION("extracting an element of Vector type.",7);
+            
         }
         return vec[index];
     }
@@ -101,22 +103,22 @@ public :
     }
     inline static std::string SUM(std::vector<std::string> vec){
         std::string sum = "";
-        for(std::vector<string>::iterator it = vec.begin() ; it != vec.end() ; ++it){
+        for(std::vector<std::string>::iterator it = vec.begin() ; it != vec.end() ; ++it){
             sum+=*it;
         }
         return sum;
     }
-    inline static string SUM(std::vector<char> vec){
+    inline static std::string SUM(std::vector<char> vec){
         try{
-            string sum = "";
+            std::string sum = "";
             for(std::vector<char>::iterator it = vec.begin() ; it != vec.end() ; ++it){
                 sum+=*it;
             }
             return sum;
         }
         catch(std::exception e){
-            printf("\nException Caught :\n > While adding string.\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(1);
+            
+            DISPLAY_EXCEPTION("adding strings.",4);
         }
         
     }
@@ -149,8 +151,8 @@ public :
     }
     template<typename t> inline static void DELETE_INDEX(std::vector<t> &vec , long long int index){
         if(index < 0 || index >= vec.size()){
-            printf("\nException Caught :\n > While deleting an element of Vector type.\n\t> Reason 1: Index is more than or equal to the length of Vector.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in vector and insert index more than 0 and less than the length of the Vector .\n");
-            exit(1);
+            DISPLAY_EXCEPTION("deleting an element of Vector type.",7);
+            
         }
         vec.erase(vec.begin()+index);
     }
@@ -159,15 +161,15 @@ public :
     }
     template<typename t> inline static void ASSIGN(std::vector<t> &vec , long long int index, t val){
         if(index < 0 || index >= vec.size()){
-            printf("\nException Caught :\n > While assigning an element to a Vector.\n\t> Reason 1: Index is more than or equal to the length of Vector.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in vector and insert index more than 0 and less than the length of the Vector .\n");
-            exit(1);
+            
+            DISPLAY_EXCEPTION("assigning an element to a Vector.",7);
         }
         vec[index] = val;
     }
     template<typename t> inline static std::vector<t> SUBVECTOR(std::vector<t> vec,long long int start , long long int end){
         if(start < 0 || end>= vec.size()){
-            printf("\nException Caught :\n > While creating a subvector.\n\t> Reason 1: Index is more than or equal to the length of Vector.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in vector and insert index more than 0 and less than the length of the Vector .\n");
-            exit(1);
+            
+            DISPLAY_EXCEPTION("creating a SubVector.",7);
         }
         try{
             std::vector<t> temp;
@@ -177,29 +179,11 @@ public :
             return temp;
         }
         catch(std::exception e){
-            printf("\nException Caught :\n > While creating a Vector from another Vector.\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(1);
+            
+            DISPLAY_EXCEPTION("creating a Vector from another vector",3);
         }
     }
     ~Vector(){ } 
 };
 
-// template<typename t>
-// ostream& operator<<(ostream& COUT, vector<t> &vec){
-//     for(typename std::vector<t>::const_iterator it = vec.begin() ; it != vec.end() ; ++it){
-//         cout<<*it<<" ";
-//     }
-//     return COUT;
-// }
-
-// int main(){
-    
-//     // vector<double> vec1 = ;
-//     long long int i = 1;
-//     long long int j = 71;
-//     vector<long long int> vec2 = {9,8,7,65,5324,46,9};
-//     cout<<vec2<<endl;
-//     Vector().ASSIGN(vec2,j,i);
-//     cout<<vec2;
-    
-// }
+#endif

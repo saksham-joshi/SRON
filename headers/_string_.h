@@ -2,30 +2,33 @@
 #include <ctype.h>
 #include <iostream>
 #include <vector>
+#include "_exception_.h"
+
+#ifndef STRING_H
+#define STRING_H
 
 class String{
 public:
-    inline static std::string STRIP(const std::string str){
+    inline static std::string STRIP(std::string str){
         std::string fin = "";
-        int string_end_index = 0;
-        for (int i = str.length() - 1; i >= 0; --i)
-        {
-            if (str[i] != ' ')
-            {
-                break;
+        try{
+            int string_end_index = 0;
+
+            for(std::string::iterator it = str.end()-1 ; *it == ' ' ; --it){
+                ++string_end_index;
             }
-            ++string_end_index;
-        }
-        for (int i = 0; i < strlen(str.c_str()); ++i)
-        {
-            if (str[i] != ' ')
-            {
-                for (int j = i; j < str.length() - string_end_index; ++j)
-                {
-                    fin += str[j];
+
+            for(std::string::iterator it = str.begin()  ; it != str.end()-string_end_index ; ++it){
+                if(*it != ' '){
+                    for( ;it != str.end()-string_end_index ; ++it ){
+                        fin+=*it;
+                    }
+                    break;
                 }
-                break;
             }
+        }
+        catch(std::exception){
+            DISPLAY_EXCEPTION("extracting the string.",3 );
         }
         return fin;
     }
@@ -49,8 +52,7 @@ public:
 
     inline static char AT(std::string str,int index){
         if(index < 0 || index >= str.length()){
-            printf("\nException Caught :\n > While extracting a element of String type.\n\t> Reason 1: Index is more than or equal to the length of String.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in string and insert index more than 0 and less than the length of the String .\n");
-            exit(1);
+            DISPLAY_EXCEPTION("extracting an element of string type.",12);
         }
         return str[index];
     }
@@ -74,8 +76,7 @@ public:
             }
         }
         catch (std::exception e){
-            printf("\nException Caught :\n > While extracting a substring from passed string.\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(1);
+            DISPLAY_EXCEPTION("extracting a substring from passed string.",3);
          }
         return fin;
     }
@@ -111,13 +112,10 @@ public:
         }
         return count;
     }
-    // inline static int COUNT(const string str,const string counter){
-
-    // }
 
     inline static std::string REPLACE(std::string str, const char from, const char with){
-        try{
-            std::string fin = "";
+        std::string fin = "";
+        try{   
             for(std::string::iterator it = str.begin() ; it!= str.end() ; ++it){
                 if(*it == from){
                     fin+=with;
@@ -128,14 +126,10 @@ public:
             return fin;
         }
         catch(std::exception e){
-            printf("\nException Caught :\n > While splitting the string.\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(1);
+            DISPLAY_EXCEPTION("replacing a character from a String .",3);
         }
+        return fin;
     }
-
-    // inline static string REPLACE(const string str , const string from , const string with){
-
-    // }
 
     inline static std::vector<std::string> SPLIT(std::string str, const char splitter){
         try{
@@ -153,41 +147,37 @@ public:
             return vec;
         }
         catch(std::exception e){
-            printf("\nException Caught :\n > While splitting the string.\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(1);
+            DISPLAY_EXCEPTION("splitting a string.",3);
         }    
     }
 
-    // inline static vector<string> SPLIT(const string str , const string splitter){
-
-    // }
-
     inline static std::string ToLOWERCASE(std::string str){
-        try{
-            std::string fin = "";
+        std::string fin = "";
+        try{   
             for(std::string::iterator it= str.begin() ; it != str.end() ; ++it){
                 fin+=tolower(*it);
             }
             return fin;
         }
         catch(std::exception e){
-            printf("\nException Caught :\n > While converting String to lowercase .\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(1);
+            DISPLAY_EXCEPTION("converting a String to lowercase.",3);
         }
+        return fin;
         
     }
     inline static std::string ToUPPERCASE(std::string str){     
+        std::string fin = "";
         try{
-            std::string fin = "";
             for(std::string::iterator it = str.begin(); it != str.end() ; ++it){
                 fin+=toupper(*it);
             }
             return fin;
         }
         catch(std::exception e){
-            printf("\nException Caught :\n > While converting String to uppercase .\n\t> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n");
-            exit(1);
+            DISPLAY_EXCEPTION("converting a String to Uppercase.",3);
         }     
     }
     ~String(){ }
 };
+
+#endif

@@ -1,5 +1,7 @@
 #include<string>
 #include<iostream>
+#include "_utility_.h"
+#include "_exception_.h"
 
 using namespace std;
 
@@ -36,7 +38,7 @@ It includes functions :
 class Convertor{
 
 private:
-    inline static std::string ToUPPERCASE(std::string str){
+    inline static std::string TOUPPERCASE(std::string str){
         for(int i=0;i<str.length();++i){
             str[i] = toupper(str[i]);
         }
@@ -55,8 +57,7 @@ private:
         }
         catch (std::exception e)
         {
-            printf("\nException Caught :\n > While Conversion of datatypes.\n\t> Reason : You input Invalid Characters.\n");
-            exit(1);
+            DISPLAY_EXCEPTION("conversion of datatypes.",13);
         }
         return -1;
     }
@@ -64,51 +65,52 @@ private:
 public :
 
     //=========| ToDOUBLE |=========//
-    inline static double ToDOUBLE(std::string i){
+    inline static double TODOUBLE(std::string i){
         try{
             double d = std::stod(i);
             return d;
         }
         catch(std::exception e){
-            printf("\nException Caught :\n > While Conversion of string type to double.\n\t> Reason : You input Invalid Characters.\n\t> Solution : Store only numbers(positive & negative) and decimal point in your string.");
-            exit(1);
+            // printf("\nException Caught :\n > While Conversion of string type to double.\n\t> Reason : You input Invalid Characters.\n\t> Solution : Store only numbers(positive & negative) and decimal point in your string.");
+            // exit(1);
+            DISPLAY_EXCEPTION("conversion of String type to Double.",13);
         }
         return 0;
     }
-    inline static double ToDOUBLE(long long int i){
+    inline static double TODOUBLE(long long int i){
         try{
             double d = (double)i;
             return d;
         }
         catch(std::exception e){
-            printf("\nException Caught :\n > While Conversion of Int type to Double.\n\t> Reason : You input Invalid Characters.\n\t> Solution : Store only numbers(positive & negative) and decimal point in your string.");
+            printf("\nException Caught :\n > While Conversion of Int type TO Double.\n\t> Reason : You input Invalid Characters.\n\t> Solution : Store only numbers(positive & negative) and decimal point in your string.");
             exit(1);
         }
         return 0;
     }
-    inline static double ToDOUBLE(double d){
+    inline static double TODOUBLE(double d){
         return d;
     }
 
     //=========| TOSTRING |=========//
-    inline static string ToSTRING(long long int i){
+    inline static std::string TOSTRING(long long int i){
         return to_string(i);
     }
-    inline static string ToSTRING(double d){
+    inline static std::string TOSTRING(double d){
         return to_string(d);
     }
-    inline static string ToSTRING(string i){
+    inline static std::string ToSTRING(string i){
         return i;
     }
-    inline static string ToSTRING(bool b){
+    inline static std::string TOSTRING(bool b){
         return (b)?"true":"false";
     }
-    inline static string ToSTRING(char ch){
-        return (string)""+ch;
+    inline static std::string TOSTRING(char ch){
+        return (std::string)""+ch;
     }
     
     //=========| ToINT |=========//
-    inline static long long int ToINT(std::string str){
+    inline static long long int TOINT(std::string str){
         try{
             long long int i = std::stoll(str);
             return i;
@@ -119,10 +121,10 @@ public :
         }
         return 0;
     }
-    inline static long long int ToINT(double d){
+    inline static long long int TOINT(double d){
         return (long long int)d;
     }
-    inline static long long int ToINT(char c){
+    inline static long long int TOINT(char c){
         try{
             int ascii = (int)c;
             if(ascii>=48 && ascii<=57){
@@ -136,17 +138,17 @@ public :
         }
         return 0;
     }
-    inline static long long int ToINT(bool b){
+    inline static long long int TOINT(bool b){
         return (b)?1:0;
     }
-    inline static long long int ToINT(long long int x){
+    inline static long long int TOINT(long long int x){
         return x;
     }
 
     //=========| ToBOOL |=========//
-    inline static bool ToBOOL(std::string str){
+    inline static bool TOBOOL(std::string str){
         try{
-            str = ToUPPERCASE(str);
+            str = TOUPPERCASE(str);
             if(str == "TRUE") return true;
             else if(str == "FALSE") return false;
             throw TypeConversionError();
@@ -156,13 +158,13 @@ public :
             exit(1);
         }
     }
-    inline static bool ToBOOL(long long int i){
+    inline static bool TOBOOL(long long int i){
         return (i>0)?true:false;
     }
     inline static bool ToBOOL(double d){
         return (d>0?true:false);
     }
-    inline static bool ToBOOL(bool b){
+    inline static bool TOBOOL(bool b){
         return b;
     }
     ~Convertor(){ }

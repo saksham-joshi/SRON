@@ -1,7 +1,5 @@
 #include<string>
 
-using namespace std;
-
 //====================| Implementing the logical operators
 inline bool OR(const bool val1,const bool val2){
     return val1 || val2;
@@ -15,9 +13,9 @@ inline bool NOT(const bool val1){
 
 //====================| Implementing the == operator
 inline bool COMPARE(const long long int val1 , const long long int val2){
-    return val1 == val2; 
+    return val1 == val2;
 }
-inline bool COMPARE(const string val1 , const string val2){
+inline bool COMPARE(const std::string val1 , const std::string val2){
     return val1 == val2;
 }
 inline bool COMPARE(const double val1 ,const double val2){

@@ -29,16 +29,16 @@ public :
         }
         return false;
     }
-    inline static char ToLOWERCASE(const char ch){
+    inline static char TOLOWERCASE(const char ch){
         return tolower(ch);
     }
-    inline static char ToUPPERCASE(const char ch){
+    inline static char TOUPPERCASE(const char ch){
         return toupper(ch);
     }
-    inline static int ToASCII(const char ch){
+    inline static int TOASCII(const char ch){
         return (int)ch;
     }
-    inline static char FromASCII(const int ch){
+    inline static char FROM_ASCII(const int ch){
         return (char)ch;
     }
     ~Char(){ }

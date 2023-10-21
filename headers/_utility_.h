@@ -1,10 +1,13 @@
 #include<cstdlib>
 #include<iostream>
 
+#ifndef UTILITY_H
+#define UTILITY_H
+
 class Utility{
 public :
 
-    inline static void EXIT(long long int status){
+    inline static void EXIT(const long long int status){
         exit(status);
     }
     template<typename t> inline static long long int SIZEOF(const t obj){
@@ -15,17 +18,6 @@ public :
         i = j;
         j = temp;
     }
-private : 
-    inline static string GET_ATTRIBUTE(string str){
-        int i=0;
-        string attribute = "";
-        while(str[i] != ':'){
-            if(str[i] == ' '){
-                ++i;
-                continue;
-            }
-            attribute+=str[i++];
-        }
-    }
-    friend int main(int argc, char **argv);
 };
+
+#endif
