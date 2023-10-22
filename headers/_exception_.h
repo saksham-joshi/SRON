@@ -7,6 +7,7 @@
 #define EmptyAttributeCode "> Reason: Specified attribute has nothing to execute!\n\t> Solution: Never leave any attribute code empty."
 
 #define FileNotFoundException "> Reason: Specified file not found !\n\t> Solution: Enter the correct file name."
+#define FileNameNotSpecifiedException "> Reason: File name is not specified !\n\t\t> Solution: Type Command like this - sron file_name.sron "
 
 #define InvalidVariableNameException "> Reason : Invalid Variable Naming.\n\t\t> Solution 1 : Name variable which contain only contain alphabets, numbers and underscore.\n\t\t> Solution 2 : Remove Special Characters like +, -, *, $ etc.\n\t\t> Solution 3 : First letter of variable must be a alphabet or underscore"
 #define InvalidAttributeException "> Reason : Invalid Attribute found !\n\t\t> Solution 1 : Always type attributes in small-case.\n\t\t> Solution 2 : Refer to the documentation of SRON to find out all valid attributes out there."
@@ -16,6 +17,8 @@
 #define SystemOutofMemoryException "> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n"
 #define StringTooLongException "> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n"
 #define StringIndexException "> Reason 1: Index is more than or equal to the length of String.\n\t> Reason 2: Index is less than 0.\n\t> Solution : Store elements in string and insert index more than 0 and less than the length of the String .\n"
+
+#define TypeConversionException "> Reason : Characters in the specified parent type is not possible to converted into another type.\n\t\t> Solution 1: Int type can only contain digits.\n\t\t> Solution 2 : Double type can only contain digits and decimal point(.).\n\t\t> Solution 3 : Char type is declared using single quote (\') and contains a single ASCII character.\n\t\t> Solution 4 : String type can contain multiple ASCII Characters.\n\t\t> Solution 5 : Bool type contain only two values(true and false).\n"
 
 #define VectorInputError "> Reason 1: You inserted the wrong character.\n\t> Reason 2: System is out of memory.\n\t> Solution 1: Insert the valid elements in the vector.\n\t>Solution 2: Remove the background applications running in our system.\n"
 #define VectorCreationError "> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n"
@@ -75,6 +78,12 @@ void DISPLAY_EXCEPTION(const char *during, const int code){
             break;
         case 15 :
             printf("%s" , InvalidValueException);
+            break;
+        case 16: 
+            printf("%s",FileNameNotSpecifiedException);
+            break;
+        case 17 :
+            printf("%s",TypeConversionException);
             break;
         default:
             printf("Invalid Exception Code !\n Contact SAKSHAM JOSHI to fix this.");

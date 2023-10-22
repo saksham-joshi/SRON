@@ -10,24 +10,24 @@ class Executor{
     HashTable H;
     private :
 
-        inline static String_and_Int GET_ATTRIBUTE(std::string str){
-            std::string attribute = "";
-            std::string::iterator it;
-            int a=0;
-            for(it=str.begin(); it!=str.end(); ++it,++a){
-                if(!(isalpha(*it) || isdigit(*it) ) ){
-                    while(it!= str.end() && *it != ':'){
-                        ++it;
-                        ++a;
-                    }
-                    break;
-                }
-                attribute+=*it;
-            }
-            String_and_Int obj(attribute,a);
+        // inline static String_and_Int GET_ATTRIBUTE(std::string str){
+        //     std::string attribute = "";
+        //     std::string::iterator it;
+        //     int a=0;
+        //     for(it=str.begin(); it!=str.end(); ++it,++a){
+        //         if(!(isalpha(*it) || isdigit(*it) ) ){
+        //             while(it!= str.end() && *it != ':'){
+        //                 ++it;
+        //                 ++a;
+        //             }
+        //             break;
+        //         }
+        //         attribute+=*it;
+        //     }
+        //     String_and_Int obj(attribute,a);
        
-            return obj;
-        }
+        //     return obj;
+        // }
         
 
         inline static bool CHECK_VALID_VARIABLE_NAME(std::string str){     
