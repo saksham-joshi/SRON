@@ -1,5 +1,5 @@
 # SRON
-SRON- Saksham Rapid Object Notation.
+> SRON- Saksham Rapid Object Notation.
 A strongly + statically typed interpreted programming language.
 
 ## Datatype :
