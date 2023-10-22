@@ -9,6 +9,8 @@
 #define FileNotFoundException "> Reason: Specified file not found !\n\t> Solution: Enter the correct file name."
 #define FileNameNotSpecifiedException "> Reason: File name is not specified !\n\t\t> Solution: Type Command like this - sron file_name.sron "
 
+#define InputTypeException "> Reason 1 : You input Invalid Characters .\n\t\t> Reason 2 : Memory Error.\n"
+
 #define InvalidVariableNameException "> Reason : Invalid Variable Naming.\n\t\t> Solution 1 : Name variable which contain only contain alphabets, numbers and underscore.\n\t\t> Solution 2 : Remove Special Characters like +, -, *, $ etc.\n\t\t> Solution 3 : First letter of variable must be a alphabet or underscore"
 #define InvalidAttributeException "> Reason : Invalid Attribute found !\n\t\t> Solution 1 : Always type attributes in small-case.\n\t\t> Solution 2 : Refer to the documentation of SRON to find out all valid attributes out there."
 #define InvalidTokenException "> Reason : Invalid Token found !\n\t\t> Solution : Read the documentation of SRON carefully and write valid tokens.\n"
@@ -84,6 +86,9 @@ void DISPLAY_EXCEPTION(const char *during, const int code){
             break;
         case 17 :
             printf("%s",TypeConversionException);
+            break;
+        case 18 :
+            printf("%s",InputTypeException);
             break;
         default:
             printf("Invalid Exception Code !\n Contact SAKSHAM JOSHI to fix this.");
