@@ -1,10 +1,11 @@
 #include "headers/_boolean_.h"
 #include "headers/_char_.h"
-#include "headers/_convertor_.h"
+#include "headers/_converter_.h"
 #include "headers/_exception_.h"
 #include "headers/_execution_engine_.h"
 #include "headers/_hashtable_.h"
 #include "headers/_input_.h"
+#include "headers/lexical_analyst.h"
 #include "headers/_math_.h"
 #include "headers/_string_.h"
 #include "headers/static_logs.h"
@@ -25,40 +26,46 @@ int main(int argc, char **argv)
         ifstream code_file(argv[1]);
         if (code_file.fail())
         {
+            if(argc == 1){
+                DISPLAY_EXCEPTION("getting the file name.",16);
+            }
             DISPLAY_EXCEPTION("getting the file from the specified path.", 1);
         }
 
         while (getline(code_file, str))
         {
 
-            str = String().STRIP(str);
-            if (str.length() == 0)
-            {
+            // str = String().STRIP(str);
+            // if (str.length() == 0)
+            // {
+            //     continue;
+            // }
+            // else if(str == "{" || str == "}" ){
+            //     continue;
+            // }
+            std::vector<std::string> lexcode = LEX(str);
+            
+            if(lexcode.size() == 0){
+                Logs::INCREMENT_LINE_NUMBER();
                 continue;
             }
-            else if(str == "{" || str == "}" ){
-                continue;
-            }
-
-            String_and_Int obj = Executor::GET_ATTRIBUTE(str);
-            string attribute = obj.str;
+            string attribute = lexcode[0];
 
             if (Executor::CHECK_IF_ATTRIBUTE_IS_NUMBER(attribute))
             {
-                continue;
+                //continue;
             }
             else if(attribute == "args"){
 
             }
-            else if (attribute == "comment")
-            {
-                continue;
-            }
             else if (attribute == "condition")
             {
             }  
-            else if (attribute == "forloop")
+            else if (attribute == "for")
             {
+
+            }
+            else if(attribute == "if"){
 
             }
             else if(attribute == "name"){
@@ -80,13 +87,13 @@ int main(int argc, char **argv)
             {
 
             }
-            else if (attribute == "whileloop")
+            else if (attribute == "while")
             {
 
             }   
             else
             {
-                DISPLAY_EXCEPTION("mapping the attribute with the functionality.", 8);
+                //DISPLAY_EXCEPTION("mapping the attribute with the functionality.", 8);
             }
             Logs::INCREMENT_LINE_NUMBER() ;
         }
