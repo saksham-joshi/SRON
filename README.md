@@ -10,9 +10,9 @@ A strongly + statically typed interpreted programming language.
 5. Bool
 
 ## Typo :
-1. Functions - Capital letters (String\~LEN() , Vector\~RANGE() etc.)
-2. Attributes - small letters (comment,variable,name,return,return_type etc.)
-3. Datatypes - Camelcase (String, Double, Char, String, Bool).
+1. Functions - Capital letters (String\~LEN(), Vector\~RANGE() etc.)
+2. Attributes - small letters (comment, variable,name, return, return_type etc.)
+3. Datatypes - Camelcase (Int, Double, Char, String, Bool).
 
 ## Operators :
 1. Arithmetic : +, -, *, /, %, ^ .
