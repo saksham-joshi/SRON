@@ -6,8 +6,8 @@
 
 #define EmptyAttributeCode "> Reason: Specified attribute has nothing to execute!\n\t> Solution: Never leave any attribute code empty."
 
-#define FileNotFoundException "> Reason: Specified file not found !\n\t> Solution: Enter the correct file name."
-#define FileNameNotSpecifiedException "> Reason: File name is not specified !\n\t\t> Solution: Type Command like this - sron file_name.sron "
+#define FileNotFoundException "> Reason: Specified file not found !\n\t> Solution 1: Enter the correct file name.\n\t> Solution 2: If you are accessing file via command line ,then remove spaces from file name.\n"
+#define FileNameNotSpecifiedException "> Reason: File name is not specified !\n\t\t> Solution 1: Type Command like this - sron file_name.sron \n\t\t> Solution 2: Avoid spaces in file name.\n"
 
 #define InputTypeException "> Reason 1 : You input Invalid Characters .\n\t\t> Reason 2 : Memory Error.\n"
 
@@ -15,6 +15,7 @@
 #define InvalidAttributeException "> Reason : Invalid Attribute found !\n\t\t> Solution 1 : Always type attributes in small-case.\n\t\t> Solution 2 : Refer to the documentation of SRON to find out all valid attributes out there."
 #define InvalidTokenException "> Reason : Invalid Token found !\n\t\t> Solution : Read the documentation of SRON carefully and write valid tokens.\n"
 #define InvalidValueException "> Reason : You inserted wrong value in wrong type.\n\t\t> Solution 1 : Int type can only contain numbers but not decimal values.\n\t\t> Solution 2 : Double type can only contain digits and decimal point(.).\n\t\t> Solution 3 : Char type is declared using single quote (\') and contains a single ASCII character.\n\t\t> Solution 4 : String type is declared using double quotes(\").\n\t\t> Solution 5 : Bool type contain only two values(true and false).\n"
+#define InvalidVariableSyntaxException "> Reason : Variable Attribute is not having a proper syntax.\n\t\t> Solution 1: Correct Syntax = variables: type variable1,type variable2=value,type variable3 .\n\t\t> Solution 2: Seprate variable and its type with comma(,).\n\t\t> Solution 3 : Assign value to variable according to its type. e.g. Int val = \"Hello\" <--- This is wrong."
 
 #define SystemOutofMemoryException "> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n"
 #define StringTooLongException "> Reason : Your System is out of Memory .\n\t> Solution : Remove some background applications and free up RAM .\n"
@@ -89,6 +90,9 @@ void DISPLAY_EXCEPTION(const char *during, const int code){
             break;
         case 18 :
             printf("%s",InputTypeException);
+            break;
+        case 19 :
+            printf("%s",InvalidVariableSyntaxException);
             break;
         default:
             printf("Invalid Exception Code !\n Contact SAKSHAM JOSHI to fix this.");

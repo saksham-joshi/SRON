@@ -18,6 +18,7 @@ public :
         i = j;
         j = temp;
     }
+    ~Utility(){}
 };
 
 #endif

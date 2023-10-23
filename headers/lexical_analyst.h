@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "_exception_.h"
+//#include<fstream>
 
 std::vector<std::string> LEX(std::string str)
 {
@@ -45,6 +46,11 @@ std::vector<std::string> LEX(std::string str)
                          vec.push_back( (std::string)"!=");
                          ++it;
                          continue;
+                    }
+                    else if(it != str.end()-1 && *it == '[' && *(it+1) == ']'){
+                        vec.push_back((std::string)"[]" );
+                        ++it;
+                        continue;
                     }
                     vec.push_back((std::string) "" + *it);
                     val = "";
@@ -93,7 +99,10 @@ std::ostream &operator<<(std::ostream &COUT, std::vector<std::string> &vec)
 
 // int main()
 // {
-//      std::vector<std::string> vec =  LEX("{name: factorial\ntype: int\nargs : (int val)\nvariables: (Char ch='a', String st21 = \"Helllo\' guys\" ,int fac1=112,int i1,double d2=123.45)\nforloop:{\nrange: i = [2,eval(val+1)]\n0 : fac = eval(fac*i)\n}\nreturn : fac\n} ");
-//      std::cout<<vec;
-//      getchar();
+//      std::ifstream file("SampleCodes/factorial.sron");
+//      std::string str;
+//      while(std::getline(file,str)){
+//         std::vector<std::string> vec = LEX(str);
+//         std::cout<<"\n --> "<<vec;
+//      }
 // }

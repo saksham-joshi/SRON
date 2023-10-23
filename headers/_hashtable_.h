@@ -281,6 +281,7 @@ class HashTable{
 
     //friend int main();
     friend int main(int argc , char **argv);
+    friend class Executor;
 };
 
 #endif
