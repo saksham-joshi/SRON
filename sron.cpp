@@ -32,17 +32,11 @@ int main(int argc, char **argv)
             DISPLAY_EXCEPTION("getting the file from the specified path.", 1);
         }
 
+        HashTable H;
+        Executor executor(H);
+
         while (getline(code_file, str))
         {
-
-            // str = String().STRIP(str);
-            // if (str.length() == 0)
-            // {
-            //     continue;
-            // }
-            // else if(str == "{" || str == "}" ){
-            //     continue;
-            // }
             std::vector<std::string> lexcode = LEX(str);
             
             if(lexcode.size() == 0){
@@ -50,25 +44,32 @@ int main(int argc, char **argv)
                 continue;
             }
             string attribute = lexcode[0];
+            std::cout<<"\n"<<attribute<<" --> "<<lexcode;
 
-            if (Executor::CHECK_IF_ATTRIBUTE_IS_NUMBER(attribute))
+            if (attribute == "{" || attribute == "}" ){
+
+            }
+            else if (CHECK_IF_ATTRIBUTE_IS_NUMBER(attribute))
             {
                 //continue;
             }
-            else if(attribute == "args"){
+            else if (attribute == "args"){
 
             }
             else if (attribute == "condition")
             {
-            }  
+            } 
+            else if (attribute == "else"){
+
+            }
             else if (attribute == "for")
             {
 
             }
-            else if(attribute == "if"){
+            else if (attribute == "if"){
 
             }
-            else if(attribute == "name"){
+            else if (attribute == "name"){
                 
             }
             else if (attribute == "range")
@@ -85,7 +86,7 @@ int main(int argc, char **argv)
             }
             else if (attribute == "variables")
             {
-
+                executor.VARIABLES(lexcode);
             }
             else if (attribute == "while")
             {
@@ -93,7 +94,7 @@ int main(int argc, char **argv)
             }   
             else
             {
-                //DISPLAY_EXCEPTION("mapping the attribute with the functionality.", 8);
+                DISPLAY_EXCEPTION("mapping the attribute with the functionality.", 8);
             }
             Logs::INCREMENT_LINE_NUMBER() ;
         }
@@ -105,6 +106,7 @@ int main(int argc, char **argv)
     }
     catch (std::exception)
     {
+        DISPLAY_EXCEPTION("interpreting the written code.",3);
     }
     return 0;
 }
