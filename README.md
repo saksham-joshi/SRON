@@ -1,6 +1,7 @@
 # SRON
-> SRON- Saksham Rapid Object Notation.<br/> <br/>
-A strongly + statically typed interpreted programming language.
+SRON stands for Saksham Rapid Object Notation.<br/> <br/>
+It is a strongly & statically typed interpreted programming language.
+
 
 ## Datatype :
 1. Int
