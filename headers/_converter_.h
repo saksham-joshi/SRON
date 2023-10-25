@@ -3,8 +3,6 @@
 #include "_utility_.h"
 #include "_exception_.h"
 
-using namespace std;
-
 struct TypeConversionError : public std::exception{
     const char* what() const throw(){
         return "Exception Caught :\n > Error while Converting datatypes ";
@@ -55,7 +53,7 @@ private:
                 exit(1);
             }
         }
-        catch (std::exception e)
+        catch (const std::exception)
         {
             DISPLAY_EXCEPTION("conversion of datatypes.",13);
         }
@@ -70,7 +68,7 @@ public :
             double d = std::stod(i);
             return d;
         }
-        catch(std::exception e){
+        catch(const std::exception){
             DISPLAY_EXCEPTION("conversion of String type to Double.",13);
         }
         return 0;
@@ -80,7 +78,7 @@ public :
             double d = (double)i;
             return d;
         }
-        catch(std::exception e){
+        catch(const std::exception){
             DISPLAY_EXCEPTION("conversion of Int type to Double.",17);
         }
         return 0;
@@ -91,12 +89,12 @@ public :
 
     //=========| TOSTRING |=========//
     inline static std::string TOSTRING(long long int i){
-        return to_string(i);
+        return std::to_string(i);
     }
     inline static std::string TOSTRING(double d){
-        return to_string(d);
+        return std::to_string(d);
     }
-    inline static std::string ToSTRING(string i){
+    inline static std::string ToSTRING(std::string i){
         return i;
     }
     inline static std::string TOSTRING(bool b){
@@ -109,10 +107,18 @@ public :
     //=========| ToINT |=========//
     inline static long long int TOINT(std::string str){
         try{
-            long long int i = std::stoll(str);
-            return i;
+            long long int val = 0;
+            for(std::string::iterator it = str.begin(); it != str.end(); ++it){
+                int ascii = (int)*it;
+                if(ascii >=48 && ascii <=57){
+                    val = (val*10)+(ascii-48 );
+                    continue;
+                }
+                DISPLAY_EXCEPTION("conversion of String type to Int.",17);
+            }
+            return val;
         }
-        catch(std::exception e){
+        catch(const std::exception){
             DISPLAY_EXCEPTION("conversion of String type to Int.",17);
         }
         return 0;
@@ -128,7 +134,7 @@ public :
             }
             throw TypeConversionError();
         }
-        catch(std::exception e){
+        catch(const std::exception){
             DISPLAY_EXCEPTION("conversion of Char type to Int.",17);
         }
         return 0;
@@ -144,11 +150,15 @@ public :
     inline static bool TOBOOL(std::string str){
         try{
             str = TOUPPERCASE(str);
-            if(str == "TRUE") return true;
-            else if(str == "FALSE") return false;
+            if(str == "TRUE"){ 
+                return true;
+            }
+            else if(str == "FALSE"){
+                return false;
+            }
             throw TypeConversionError();
         }
-        catch(std::exception e){
+        catch(const std::exception){
             DISPLAY_EXCEPTION("conversion of String type to Bool.",17);
         }
     }

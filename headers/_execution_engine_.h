@@ -5,21 +5,7 @@
 #include "_hashtable_.h"
 #include "_utility_.h"
 
-inline static bool CHECK_VALID_VARIABLE_NAME(std::string str)
-{
-    if (!(str[0] == '_' || isalpha(str[0]) > 0))
-    {
-        DISPLAY_EXCEPTION("creating a variable.", 2);
-    }
-    for (std::string::iterator it = str.begin() + 1; it < str.end(); ++it)
-    {
-        if (!(*it == '_' || isalpha(*it) > 0 || ((int)*it >= 48 && (int)*it <= 57)))
-        {
-            DISPLAY_EXCEPTION("creating a variable.", 2);
-        }
-    }
-    return true;
-}
+
 inline static bool CHECK_IF_ATTRIBUTE_IS_NUMBER(std::string str)
 {
     for (std::string::iterator it = str.begin(); it < str.end(); ++it)
@@ -54,7 +40,7 @@ public:
                 if (*it == "Int")
                 {
                     if(it < vec.end()-2){
-                        CHECK_VALID_VARIABLE_NAME(*(it+1));
+                        //CHECK_VALID_VARIABLE_NAME(*(it+1));
                         H.INSERT(*(it+1),(long long int)0);
                     }
                     
