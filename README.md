@@ -12,7 +12,7 @@ A strongly + statically typed interpreted programming language.
 ## Typo :
 1. Functions - Capital letters (String\~LEN(), Vector\~RANGE() etc.)
 2. Attributes - small letters (comment, variable,name, return, return_type etc.)
-3. Datatypes - Camelcase (Int, Double, Char, String, Bool).
+3. Datatypes - Capitlized (Int, Double, Char, String, Bool).
 
 ## Operators :
 1. Arithmetic : +, -, *, /, %, ^ .
