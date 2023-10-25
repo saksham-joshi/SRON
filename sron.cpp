@@ -1,16 +1,6 @@
-#include "headers/_boolean_.h"
-#include "headers/_char_.h"
-#include "headers/_converter_.h"
-#include "headers/_exception_.h"
 #include "headers/_execution_engine_.h"
-#include "headers/_hashtable_.h"
-#include "headers/_input_.h"
 #include "headers/lexical_analyst.h"
-#include "headers/_math_.h"
-#include "headers/_string_.h"
 #include "headers/static_logs.h"
-#include "headers/_utility_.h"
-#include "headers/_vector_.h"
 
 #include <iostream>
 #include <fstream>
