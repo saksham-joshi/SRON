@@ -1,6 +1,6 @@
-#include "headers/_execution_engine_.h"
-#include "headers/lexical_analyst.h"
-#include "headers/static_logs.h"
+#include "headers/_execution_engine_.hpp"
+#include "headers/lexical_analyst.hpp"
+#include "headers/static_logs.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -22,8 +22,6 @@ int main(int argc, char **argv)
             DISPLAY_EXCEPTION("getting the file from the specified path.", 1);
         }
 
-        HashTable H;
-        Executor executor(H);
 
         while (getline(code_file, str))
         {
@@ -37,7 +35,7 @@ int main(int argc, char **argv)
             std::cout<<"\n"<<attribute<<" --> "<<lexcode;
 
             if (attribute == "{" || attribute == "}" ){
-
+                
             }
             else if (CHECK_IF_ATTRIBUTE_IS_NUMBER(attribute))
             {
@@ -51,6 +49,9 @@ int main(int argc, char **argv)
             } 
             else if (attribute == "else"){
 
+            }
+            else if(attribute == "elif"){
+                
             }
             else if (attribute == "for")
             {
@@ -76,7 +77,7 @@ int main(int argc, char **argv)
             }
             else if (attribute == "variables")
             {
-                executor.VARIABLES(lexcode);
+                //executor.VARIABLES(lexcode);
             }
             else if (attribute == "while")
             {
