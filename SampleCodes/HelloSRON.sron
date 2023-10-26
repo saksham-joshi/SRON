@@ -1,0 +1,6 @@
+{
+    name: main
+    type: void
+    args: ()
+    0 : print("Hello, SRON")
+}
