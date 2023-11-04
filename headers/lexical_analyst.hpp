@@ -42,7 +42,7 @@ std::vector<std::string> LEX(std::string str)
                          ++it;
                     }
                }
-               else if (*it == '~' || *it == '{' || *it == '}' || *it == '[' || *it == ']' || *it == '(' || *it == ')' || *it == ':' || *it == '=' || *it == ',' || *it == '+' || *it == '-' || *it == '*' || *it == '/' || *it == '%' || *it == '^' || *it == '!' || *it == '\\' || *it == '\n' || *it == '\t')
+               else if (*it == '~' || *it == '{' || *it == '}' || *it == '[' || *it == ']' || *it == '(' || *it == ')' || *it == ':' || *it == '&' || *it == '|' || *it == '=' || *it == ',' || *it == '+' || *it == '-' || *it == '*' || *it == '/' || *it == '%' || *it == '^' || *it == '!' || *it == '\\' || *it == '\n' || *it == '\t')
                {
                     if(it != str.end()-1 && *it == '!' && *(it+1) == '='){
                          vec.push_back( (std::string)"!=");
@@ -51,6 +51,21 @@ std::vector<std::string> LEX(std::string str)
                     }
                     else if(it != str.end()-1 && *it == '[' && *(it+1) == ']'){
                         vec.push_back((std::string)"[]" );
+                        ++it;
+                        continue;
+                    }
+                    else if(it != str.end()-1 && *it == '&' && *(it+1) == '&'){
+                        vec.push_back((std::string)"&&" );
+                        ++it;
+                        continue;
+                    }
+                    else if(it != str.end()-1 && *it == '|' && *(it+1) == '|'){
+                        vec.push_back((std::string)"||" );
+                        ++it;
+                        continue;
+                    }
+                    else if(it != str.end()-1 && *it == '=' && *(it+1) == '='){
+                        vec.push_back((std::string)"==" );
                         ++it;
                         continue;
                     }
@@ -93,7 +108,7 @@ std::ostream& operator<<(std::ostream& COUT, std::vector<std::string>& vec)
      std::vector<std::string>::const_iterator it;
      for (it = vec.begin(); it != vec.end() - 1; ++it)
      {
-          std::cout << *it << "| ";
+          std::cout << *it << ", ";
      }
      std::cout << *it <<"]";
      return COUT;

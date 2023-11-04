@@ -1,14 +1,36 @@
 #include <string>
 #include <ctype.h>
-#include <iostream>
 #include <vector>
-#include "_exception_.hpp"
+#include "Argument_List.hpp"
+#include "_converter_.hpp"
 
 #ifndef STRING_H
 #define STRING_H
 
+/*
+ * String Class - this class includes static function which can help you easily work on string and perfomr manipulations.
+  
+ * It includes these functions :
+
+ * 1. STRIP
+ * 2. CONCAT
+ * 3. AT
+ * 4. CAPITALIZE
+ * 5. SUBSTRING
+ * 6. LEN
+ * 7. CLEAR
+ * 8. COPY
+ * 9. REVERSE
+ * 10. COUNT
+ * 11. REPLACE
+ * 12. SPLIT
+ * 13. TOLOWERCASE
+ * 14. TOUPPERCASE
+*/
+
 class String{
 public:
+    //============================================================================| Strip function //
     inline static std::string STRIP(std::string str){
         std::string fin = "";
         try{
@@ -27,12 +49,43 @@ public:
                 }
             }
         }
-        catch(std::exception){
+        catch(const std::exception&){
             DISPLAY_EXCEPTION("extracting the string.",3 );
         }
         return fin;
     }
+    inline static std::string STRIP(ArgumentList& args){
+        return STRIP(args.GET_STRING(0));
+    }
 
+    //============================================================================| CONCAT function //
+
+    inline static std::string CONCAT(ArgumentList& args){
+        std::string fin = "";
+        for(int i=0;i<args.LEN();++i){
+            std::string type = args.GET_TYPE(i);
+            if(type == "String"){
+                fin=fin.append(args.GET_STRING(i) );
+            }
+            else if(type == "Int"){
+                fin=fin.append(std::to_string(args.GET_INT(i)));
+            }
+            else if(type == "Double"){
+                fin.append(std::to_string(args.GET_DOUBLE(i)));
+            }
+            else if(type == "Char"){
+                fin += args.GET_CHAR(i);
+            }
+            else if(type == "Bool"){
+                fin+= (args.GET_BOOL(i))?"true":"false"; 
+            }
+            else{
+                std::cout<<"exception";
+                DISPLAY_EXCEPTION((std::string("concatenating String with type ")+type).c_str(),23);
+            }
+        }
+        return fin;
+    }
     inline static std::string CONCAT(std::string str1, const std::string str2)
     {
         return str1.append(str2);
@@ -50,9 +103,10 @@ public:
         return str + std::to_string(x);
     }
 
+    //============================================================================| AT function //
     inline static char AT(std::string str,int index){
         if(index < 0 || index >= str.length()){
-            DISPLAY_EXCEPTION("extracting an element of string type.",12);
+            DISPLAY_EXCEPTION("extracting an element of Char type from String type.",12);
         }
         return str[index];
     }
@@ -151,7 +205,7 @@ public:
         }    
     }
 
-    inline static std::string ToLOWERCASE(std::string str){
+    inline static std::string TOLOWERCASE(std::string str){
         std::string fin = "";
         try{   
             for(std::string::iterator it= str.begin() ; it != str.end() ; ++it){
@@ -165,7 +219,7 @@ public:
         return fin;
         
     }
-    inline static std::string ToUPPERCASE(std::string str){     
+    inline static std::string TOUPPERCASE(std::string str){     
         std::string fin = "";
         try{
             for(std::string::iterator it = str.begin(); it != str.end() ; ++it){

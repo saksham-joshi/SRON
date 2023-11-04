@@ -1,13 +1,47 @@
 #include<vector>
 #include<iostream>
 #include<algorithm>
-#include "./_exception_.hpp"
+#include "Argument_List.hpp"
 
 #ifndef VECTOR_H
 #define VECTOR_H
 
 class Vector{
 public :
+    inline static void INSERT(ArgumentList& args){
+        try{
+            if(args.LEN() == 2){
+                std::string type1 = args.GET_TYPE(0);
+                std::string type2 = args.GET_TYPE(1);
+                if(type1 == "Int[]" && type2 == "Int"){
+                    args.GET_INT_VECTOR(0).push_back(args.GET_INT(1));      
+                }
+                else if(type1 == "Double[]" && type2 == "Double"){
+                    args.GET_DOUBLE_VECTOR(0).push_back(args.GET_DOUBLE(1));
+                }
+                else if(type1 == "String[]" && type2 == "String"){
+                    args.GET_STRING_VECTOR(0).push_back(args.GET_STRING(1));
+                }
+                else if(type1 == "Char[]" && type2 == "Char"){
+                    args.GET_CHAR_VECTOR(0).push_back(args.GET_CHAR(1));
+                }
+                else if(type1 == "Bool[]" && type2 == "Bool"){
+                    args.GET_BOOL_VECTOR(0).push_back(args.GET_BOOL(1));
+                }
+                else{
+                    DISPLAY_EXCEPTION("inserting the element in the vector.",23);
+                }
+                return;
+            }
+            else{
+                DISPLAY_EXCEPTION("inserting the element in the vector.",23);
+            }
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("inserting elements inside the vector.",3);
+        }
+        
+    }
     template<typename t> inline static void INSERT(std::vector<t> &vec,t val){
         try{
             vec.push_back(val);

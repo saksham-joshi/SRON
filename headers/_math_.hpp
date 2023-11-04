@@ -1,5 +1,7 @@
 #include <cmath>
-
+#include<vector>
+#include "_rectifier_.hpp"
+#include "Argument_List.hpp"
 /*
 In this file, the following Mathematical functions are declared :
     1. Abs
@@ -19,7 +21,7 @@ In this file, the following Mathematical functions are declared :
 class Math
 {
 public :
-    //====================|  implementing absolute value
+    //===========================================================================|  implementing absolute value
     inline static double ABSOLUTE(const double i)
     {
         return abs(i);
@@ -29,27 +31,86 @@ public :
         return abs(i);
     }
 
-    //====================|  implementing max value
-    inline static double MAX(const double i, const double j)
-    {
-        return (i > j) ? i : j;
-    }
-    inline static int MAX(const long long int i, const long long int j)
-    {
-        return (i > j) ? i : j;
+    //===========================================================================|  implementing MAX value
+    
+    template<typename t> inline static t MAX(const std::vector<t>& vec){
+        try{
+            if(vec.size() != 0){
+                t max = vec[0];
+                for(typename std::vector<t>::const_iterator it = vec.begin()+1 ; it != vec.end() ; ++it){
+                    max = (max < *it)? *it : max;
+                }
+                return max;
+            }
+            throw ThrowException();
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("finding the maximum value from a vector. If you haven't passed similar types of arguments, this exception could be one of the reasons.",7);
+        }
+        return vec[0];
     }
 
-    //====================|  implementing min value
-    inline static double MIN(const double i, const double j)
-    {
-        return (i > j) ? j : i;
-    }
-    inline static long long int MIN(const long long int i, const long long int j)
-    {
-        return (i > j) ? j : i;
+    inline static Collection MAX(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+
+        if(type == "Int[]"){
+            return MAX(args.GET_INT_VECTOR(0));
+        }
+        else if(type == "Double[]"){
+            return MAX(args.GET_DOUBLE_VECTOR(0));
+        }
+        else if(type =="String[]"){
+            return MAX(args.GET_STRING_VECTOR(0));
+        }
+
+        DISPLAY_EXCEPTION("finding the maximum value from passed argument.",23);
+        return 0;
     }
 
-    //====================|  implementing Square Root function
+    // //===========================================================================|  implementing MIN value
+    template<typename t> inline static t MIN(const std::vector<t>& vec){
+        try{
+            if(vec.size() != 0){
+                t min = vec[0];
+                for(typename std::vector<t>::const_iterator it = vec.begin()+1 ; it != vec.end() ; ++it){
+                    min = (min<*it)?min:*it;
+                }
+                return min;
+            }
+            throw ThrowException() ;
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("finding the minimum value from a vector. If you haven't passed similar types of arguments, this exception could be one of the reasons.",7);
+        }
+        return vec[0]; 
+    }
+    inline static Collection MIN(ArgumentList& args){
+        std::string type = args.GET_TYPE(0); 
+        if(type == "Int[]" ){
+            return MIN(args.GET_INT_VECTOR(0));
+        }
+        else if(type == "Double[]"){
+            return MIN(args.GET_DOUBLE_VECTOR(0));
+        }
+        else if(type == "String[]"){
+            return MIN(args.GET_STRING_VECTOR(0));
+        }
+        DISPLAY_EXCEPTION("finding the minimum value from passed argument.",23);
+        return 0;
+    }
+
+    //===========================================================================|  implementing Square Root function
+    inline static Collection SQRT(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+        if(type == "Int"){
+            return sqrt((double)args.GET_INT(0));
+        }
+        else if(type == "Double"){
+            return sqrt(args.GET_DOUBLE(0));
+        }
+        DISPLAY_EXCEPTION("calculating the Square root of passed argument.",23);
+        return 0;
+    }
     inline static double SQRT(const double i)
     {
         return sqrt(i);
@@ -59,7 +120,17 @@ public :
         return sqrt((double)i);
     }
 
-    //====================|  implementing Cube Root function
+    //===========================================================================|  implementing Cube Root function
+    inline static Collection CBRT(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+        if(type == "Int"){
+            return cbrt((double)args.GET_INT(0));
+        }
+        else if(type == "Double"){
+            return cbrt(args.GET_DOUBLE(0));                                                                                                                                                                                                                                                    
+        }
+        DISPLAY_EXCEPTION("calculating the Cube root of passed argument.",23);
+    }
     inline static double CBRT(const double i)
     {
         return cbrt(i);
@@ -69,7 +140,18 @@ public :
         return cbrt((double)i);
     }
 
-    //====================|  implementing log base 10 function
+    //===========================================================================|  implementing log base 10 function
+    inline static Collection LOG10(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+        if(type == "Int"){
+            return log10((double)args.GET_INT(0));
+        }
+        else if(type == "Double"){
+            return log10(args.GET_DOUBLE(0));
+        }
+        DISPLAY_EXCEPTION("calculating the Log10 of the passes argument.",23);
+        return 0;
+    }
     inline static double LOG10(const double i)
     {
         return log10(i);
@@ -79,7 +161,18 @@ public :
         return log10((double)i);
     }
 
-    //====================| implmenting log function
+    //===========================================================================| implmenting log function
+    inline static Collection LOG(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+        if(type == "Int"){
+            return log((double)args.GET_INT(0));
+        }
+        else if(type == "Double"){
+            return log(args.GET_DOUBLE(0));
+        }
+        DISPLAY_EXCEPTION("calculating the Log of the passes argument.",23);
+        return 0;
+    }
     inline static double LOG(const double i)
     {
         return log(i);
@@ -89,7 +182,18 @@ public :
         return log((double)i);
     }
 
-    //====================| implementing log base 2 function
+    //===========================================================================| implementing log base 2 function
+    inline static Collection LOG2(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+        if(type == "Int"){
+            return log2((double)args.GET_INT(0));
+        }
+        else if(type == "Double"){
+            return log2(args.GET_DOUBLE(0));
+        }
+        DISPLAY_EXCEPTION("calculating the Log2 of the passes argument.",23);
+        return 0;
+    }
     inline static double LOG2(const double i)
     {
         return log2(i);
@@ -106,7 +210,18 @@ public :
         3. tan
     */
 
-    //=====| SIN |=====//
+    //===========================================================================|| SIN |=====//
+    inline static Collection SIN(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+        if(type == "Int"){
+            return sin((double)args.GET_INT(0));
+        }
+        else if(type == "Double"){
+            return sin(args.GET_DOUBLE(0));
+        }
+        DISPLAY_EXCEPTION("calculating the sin of the passes argument.",23);
+        return 0;
+    }
     inline static double SIN(const double d)
     {
         return sin(d);
@@ -116,7 +231,18 @@ public :
         return sin((double)d);
     }
 
-    //=====| COS |=====//
+    //===========================================================================|| COS |=====//
+    inline static Collection COS(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+        if(type == "Int"){
+            return cos((double)args.GET_INT(0));
+        }
+        else if(type == "Double"){
+            return cos(args.GET_DOUBLE(0));
+        }
+        DISPLAY_EXCEPTION("calculating the cos of the passes argument.",23);
+        return 0;
+    }
     inline static double COS(const double d)
     {
         return cos(d);
@@ -126,7 +252,18 @@ public :
         return cos((double)d);
     }
 
-    //=====| TAN |=====//
+    //===========================================================================|| TAN |=====//
+    inline static Collection TAN(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+        if(type == "Int"){
+            return tan((double)args.GET_INT(0));
+        }
+        else if(type == "Double"){
+            return tan(args.GET_DOUBLE(0));
+        }
+        DISPLAY_EXCEPTION("calculating the tan of the passes argument.",23);
+        return 0;
+    }
     inline static double TAN(const double d)
     {
         return tan(d);
@@ -142,9 +279,32 @@ public :
         2. ceil = returns the smallest integer that is greater than or equal to the value passed as the argument (i.e.: rounds up the nearest integer).
         3. round = returns the decimal or integer value rounded to x number of decimal places.
     */
+    inline static Collection CEIL(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+        if(type == "Int"){
+            return (long long int)ceil((double)args.GET_INT(0));
+        }
+        else if(type == "Double"){
+            return ceil(args.GET_DOUBLE(0));
+        }
+        DISPLAY_EXCEPTION("calculating the ceil of the passes argument.",23);
+        return 0;
+    }
     inline static long long int CEIL(double d)
     {
         return ((long long int)ceil(d));
+    }
+
+    inline static Collection FLOOR(ArgumentList& args){
+        std::string type = args.GET_TYPE(0);
+        if(type == "Int"){
+            return (long long int)floor((double)args.GET_INT(0));
+        }
+        else if(type == "Double"){
+            return floor(args.GET_DOUBLE(0));
+        }
+        DISPLAY_EXCEPTION("calculating the floor of the passes argument.",23);
+        return 0;
     }
     inline static long long int FLOOR(double d)
     {
@@ -153,26 +313,3 @@ public :
 
     ~Math(){ }
 };
-// implementing eval
-// class eval{
-// private :
-//     string str="";
-
-//     void replacer_checker(){
-//         string fin="";
-//         for(int i = 0 ; i< str.length() ; i++){
-//             try{
-
-//             }
-//             catch(exception e){ }
-
-//         }
-//         str = fin;
-//     }
-
-// public :
-//     eval(const string str){
-//         this->str = str;
-//         replacer_checker();
-//     }
-// };

@@ -2,23 +2,14 @@
 #include <string>
 #include <iostream>
 #include "./_exception_.hpp"
-
-/* This Exception is thrown when the user will
-   input wrong datatype
-*/
-struct TypeError : public std::exception
-{
-    const char *what() const throw()
-    {
-        return " ";
-    }
-};
+#include "Argument_List.hpp"
 
 class Input
 {
 public :
 
-    inline static std::string INPUT_STRING(){
+    // ========================================================================== FOR STRING USER INPUTS
+    inline static std::string STRING(){
         std::string str = "";
         try
         {
@@ -30,49 +21,56 @@ public :
         }
         return str;
     }
-    inline static std::string INPUT_STRING(std::string msg)
+    inline static std::string STRING(std::string msg)
     {
         printf("%s", msg.c_str());
-        return INPUT_STRING();
+        return STRING();
+    }
+    inline static std::string STRING(ArgumentList& args){
+        if(args.LEN() == 0){
+            return STRING();
+        }
+        return STRING(args.GET_STRING(0));
     }
 
-    inline static double INPUT_DOUBLE(){
+
+    // ========================================================================== FOR DOUBLE USER INPUTS
+    inline static double DOUBLE(){
         double d = 0;
         try
         {
             if (!scanf("%lf", &d))
             {
-                throw " ";
+                throw ThrowException() ;
             }
-        }
-        catch (const char*)
-        {
-            DISPLAY_EXCEPTION("taking Double type input value from user via console.",18);
         }
         catch(const std::exception&){
             DISPLAY_EXCEPTION("taking Double type input value from user via console.",18);
         }
         return d;
     }
-
-
-    inline static double INPUT_DOUBLE(std::string msg)
+    inline static double DOUBLE(std::string msg)
     {
         printf("%s", msg.c_str());
-        return INPUT_DOUBLE();
+        return DOUBLE();
+    }
+    inline static double DOUBLE(ArgumentList& args){
+        if(args.LEN() == 0){
+            return DOUBLE();
+        }
+        return DOUBLE(args.GET_STRING(0));
     }
 
-    inline static long long int INPUT_INT(){
+
+    // ============================================================================ FOR INT USER INPUTS 
+    inline static long long int INT(){
         double val = 0;
         try
         {
             if (!scanf("%lf", &val))
             {
-                throw " ";
+                throw ThrowException();
             }
-        }
-        catch(const char*){
-            DISPLAY_EXCEPTION("taking Int type input value from user via console.",18);
         }
         catch (const std::exception&)
         {
@@ -80,14 +78,19 @@ public :
         }
         return (long long int)val;
     }
-
-    inline static long long int INPUT_INT(std::string msg)
-    {
+    inline static long long int INT(std::string msg){
         printf("%s", msg.c_str());
-        return INPUT_INT();
+        return INT();
+    }
+    inline static long long int INT(ArgumentList& args){
+        if(args.LEN() == 0){
+            return INT();
+        }
+        return INT(args.GET_STRING(0));
     }
 
-    inline static char INPUT_CHAR(){
+    // ========================================================================== FOR CHAR USER INPUTS
+    inline static char CHAR(){
         char ch = ' ' ;
         try
         {
@@ -99,11 +102,17 @@ public :
         }
         return ch;
     }
-    inline static char INPUT_CHAR(std::string msg)
+    inline static char CHAR(std::string msg)
     {
         printf("%s", msg.c_str());
-        return INPUT_CHAR();
+        return CHAR();
         
+    }
+    inline static char CHAR(ArgumentList& args){
+        if(args.LEN() == 0){
+            return CHAR();
+        }
+        return CHAR(args.GET_STRING(0));
     }
 
     ~Input(){ }

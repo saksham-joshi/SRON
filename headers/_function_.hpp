@@ -5,6 +5,7 @@
 
 #ifndef _FUNCTION_H
 #define _FUNCTION_H
+
 struct _function_
 {
     std::string function_name;
