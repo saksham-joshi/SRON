@@ -14,9 +14,9 @@ It follows the typing style of JSON. In this, every line specifies an attribute 
 6. List
 
 ## Typo :
-1. Functions - Capital letters (String\~LEN(), Vector\~RANGE() etc.)
+1. Functions - Capital letters (LEN(), SIZE_OF(), PRINT(), PRINTLN()  etc.)
 2. Attributes - small letters (comment, variable,name, return, type etc.)
-4. Datatypes - Capitlized (Int, Double, Char, String, Bool).
+4. Datatypes - Capitlized (Int, Double, Char, String, Bool, List).
 
 ## Operators :
 1. Arithmetic : +, -, *, /, %, ^ .
