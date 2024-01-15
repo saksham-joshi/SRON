@@ -1,0 +1,3 @@
+> Reason : Your System is out of Memory .
+
+	|> Solution : Remove some background applications and free up RAM .

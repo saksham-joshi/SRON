@@ -1,0 +1,13 @@
+{
+    name: main
+    type: Void
+    variables:Int val
+     : val = INPUT_INT("Enter the value :-")
+    if:{
+        condition:((val % 2) == 0 )  
+        1 : PRINTLN("Even number.")
+    }
+    else:{
+        1 : PRINTLN("Odd number.")
+    }
+}

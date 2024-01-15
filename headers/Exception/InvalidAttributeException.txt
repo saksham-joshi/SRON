@@ -1,0 +1,4 @@
+> Reason : Invalid Attribute found !
+
+	|> Solution 1: Always type attributes in small-case.
+	|> Solution 2 : Refer to the documentation of SRON to find out all valid attributes out there.

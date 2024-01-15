@@ -1,6 +1,6 @@
 {
     name: main
-    type: void
+    type: Void
     args: ()
-    0 : print("Hello, SRON")
+    0 : PRINT("Hello, SRON")
 }

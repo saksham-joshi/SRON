@@ -1,0 +1,6 @@
+> Reason : Invalid Variable Naming.
+
+	|> Solution 1: Name variable which contain only contain alphabets, numbers and underscore.
+	|> Solution 2 : Remove Special Characters like +, -, *, $ etc.
+	|> Solution 3 : First letter of variable must be a alphabet or underscore.
+	|> Solution 4 : Maximum number of characters in a variable can be 32.

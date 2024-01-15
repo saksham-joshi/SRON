@@ -1,19 +1,28 @@
-#include "headers/_execution_engine_.hpp"
-#include "headers/lexical_analyst.hpp"
+// #include "headers/_execution_engine_.hpp"
+// #include "headers/lexical_analyst.hpp"
 #include "headers/static_logs.hpp"
+#include "headers/_exception_.hpp"
+#include<iostream>
 
-#include <iostream>
+#include<string>
 #include <fstream>
-#include <map>
+
+#ifndef SRON_H
+#define SRON_H
+
+
+std::string READ_WHOLE_FILE(std::ifstream& input){
+    std::string content((std::istreambuf_iterator<char>(input)),(std::istreambuf_iterator<char>()));
+    return content;
+}
 
 int main(int argc, char **argv)
 {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    string str;
+    std::string str;
     try
     {
-        ifstream code_file(argv[1]);
+        std::ifstream code_file(argv[1]);
+        
         if (code_file.fail())
         {
             if(argc == 1){
@@ -22,82 +31,16 @@ int main(int argc, char **argv)
             DISPLAY_EXCEPTION("getting the file from the specified path.", 1);
         }
 
-
-        while (getline(code_file, str))
-        {
-            std::vector<std::string> lexcode = LEX(str);
-            
-            if(lexcode.size() == 0){
-                Logs::INCREMENT_LINE_NUMBER();
-                continue;
-            }
-            string attribute = lexcode[0];
-            std::cout<<"\n"<<attribute<<" --> "<<lexcode;
-
-            if (attribute == "{" || attribute == "}" ){
-                
-            }
-            else if (CHECK_IF_ATTRIBUTE_IS_NUMBER(attribute))
-            {
-                //continue;
-            }
-            else if (attribute == "args"){
-
-            }
-            else if (attribute == "condition")
-            {
-            } 
-            else if (attribute == "else"){
-
-            }
-            else if(attribute == "elif"){
-                
-            }
-            else if (attribute == "for")
-            {
-
-            }
-            else if (attribute == "if"){
-
-            }
-            else if (attribute == "name"){
-                
-            }
-            else if (attribute == "range")
-            {
-
-            }
-            else if (attribute == "return")
-            {
-
-            }
-            else if (attribute == "type")
-            {
-
-            }
-            else if (attribute == "variables")
-            {
-                //executor.VARIABLES(lexcode);
-            }
-            else if (attribute == "while")
-            {
-
-            }   
-            else
-            {
-                DISPLAY_EXCEPTION("mapping the attribute with the functionality.", 8);
-            }
-            Logs::INCREMENT_LINE_NUMBER() ;
-        }
+        Logs::filename = argv[1] ;
+        
+        std::string lexcode = READ_WHOLE_FILE(code_file);
+        std::cout<<lexcode;
     }
-    catch (const char *excep)
-    {
-        printf("%s", excep);
-        exit(1);
-    }
-    catch (std::exception)
+    catch (const std::exception&)
     {
         DISPLAY_EXCEPTION("interpreting the written code.",3);
     }
     return 0;
 }
+
+#endif

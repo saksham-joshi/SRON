@@ -4,11 +4,14 @@
 class Logs{
     public :
     static int line_number;
+    static const char * filename;
     static int GET_LINE_NUMBER();
     static void INCREMENT_LINE_NUMBER();
 };
 
 int Logs::line_number=1;
+
+const char *Logs::filename;
 
 int Logs::GET_LINE_NUMBER(){
     return Logs::line_number;    

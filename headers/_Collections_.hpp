@@ -68,7 +68,7 @@ public:
         }
         return " ";
     }
-    template <typename t> inline static void PRINT(vector<t> &vec, char ch = ' ')
+    template <typename t> inline static void PRINT(vector<t> &vec, char ch)
     {
         if (vec.size() == 0)
         {
@@ -95,7 +95,7 @@ public:
             }
             else if (type == "Int[]")
             {
-                PRINT(get<vector<long long int>>(val));
+                PRINT(get<vector<long long int>>(val), ' ');
             }
             else if (type == "Double")
             {
@@ -103,7 +103,7 @@ public:
             }
             else if (type == "Double[]")
             {
-                PRINT(get<vector<double>>(val));
+                PRINT(get<vector<double>>(val), ' ');
             }
             else if (type == "String")
             {
@@ -138,7 +138,7 @@ public:
                 printf("%s]",(vec[vec.size()-1])?"true":"false");
             }
         }
-        catch (std::exception &e)
+        catch (const std::exception &)
         {
             DISPLAY_EXCEPTION("printing the given values.", 3);
         }
@@ -146,6 +146,106 @@ public:
     inline static void PRINTLN(collection val){
         PRINT(val);
         printf("\n");
+    }
+
+    inline static long long int TO_INT(collection val){
+        try{
+            return std::get<long long int>(val);
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("rectifying the Int value.",25);
+        }
+        return 0;
+    }
+
+    inline static double TO_DOUBLE(collection val){
+        try{
+            return std::get<double>(val);
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("rectifying the Double value.",25);
+        }
+        return 0;
+    }
+
+    inline static char TO_CHAR(collection val){
+        try{
+            return std::get<char>(val);
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("rectifying the Char value.",25);
+        }
+        return ' ';
+    }
+
+    inline static bool TO_BOOL(collection val){
+        try{
+            return std::get<bool>(val);
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("rectifying the Bool value.",25);
+        }
+        return false;
+    }
+
+    inline static std::string TO_STRING(collection val){
+        try{
+            return std::get<std::string>(val);
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("rectifying the String value.",25);
+        }
+        return " ";
+    }
+
+    inline static std::vector<long long int> TO_INT_VECTOR(collection val){
+        try{
+            return std::get<std::vector<long long int>>(val);
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("rectifying the Int[] value.",25);
+        }
+        exit(1);
+    }
+
+    inline static std::vector<double> TO_DOUBLE_VECTOR(collection val){
+        try{
+            return std::get<std::vector<double>>(val);
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("rectifying the Double[] value.",25);
+        }
+        exit(1);
+    }
+
+    inline static std::vector<char> TO_CHAR_VECTOR(collection val){
+        try{
+            return std::get<std::vector<char>>(val);
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("rectifying the Char[] value.",25);
+        }
+        exit(1);
+    }
+
+    inline static std::vector<bool> TO_BOOL_VECTOR(collection val){
+        try{
+            return std::get<std::vector<bool>>(val);
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("rectifying the Bool[] value.",25);
+        }
+        exit(1);
+    }
+
+    inline static std::vector<std::string> TO_STRING_VECTOR(collection val){
+        try{
+            return std::get<std::vector<std::string>>(val);
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("rectifying the String[] value.",25);
+        }
+        exit(1);
     }
     
 };

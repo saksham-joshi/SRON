@@ -1,0 +1,3 @@
+> Reason 1 : You input Invalid Characters .
+	> Reason 2 : Maybe System\'s memory is dysfunctioning.
+	> Reason 3 : In case of Int & Double inputs, if the values are too big, then this exception is thrown.

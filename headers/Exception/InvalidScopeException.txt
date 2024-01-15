@@ -1,0 +1,4 @@
+> Reason 1 : No. of Opening Curly brackets is not equals to the No. of Closing Curly brackets.
+	> Reason 2 : You started a new function without closing a function before.
+
+	|> Solution : Keep track of Curly braces by using an Advanced IDE.

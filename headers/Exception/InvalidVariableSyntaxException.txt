@@ -1,0 +1,5 @@
+> Reason : Variable Attribute is not having a proper syntax.
+
+	|> Solution 1: Correct Syntax = variables: type variable1,type variable2=value,type variable3 .
+	|> Solution 2: Seprate variable and its type with comma(,).
+	|> Solution 3 : Assign value to variable according to its type. e.g. Int val = \"Hello\" <--- This is wrong.

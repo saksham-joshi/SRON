@@ -1,20 +1,17 @@
 {
     name: factorial
     type: Int
-    args : (Int val)
     variables: Int fac=1,Int i
 
     for:{
-        range: i = [2,EVAL(val+1)]
-        0 : fac = EVAL(fac*i)
+        range: i = [2,val+1]
+        0 : fac = fac*i
     }
-    
     return : fac
 }
 
 {
     name: main
-    type void
-    args:()
+    type Void
     0 : PRINTLN(factorial(5))
 }

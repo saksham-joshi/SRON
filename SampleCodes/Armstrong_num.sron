@@ -2,16 +2,15 @@
     name : Armstrong
     args: Int val
     type: Int
-    variables : Int arm,Int temp,Int len, String[] array =["Hey hello","Say somet"]
-    0 : len = String~LEN( Convertor~TOSTRING(val))
+    variables : Int arm,Int temp,Int len, List ar =["Hey hello","Say something"]
+    0 : len = LEN(TOSTRING(val))
     while:{
         condition:(val != 0)
-        0 : temp = EVAL(val%10)
-        1 : arm = EVAL(arm+temp^len)
-        2 : val = EVAL(val%10)
+        0 : temp = val%10
+        1 : arm = arm+temp^len
+        2 : val = val%10
     }
     return : arm
-
 }
 
 {
@@ -20,10 +19,10 @@
     0 : val = INPUT_INT("\n ==> Enter the value :- ")
     if:{
         condition: (val = Armstrong(val))
-        0 : PRINTLN("Yes, ",val," is an Armstrong Number.")
+        1 : PRINTLN("Yes, ",val," is an Armstrong Number.")
     }
     else:{
-        0 : PRINTLN("No, ",val," is not an Armstrong Number.")
+        1 : PRINTLN("No, ",val," is not an Armstrong Number.")
     }
     return : 0
 }
