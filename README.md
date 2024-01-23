@@ -1,6 +1,6 @@
 # SRON
 
-<code> <img src="./Pictures/SRON_transparent.png" alt="logo"> </code>
+<code> <img width="50%" src="./Pictures/SRON_transparent.png" alt="logo"> </code>
 
 SRON stands for Saksham Rapid Object Notation.<br/> <br/>
 It is a dynamically typed, single threaded, functional and interpreted programming language.
