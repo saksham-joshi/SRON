@@ -1,5 +1,7 @@
 # SRON
 
+<code> <img height="80" src="./Pictures/SRON_transparent.png" alt="logo"> </code>
+
 SRON stands for Saksham Rapid Object Notation.<br/> <br/>
 It is a dynamically typed, single threaded, functional and interpreted programming language.
 It follows the typing style of JSON. In this, every line specifies an attribute which shows what types of instruction is written after colon(:).
