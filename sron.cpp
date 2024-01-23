@@ -1,20 +1,7 @@
-// #include "headers/_execution_engine_.hpp"
-// #include "headers/lexical_analyst.hpp"
-#include "headers/static_logs.hpp"
-#include "headers/_exception_.hpp"
-#include<iostream>
-
-#include<string>
-#include <fstream>
+#include "headers/lexical_analyst.hpp"
 
 #ifndef SRON_H
 #define SRON_H
-
-
-std::string READ_WHOLE_FILE(std::ifstream& input){
-    std::string content((std::istreambuf_iterator<char>(input)),(std::istreambuf_iterator<char>()));
-    return content;
-}
 
 int main(int argc, char **argv)
 {
@@ -22,23 +9,34 @@ int main(int argc, char **argv)
     try
     {
         std::ifstream code_file(argv[1]);
-        
+
         if (code_file.fail())
         {
-            if(argc == 1){
-                DISPLAY_EXCEPTION("getting the file name.",16);
+            if (argc == 1)
+            {
+                DISPLAY_EXCEPTION("getting the file name.", FileNameNotSpecifiedException);
             }
-            DISPLAY_EXCEPTION("getting the file from the specified path.", 1);
+            DISPLAY_EXCEPTION("getting the file from the specified path.", FileNotFoundException);
         }
 
-        Logs::filename = argv[1] ;
+        Logs::filename = argv[1];
+
+        std::string file_content((std::istreambuf_iterator<char>(code_file)), (std::istreambuf_iterator<char>()));
         
-        std::string lexcode = READ_WHOLE_FILE(code_file);
-        std::cout<<lexcode;
+        LEXICAL_ANALYSER::LEX(file_content);
+
+        for (const auto j : LEXICAL_ANALYSER::FunctionVector)
+        {
+            for (const auto i : j.codemap)
+            {
+                std::cout << "\nAttribute -> " << i.first << "\n\t Vector -> ";
+                print_vector(i.second);
+            }
+        }
     }
-    catch (const std::exception&)
+    catch (const std::exception &)
     {
-        DISPLAY_EXCEPTION("interpreting the written code.",3);
+        DISPLAY_EXCEPTION("interpreting the written code.", SystemOutofMemoryException);
     }
     return 0;
 }
