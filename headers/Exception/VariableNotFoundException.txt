@@ -2,4 +2,4 @@
 	> Reason 2: Specified variable is freed up before.
 	> Reason 3: Maybe you or the interpreter misunderstood the type of the variable.
 
-	|> Solution: Input a valid variable that already exists.
+	||> Solution: Input a valid variable that already exists.

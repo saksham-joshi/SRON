@@ -1,4 +1,5 @@
-> Reason: File name is not specified !
+> Reason : File name is not specified !
 
-	|> Solution 1: Type Command like this - sron file_name.sron 
-	|> Solution 2: Avoid spaces in file name.
+	||> Solution 1 : Type Command like this - sron path/filename.sron 
+	||> Solution 2 : Avoid spaces in file name.
+	

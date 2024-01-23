@@ -9,7 +9,7 @@ public:
     Argument_List() : array(nullptr), size(0) {
         array = reinterpret_cast<Any**>(calloc(1, sizeof(Any*)));
         if(!array){
-            DISPLAY_EXCEPTION("allocating a memory to call a function.",3);
+            DISPLAY_EXCEPTION("allocating a memory to call a function.",SystemOutofMemoryException);
         }
     }
 
@@ -21,16 +21,20 @@ public:
         if (index < size) {
             return array[index];
         } else {
-            DISPLAY_EXCEPTION("extracting the passed arguments.",23);
+            DISPLAY_EXCEPTION("extracting the passed arguments.",IndexNotWithinRange);
             return nullptr;
         }
     }
 
     inline void PUT(Any* arg) {
-        
-        size++;
-        array = reinterpret_cast<Any**>(realloc(array, size * sizeof(Any*)));
-        array[size - 1] = arg;
+        try{
+            size++;
+            array = reinterpret_cast<Any**>(realloc(array, size * sizeof(Any*)));
+            array[size - 1] = arg;
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("calling a function.",SystemOutofMemoryException);
+        }
     }
 
     inline void CLEAR(){

@@ -11,7 +11,6 @@
   9. Vector.
 */
 
-#include<cstdio>
 #include<string>
 #include<vector>
 #include<cmath>
@@ -436,7 +435,7 @@ class String : public Any{
             try{
                 this->value = str;
             }catch(const std::exception&){
-                DISPLAY_EXCEPTION("creating a variable of type 'String'.",3);
+                DISPLAY_EXCEPTION("creating a variable of type 'String'.",SystemOutofMemoryException);
             }
         }
 
@@ -482,6 +481,13 @@ class String : public Any{
             return nullptr;
         }
 
+        inline char AT(int index){
+            if(index >= 0 && index < value.length()){
+                return value[index];
+            }
+            DISPLAY_EXCEPTION("extracting the elements from the string.",StringIndexException );
+        }
+
         inline string GET(){
             return value;
         }
@@ -513,7 +519,7 @@ class List : public Any{
             try{
                 value = val;
             }catch(const std::exception&){
-                DISPLAY_EXCEPTION("creating a variable of type 'List'.",3);
+                DISPLAY_EXCEPTION("creating a variable of type 'List'.",SystemOutofMemoryException);
             }
         }
 
@@ -521,7 +527,7 @@ class List : public Any{
             try{
                 value.push_back(a);
             }catch(const std::exception&){
-                DISPLAY_EXCEPTION("creating a variable of type 'List'.",3);
+                DISPLAY_EXCEPTION("creating a variable of type 'List'.",SystemOutofMemoryException);
             }
         }
         List(Any* a, Any* b){
@@ -529,7 +535,7 @@ class List : public Any{
                 value.push_back(a);
                 value.push_back(b);
             }catch(const std::exception&){
-                DISPLAY_EXCEPTION("creating a variable of type 'List'.",3);
+                DISPLAY_EXCEPTION("creating a variable of type 'List'.",SystemOutofMemoryException);
             }
         }
         List(Any* a, Any* b, Any* c){
@@ -538,7 +544,7 @@ class List : public Any{
                 value.push_back(b);
                 value.push_back(c);
             }catch(const std::exception&){
-                DISPLAY_EXCEPTION("creating a variable of type 'List'.",3);
+                DISPLAY_EXCEPTION("creating a variable of type 'List'.",SystemOutofMemoryException);
             }
         }
 
@@ -566,7 +572,7 @@ class List : public Any{
                 printf("]");
             }
             catch(const std::exception&){
-
+                DISPLAY_EXCEPTION("displaying the list into the console",UnknownException);
             }
             
         }
@@ -591,7 +597,7 @@ class List : public Any{
                 fin+=(*it)->TO_STRING()+"]";
 
             }catch(const std::exception&){
-                DISPLAY_EXCEPTION("converting the type 'List' to type 'String'.",3);
+                DISPLAY_EXCEPTION("converting the type 'List' to type 'String'.",SystemOutofMemoryException);
             }
             return fin;
         }
@@ -628,34 +634,9 @@ class List : public Any{
                     value.push_back(val);
                     return;
                 }
-                DISPLAY_EXCEPTION("inserting a list inside itself.",27);
+                DISPLAY_EXCEPTION("inserting a list inside itself.",InsertionException);
             }catch(const std::exception&){
-                DISPLAY_EXCEPTION("appending an element into the type 'List'.",3);
-            }
-        }
-        inline void PUSH(Any* a, Any* b){
-            try{
-                if(this != a && this != b){
-                    value.push_back(a);
-                    value.push_back(b);
-                    return;
-                }
-                DISPLAY_EXCEPTION("inserting a list inside itself.",27);
-            }catch(const std::exception&){
-                DISPLAY_EXCEPTION("appending elements into the type 'List'.",3);
-            }
-        }
-        inline void PUSH(Any* a, Any* b, Any *c){
-            try{
-                if(this != a && this != b && this != c){
-                    value.push_back(a);
-                    value.push_back(b);
-                    value.push_back(c);
-                    return;
-                }
-                DISPLAY_EXCEPTION("inserting a list inside itself.",27);
-            }catch(const std::exception&){
-                DISPLAY_EXCEPTION("appending elements into the type 'List'.",3);
+                DISPLAY_EXCEPTION("appending an element into the type 'List'.",SystemOutofMemoryException);
             }
         }
 
@@ -664,7 +645,7 @@ class List : public Any{
                 return value[index];
             }
             catch(const std::exception&){
-                DISPLAY_EXCEPTION("extracting elements from type 'List'.",23);
+                DISPLAY_EXCEPTION("extracting elements from type 'List'.",IndexNotWithinRange);
             }
             return nullptr;
         }

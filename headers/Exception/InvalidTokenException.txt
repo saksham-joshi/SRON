@@ -1,3 +1,3 @@
 > Reason : Invalid Token found !
 
-	|> Solution : Read the documentation of SRON carefully and write valid tokens.
+	||> Solution : Read the documentation of SRON carefully and write valid tokens.

@@ -26,9 +26,17 @@ public :
     {
         return abs(i);
     }
-    inline static int ABSOLUTE(const long long int i)
+    inline static long long int ABSOLUTE(const long long int i)
     {
         return abs(i);
+    }
+
+    inline static long double NEGATE(const long double i){
+        return -i;
+    }
+    inline static long long int NEGATE(const long long int i)
+    {
+        return -i;
     }
 
     //===========================================================================|  implementing MAX value

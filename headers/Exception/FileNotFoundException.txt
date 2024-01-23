@@ -1,4 +1,5 @@
-> Reason: Specified file not found !
+> Reason : Specified file not found !
 
-	|> Solution 1: Enter the correct file name.
-	|> Solution 2: If you are accessing file via command line ,then remove spaces from file name.
+	||> Solution 1 : Enter the correct file name.
+	||> Solution 2 : If you are accessing file via command line ,then remove spaces from file name.
+	||> Solution 3 : If there are spaces in file path, then put the path to the file within quotes(") like this - sron "path/filename.sron"

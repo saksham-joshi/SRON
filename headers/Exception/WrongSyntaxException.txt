@@ -1,0 +1,10 @@
+> Reason 1 : You are not following the rules of programming in SRON.
+    > Reason 2 : Maybe you have given Instructions in a wrong syntax.
+    > Reason 3 : If you are trying to write two attributes within a single line, it will generate this error.
+    > Reason 4 : Maybe you left an empty attribute or instruction. This may also raised this error.
+    > Reason 5 : Maybe you have created a empty functions with no pairs of attribute and instructions.
+
+    ||> Solution 1 : Read the official documentation of SRON.
+    ||> Solution 2 : Follow the rules and keep learning SRON.
+    ||> Solution 3 : Instructions are written in this way-  Attribute : Instructions
+    ||> Solution 4 : Do not write two attributes or two Instructions in a single line.

@@ -45,7 +45,7 @@ inline static int get_number_from_char(int ch)
         throw std::exception();
     }
     catch (const std::exception &){
-        DISPLAY_EXCEPTION("conversion of datatypes.", 20);
+        DISPLAY_EXCEPTION("conversion of datatypes.", TypeConversionException);
     }
     return 0;
 }
@@ -83,7 +83,7 @@ inline static long double TO_DOUBLE(std::string str)
     }
     catch (const std::exception &)
     {
-        DISPLAY_EXCEPTION("conversion of String type to Double.", 20);
+        DISPLAY_EXCEPTION("conversion of String type to Double.", TypeConversionException);
     }
     return 0;
 }
@@ -94,7 +94,7 @@ inline static long double TO_DOUBLE(long long int i)
     }
     catch (const std::exception &)
     {
-        DISPLAY_EXCEPTION("conversion of Int type to Double.", 20);
+        DISPLAY_EXCEPTION("conversion of Int type to Double.", TypeConversionException);
     }
     return 0;
 }
@@ -154,7 +154,7 @@ inline static long long int TO_INT(std::string str)
     try
     {
         long long int val = 0;
-        for (const auto it : str)
+        for (const auto& it : str)
         {
             int ascii = (int)it;
             if (ascii >= 48 && ascii <= 57)
@@ -162,13 +162,13 @@ inline static long long int TO_INT(std::string str)
                 val = (val * 10) + (ascii - 48);
                 continue;
             }
-            DISPLAY_EXCEPTION("conversion of String type to Int.", 20);
+            throw std::exception();
         }
         return val;
     }
     catch (const std::exception &)
     {
-        DISPLAY_EXCEPTION("conversion of String type to Int.", 20);
+        DISPLAY_EXCEPTION("conversion of String type to Int.", TypeConversionException);
     }
     return 0;
 }
@@ -189,7 +189,7 @@ inline static long long int TO_INT(char c)
     }
     catch (const std::exception &)
     {
-        DISPLAY_EXCEPTION("conversion of Char type to Int.", 20);
+        DISPLAY_EXCEPTION("conversion of Char type to Int.", TypeConversionException);
     }
     return 0;
 }
@@ -227,7 +227,7 @@ inline static bool TO_BOOL(std::string str)
     }
     catch (const std::exception &)
     {
-        DISPLAY_EXCEPTION("conversion of String type to Bool.", 20);
+        DISPLAY_EXCEPTION("conversion of String type to Bool.", TypeConversionException);
     }
     return false;
 }

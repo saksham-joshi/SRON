@@ -14,14 +14,14 @@
 class VariableManager{
     private:
         std::map<std::string, Any*> vmap;
-        const char* function_name;
+        std::string function_name;
 
     public :
-        VariableManager(const char* function_name){
+        VariableManager(std::string function_name){
             this->function_name = function_name;
         }
 
-        void INSERT(std::string type, std::string variable_name){
+        inline void INSERT(std::string type, std::string variable_name){
            if(type == "Int"){ vmap[variable_name] =  Int::MAKE(); }
            else if(type == "String"){ vmap[variable_name] =  String::MAKE(); }
            else if(type == "List"){ vmap[variable_name] =  List::MAKE(); }
@@ -29,10 +29,10 @@ class VariableManager{
            else if(type == "Void"){ vmap[variable_name] = Void::MAKE();}
            else if(type == "Char"){ vmap[variable_name] =  Char::MAKE(); }
            else if(type == "Bool"){ vmap[variable_name] =  Bool::MAKE(); }
-           else{ DISPLAY_EXCEPTION("declaring and allocating memory space for variables.",13);}
+           else{ DISPLAY_EXCEPTION("declaring and allocating memory space for variables.",InvalidTypeException);}
         }
 
-        void FREE(std::string variable_name){
+        inline void FREE(std::string variable_name){
             try{
                 auto it = vmap.find(variable_name);
                 if(it != vmap.end()){
@@ -41,28 +41,31 @@ class VariableManager{
                 throw std::exception();
             }
             catch(const std::exception&){
-                DISPLAY_EXCEPTION("freeing up the memory space.",26);
+                DISPLAY_EXCEPTION("freeing up the memory space.",VariableNotFoundException);
             }
         }
 
-        std::string TYPE(std::string variable_name){
+        inline std::string TYPE(std::string variable_name){
             try{
                 return vmap.at(variable_name)->TYPE();
             }
             catch(const std::exception&){
-                DISPLAY_EXCEPTION("checking the type of the variable.",26);
+                DISPLAY_EXCEPTION("checking the type of the variable.",VariableNotFoundException);
             }
             return " ";
         }
 
-        Any* GET(std::string variable_name){
+        inline Any* GET(std::string variable_name){
             try{
                 return vmap.at(variable_name);
             }
             catch(const std::exception&){
-                DISPLAY_EXCEPTION("retreving the value of a variable.",26);
+                DISPLAY_EXCEPTION("retreving the value of a variable.",VariableNotFoundException);
             }
             return nullptr;
+        }
+        inline void CLEAR(){
+            vmap.clear();
         }
         ~VariableManager(){
             vmap.clear();

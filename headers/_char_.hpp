@@ -25,10 +25,10 @@ public :
     }
 
     // ============================================================================== TO CHECK IF THE GIVEN CHAR IS ALPHABET OR NOT
-    inline static bool ISALPHABET(ArgumentList& args){
+    inline static bool IS_ALPHABET(ArgumentList& args){
         return ISALPHABET(args.GET_CHAR(0));
     }
-    inline static bool ISALPHABET(const char ch){
+    inline static bool IS_ALPHABET(const char ch){
         return (bool)isalpha(ch);
     }
 

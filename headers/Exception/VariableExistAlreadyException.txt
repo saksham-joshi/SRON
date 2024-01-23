@@ -1,2 +1,3 @@
 > Reason : Specified Variable already exist !
-	|> Solution : Enter a different & valid variable name.
+
+	||> Solution : Enter a different & valid variable name.
