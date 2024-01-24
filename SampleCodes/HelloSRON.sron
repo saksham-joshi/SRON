@@ -1,6 +1,5 @@
 {
     name: main
     type: Void
-    args: ()
     0 : PRINT("Hello, SRON")
 }

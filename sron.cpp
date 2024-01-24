@@ -25,14 +25,9 @@ int main(int argc, char **argv)
         
         LEXICAL_ANALYSER::LEX(file_content);
 
-        for (const auto j : LEXICAL_ANALYSER::FunctionVector)
-        {
-            for (const auto i : j.codemap)
-            {
-                std::cout << "\nAttribute -> " << i.first << "\n\t Vector -> ";
-                print_vector(i.second);
-            }
-        }
+        Logs::line_number = 0;
+
+        
     }
     catch (const std::exception &)
     {

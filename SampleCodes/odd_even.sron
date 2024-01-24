@@ -2,9 +2,9 @@
     name: main
     type: Void
     variables:Int val
-     : val = INPUT_INT("Enter the value :-")
+    0 : val = INPUT_INT("Enter the value :-")
     if:{
-        condition:((val % 2) == 0 )  
+        condition:(~val % 2 == 0~ )
         1 : PRINTLN("Even number.")
     }
     else:{

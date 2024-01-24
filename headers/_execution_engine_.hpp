@@ -1,66 +1,46 @@
-//#include <iostream>
-#include <string>
-#include "Support.hpp"
-// #include <stack>
-// #include "./_string_.hpp"
-// #include "./_hashtable_.hpp"
-// #include "./_utility_.hpp"
-// #include "./Argument_List.hpp"
-// #include "./lexical_analyst.hpp"
-// #include "./Variable_Manager.hpp"
+#include "headers/lexical_analyst.hpp"
 
-#ifndef _EXECUTOR_H
-#define _EXECUTOR_H
+#ifndef EXECUTOR_H
+#define EXECUTOR_H
 
+namespace EXECUTION_ENGINE{
+    std::vector<Function> function_vector;
 
-
-
-class Executor
-{
-    
-
-private:
-    friend int main(int argc, char **argv);
-
-public:
-    Executor()
-    {
-        
-    }
-    void VARIABLES(std::vector<std::string> vec)
-    {
-        try
-        {
-            for (std::vector<std::string>::iterator it = vec.begin() + 3; it != vec.end(); ++it)
-            {
-                if (*it == "Int")
-                {
-                    if(it < vec.end()-2){
-                        
-                    }
-                    
-
-                }
-                else if(*it == "Double"){
-
-                }
-                else if(*it == "String"){
-
-                }
-                else if(*it == "Char"){
-
-                }
-                else if(*it == "Bool"){
-                    
-                }
+    Function& FIND_FUNCTION(std::string fnc_name){
+        for(auto& fnc : EXECUTION_ENGINE::function_vector){
+            if(fnc.fnc_name == fnc_name){
+                return fnc;
             }
         }
-        catch (const std::exception &e)
-        {
-            // std::cerr << e.what() << '\n';
-            DISPLAY_EXCEPTION("storing the variable from \'variables\' attribute.", 19);
+        if(fnc_name == "MAIN" || fnc_name == "main" || fnc_name == "Main"){
+            DISPLAY_EXCEPTION("finding the main function.",MainFunctionNotFoundException);
+        }
+        DISPLAY_EXCEPTION(("finding the '"+ fnc_name +"' function.").c_str(),FunctionNotFoundException);
+        exit(1);
+    }
+
+    void EXECUTE(std::vector<Function>& vec){
+        EXECUTION_ENGINE::function_vector = vec;
+
+        auto& main_fnc = FIND_FUNCTION("main");
+
+        for(const auto& codemap : main_fnc.codemap){
+            std::string attribute = codemap.first;
+            if(attribute == "variables"){
+
+            }
+            else if(attribute == "if"){
+
+            }
+            else if(attribute == "for"){
+
+            }
+            else if(attribute == "while"){
+
+            }
+    
         }
     }
-};
+}
 
 #endif

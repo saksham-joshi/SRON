@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <string>
 #include <fstream>
-
 #include "static_logs.hpp"
 
 #ifndef EXCEPTION_H
@@ -39,6 +38,8 @@
 #define UnknownException 28
 #define WrongSyntaxException 29
 #define NoValidCodeFoundException 30
+#define FunctionNotFoundException 31
+#define MainFunctionNotFoundException 32
 
 void DISPLAY_EXCEPTION(const char *during, const int code)
 {
@@ -140,6 +141,12 @@ void DISPLAY_EXCEPTION(const char *during, const int code)
             break;
         case 30 :
             filename = "NoValidCodeFoundException";
+            break;
+        case 31 : 
+            filename = "FunctionNotFoundException";
+            break;
+        case 32 :
+            filename = "MainFunctionNotFoundException";
             break;
         default:
             printf("Invalid Exception Code !\n Contact SAKSHAM JOSHI via linkedin(/sakshamjoshi27) or twitter(X) to fix this.");

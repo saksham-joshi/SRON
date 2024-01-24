@@ -159,22 +159,26 @@
 #define SUPPORT_H
 
 
-inline static bool IS_ATTRIBUTE(std::string word){
+inline static bool IS_ATTRIBUTE(std::string& word){
      return (word == "name" || word == "type" || word == "args" || word == "variables" || word == "if" || word == "elif" || word == "else"
      || word == "condition" || word == "comment" || word == "return" || word == "for" || word == "range" || word == "while");
 }
 
-inline static bool IS_DATATYPE(std::string word){
+inline static bool IS_DATATYPE(std::string& word){
     return (word == "Any" || word == "Int" || word == "List" || word == "String" || word == "Double" || word == "Char"  || word == "Bool");
 }
 
-inline static bool IS_KEYWORD(std::string word){
+inline static bool IS_KEYWORD(std::string& word){
      return (IS_ATTRIBUTE(word) || IS_DATATYPE(word) || word == "main" || word == "PRINT" || word == "PRINTLN" || word == "LEN" || 
      word == "SIZE_OF" || word == "TYPE" || word == "TO_STRING");
 }
 
-inline static bool IS_CURLY_BRACES(char ch){
+inline static bool IS_CURLY_BRACES(char& ch){
     return (ch == '{' || ch == '}');
+}
+
+inline static bool IS_INNER_SCOPE_ATTRIBUTE(std::string& str){
+    return (str == "if" || str =="elif" || str == "else" || str == "for" || str == "while");
 }
 
 inline static bool is_number(int ch){
