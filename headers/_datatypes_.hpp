@@ -1,4 +1,18 @@
 /*
+ * Copyright (c) 2024 SAKSHAM JOSHI
+ * All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ * 
+ * You can freely redistribute it but cannot modify the source code without the permission from the author.
+*/
+
+
+/*----------------------------------------------------------------*/
+
+
+/*
  This file contains the implementation of all the neccessary datatypes like :
   1. Any.
   2. Void.
@@ -25,7 +39,6 @@ using std::vector;
 #ifndef DATATYPES_H
 #define DATATYPES_H
 
-
 class Any;
 class Void;
 class Int;
@@ -43,7 +56,7 @@ class List;
 class Any{
     public:
         // Returns the length of the datatype 
-        inline virtual long long int LEN() const = 0;
+        inline virtual size_t LEN() const = 0;
 
         // prints the value of the datatype
         inline virtual void PRINT() const = 0;
@@ -91,7 +104,7 @@ class Void : public Any{
     public :
         Void(){}
 
-        inline virtual long long int LEN() const override{
+        inline virtual size_t LEN() const override{
             return 0;
         }
 
@@ -138,79 +151,6 @@ class Void : public Any{
 };
 
 /*
-  |====================== INT ===============================|
- 'Int' datatype implements integer type with long long modifier.
- > long long int takes 8 bytes.
- > Syntax in SRON : "Int x = 10" or "Int x" 
-*/
-
-class Int: public Any {
-    private:
-        long long int value=0;
-
-    public :
-
-        Int(){}
-        Int(long long int val) : value(val){}
-
-        inline virtual long long int LEN() const override{
-            return floor(log10(value)+1 );
-        }
-
-        inline virtual void PRINT() const override{
-            printf("%lld",value);
-        }
-
-        inline virtual long long int SIZE_OF() const override{
-            return sizeof(value);
-        }
-
-        inline virtual string TYPE() const override{
-            return "Int";
-        }
-
-        inline virtual string TO_STRING() const override{
-            return std::to_string(value);
-        }
-
-        inline virtual Void* GET_VOID() const override{
-            return nullptr;
-        }
-        inline virtual Int* GET_INT() const override{
-            return const_cast<Int*>(this);
-        }
-        inline virtual Double* GET_DOUBLE() const override{
-            return nullptr;
-        }
-        inline virtual String* GET_STRING() const override{
-            return nullptr;
-        }
-        inline virtual Char* GET_CHAR() const override{
-            return nullptr;
-        }
-        inline virtual Bool* GET_BOOL() const override{
-            return nullptr;
-        }
-        inline virtual List* GET_LIST() const override{
-            return nullptr;
-        }
-
-        inline long long int GET(){
-            return value;
-        }
-
-        inline static Int* MAKE(){
-            return new Int();
-        }
-
-        inline static Int* MAKE(long long int val){
-            return new Int(val) ;
-        }
-
-        ~Int(){}
-};
-
-/*
   |====================== DOUBLE ===============================|
  'Double' datatype uses long double to store values.
   > long double take 16 bytes.
@@ -224,8 +164,11 @@ class Double : public Any{
     public :
         Double(){}
         Double(long double val) : value(val){}
+        Double(long long int val){
+            value = (long double)val;
+        }
 
-        inline virtual long long int LEN() const override{
+        inline virtual size_t LEN() const override{
             return std::to_string(value).length();
         }
         
@@ -266,7 +209,6 @@ class Double : public Any{
         inline virtual List* GET_LIST() const override{
             return nullptr;
         }
-        
 
         inline long double GET(){
             return value;
@@ -284,6 +226,79 @@ class Double : public Any{
 };
 
 /*
+  |====================== INT ===============================|
+ 'Int' datatype implements integer type with long long modifier.
+ > long long int takes 8 bytes.
+ > Syntax in SRON : "Int x = 10" or "Int x" 
+*/
+
+class Int: public Any {
+    private:
+        long long int value=0;
+
+    public :
+
+        Int(){}
+        Int(long long int val) : value(val){}
+
+        inline virtual size_t LEN() const override{
+            return floor(log10(value)+1 );
+        }
+
+        inline virtual void PRINT() const override{
+            printf("%lld",value);
+        }
+
+        inline virtual long long int SIZE_OF() const override{
+            return sizeof(value);
+        }
+
+        inline virtual string TYPE() const override{
+            return "Int";
+        }
+
+        inline virtual string TO_STRING() const override{
+            return std::to_string(value);
+        }
+
+        inline virtual Void* GET_VOID() const override{
+            return nullptr;
+        }
+        inline virtual Int* GET_INT() const override{
+            return const_cast<Int*>(this);
+        }
+        inline virtual Double* GET_DOUBLE() const override{
+            return new Double(value);
+        }
+        inline virtual String* GET_STRING() const override{
+            return nullptr;
+        }
+        inline virtual Char* GET_CHAR() const override{
+            return nullptr;
+        }
+        inline virtual Bool* GET_BOOL() const override{
+            return nullptr;
+        }
+        inline virtual List* GET_LIST() const override{
+            return nullptr;
+        }
+
+        inline long long int GET(){
+            return value;
+        }
+
+        inline static Int* MAKE(){
+            return new Int();
+        }
+
+        inline static Int* MAKE(long long int val){
+            return new Int(val) ;
+        }
+
+        ~Int(){}
+};
+
+/*
   |====================== CHAR ===============================|
  'Char' datatype uses char to store values.
   > char take 1 byte.
@@ -297,7 +312,7 @@ class Char : public Any{
         Char(){ }
         Char(char val): value(val){}
 
-        inline virtual long long int LEN() const override{
+        inline virtual size_t LEN() const override{
             return 1;
         }
         inline virtual void PRINT() const override{
@@ -363,7 +378,7 @@ class Bool : public Any{
         Bool(){}
         Bool(bool val) : value(val){}
 
-        inline virtual long long int LEN() const override{
+        inline virtual size_t LEN() const override{
             return (value)?4:5;
         }
         
@@ -416,6 +431,16 @@ class Bool : public Any{
         inline static Bool* MAKE(bool val){
             return new Bool(val);
         }
+        inline static Bool* MAKE(string str){
+            if(str == "true"){
+                return new Bool(true);
+            }
+            else if(str == "false"){
+                return new Bool(false);
+            }
+            DISPLAY_EXCEPTION("creating a variable of type 'Bool' from '"+str+"' value.",InvalidValueException);
+            return new Bool();
+        }
         ~Bool(){}
 };
 
@@ -439,7 +464,7 @@ class String : public Any{
             }
         }
 
-        inline virtual long long int LEN() const override{
+        inline virtual size_t LEN() const override{
             return value.length();
         }
 
@@ -486,6 +511,7 @@ class String : public Any{
                 return value[index];
             }
             DISPLAY_EXCEPTION("extracting the elements from the string.",StringIndexException );
+            return ' ';
         }
 
         inline string GET(){
@@ -548,7 +574,7 @@ class List : public Any{
             }
         }
 
-        inline virtual long long int LEN() const override{
+        inline virtual size_t LEN() const override{
             return value.size();
         }
 
@@ -682,7 +708,7 @@ class List : public Any{
 //         Vector(){ }
 //         Vector(vector<T>& val) : value(val){ }
         
-//         inline virtual long long int LEN() const override{
+//         inline virtual size_t LEN() const override{
 //             return value.size();
 //         }
 

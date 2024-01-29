@@ -1,7 +1,6 @@
 #include <cmath>
 #include<vector>
-#include "_rectifier_.hpp"
-#include "Argument_List.hpp"
+#include "_argument_list_.hpp"
 /*
 In this file, the following Mathematical functions are declared :
     1. Abs

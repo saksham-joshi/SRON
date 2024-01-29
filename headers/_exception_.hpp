@@ -1,3 +1,13 @@
+/*
+ * Copyright (c) 2024 SAKSHAM JOSHI
+ * All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ * 
+ * You can freely redistribute it but cannot modify the source code without the permission from the author.
+*/
+
 #include <exception>
 #include <cstdio>
 #include <cstdlib>
@@ -8,6 +18,11 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
+
+// used to display no reason and solution to the occured exception.
+#define NoException 0
+
+// The exception below which be used
 #define ArgumentException 1
 #define DatatypeConversionError 2
 #define EmptyAttributeCode 3
@@ -40,8 +55,15 @@
 #define NoValidCodeFoundException 30
 #define FunctionNotFoundException 31
 #define MainFunctionNotFoundException 32
+#define SourceCodeChangedException 33
+#define MathEvaluationException 34
+#define DivisionByZeroException 35
 
-void DISPLAY_EXCEPTION(const char *during, const int code)
+inline static void DISPLAY_EXCEPTION(const std::string& during, unsigned short int code){
+    DISPLAY_EXCEPTION(during.c_str(),code);
+}
+
+inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short int code)
 {
     try
     {
@@ -52,113 +74,122 @@ void DISPLAY_EXCEPTION(const char *during, const int code)
 
         switch (code)
         {
-        case 1:
+        case NoException : exit(-1);
+        case ArgumentException:
             filename = "ArgumentException";
             break;
-        case 2:
+        case DatatypeConversionError:
             filename = "DatatypeConversionError";
             break;
-        case 3:
+        case DivisionByZeroException :
+            filename = "DivisionByZeroException";
+            break;
+        case EmptyAttributeCode:
             filename = "EmptyAttributeCode";
             break;
-        case 4:
+        case FileNotFoundException:
             filename = "FileNotFoundException";
             break;
-        case 5:
+        case FileNameNotSpecifiedException:
             filename = "FileNameNotSpecifiedException";
             break;
-        case 6:
+        case InputTypeException:
             filename = "InputTypeException";
             break;
-        case 7:
+        case InsertionException:
             filename = "InsertionException";
             break;
-        case 8:
+        case InvalidVariableNameException:
             filename = "InvalidVariableNameException";
             break;
-        case 9:
+        case InvalidAttributeException:
             filename = "InvalidAttributeException";
             break;
-        case 10:
+        case InvalidTokenException:
             filename = "InvalidTokenException";
             break;
-        case 11:
+        case InvalidValueException:
             filename = "InvalidValueException";
             break;
-        case 12:
+        case InvalidVariableSyntaxException:
             filename = "InvalidVariableSyntaxException";
             break;
-        case 13:
+        case InvalidTypeException:
             filename = "InvalidTypeException";
             break;
         case 14:
             filename = "InvalidVectorDeclaration";
             break;
-        case 15:
+        case InvalidScopeException:
             filename = "InvalidScopeException";
             break;
-        case 16:
+        case RectifyingException:
             filename = "RectifyingException";
             break;
-        case 17:
+        case SystemOutofMemoryException:
             filename = "SystemOutofMemoryException";
             break;
-        case 18:
+        case StringTooLongException:
             filename = "StringTooLongException";
             break;
-        case 19:
+        case StringIndexException:
             filename = "StringIndexException";
             break;
-        case 20:
+        case TypeConversionException:
             filename = "TypeConversionException";
             break;
-        case 21:
+        case VectorInputError:
             filename = "VectorInputError";
             break;
-        case 22:
+        case VectorCreationError:
             filename = "VectorCreationError";
             break;
-        case 23:
+        case IndexNotWithinRange:
             filename = "IndexNotWithinRange";
             break;
-        case 24:
+        case VectorEmptyException:
             filename = "VectorEmptyException";
             break;
-        case 25:
+        case VariableExistAlreadyException:
             filename = "VariableExistAlreadyException";
             break;
-        case 26:
+        case VariableNotFoundException:
             filename = "VariableNotFoundException";
             break;
-        case 27:
+        case UnknownIdentifierException:
             filename = "UnknownIdentifierException";
             break;
-        case 28:
+        case UnknownException:
             filename = "UnknownException";
             break;
-        case 29:
+        case WrongSyntaxException:
             filename = "WrongSyntaxException";
             break;
-        case 30 :
+        case NoValidCodeFoundException :
             filename = "NoValidCodeFoundException";
             break;
-        case 31 : 
+        case FunctionNotFoundException : 
             filename = "FunctionNotFoundException";
             break;
-        case 32 :
+        case MainFunctionNotFoundException :
             filename = "MainFunctionNotFoundException";
+            break;
+        case SourceCodeChangedException :
+            filename = "SourceCodeChangedException";
+            break;
+        case MathEvaluationException : 
+            filename = "MathEvaluationException";
             break;
         default:
             printf("Invalid Exception Code !\n Contact SAKSHAM JOSHI via linkedin(/sakshamjoshi27) or twitter(X) to fix this.");
             break;
         }
 
-       
         std::ifstream input("headers/Exception/" + filename + ".txt");
         std::string content((std::istreambuf_iterator<char>(input)), (std::istreambuf_iterator<char>()));
 
         printf("%s", content.c_str());
-        exit(1);
+        exit(-1);
     }
     catch (const std::exception &)
     {

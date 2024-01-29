@@ -1,0 +1,6 @@
+> Reason 1 : You have trying to evaluate invalid mathematical expression.
+    > Reason 2 : You have passed invalid operators.
+    > Reason 3 : You have passed values of types other than Int and Double.
+    
+    ||> Solution 1 : To solve a mathematical expression, only +, -, *, /, % and ^ operators are allowed.
+    ||> Solution 2 : Pass only Int and Double type of values to the expression.

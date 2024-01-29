@@ -6,14 +6,14 @@
  */
 
 #include "_datatypes_.hpp"
-#include<map>
+#include<unordered_map>
 
 #ifndef VariableManager_H
 #define VariableManager_H
 
 class VariableManager{
     private:
-        std::map<std::string, Any*> vmap;
+        std::unordered_map<std::string, Any*> vmap;
         std::string function_name;
 
     public :
@@ -30,6 +30,14 @@ class VariableManager{
            else if(type == "Char"){ vmap[variable_name] =  Char::MAKE(); }
            else if(type == "Bool"){ vmap[variable_name] =  Bool::MAKE(); }
            else{ DISPLAY_EXCEPTION("declaring and allocating memory space for variables.",InvalidTypeException);}
+        }
+        inline void INSERT(std::string variable_name, Any* value){
+            try{
+                vmap[variable_name] = value;
+            }
+            catch(const std::exception&){
+                DISPLAY_EXCEPTION("allocating memory for variables.",SystemOutofMemoryException);
+            }
         }
 
         inline void FREE(std::string variable_name){
@@ -60,7 +68,7 @@ class VariableManager{
                 return vmap.at(variable_name);
             }
             catch(const std::exception&){
-                DISPLAY_EXCEPTION("retreving the value of a variable.",VariableNotFoundException);
+                DISPLAY_EXCEPTION("retreving the value of a variable '"+variable_name+"'.",VariableNotFoundException);
             }
             return nullptr;
         }

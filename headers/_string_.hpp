@@ -81,7 +81,7 @@ public:
             }
             else{
                 std::cout<<"exception";
-                DISPLAY_EXCEPTION((std::string("concatenating String with type ")+type).c_str(),23);
+                DISPLAY_EXCEPTION("concatenating String with type "+type,23);
             }
         }
         return fin;

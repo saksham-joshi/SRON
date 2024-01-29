@@ -1,5 +1,8 @@
 > Reason : Variable Attribute is not having a proper syntax.
 
-	||> Solution 1 : Correct Syntax = variables: type variable1,type variable2=value,type variable3 .
+	||> Solution 1 : Correct Syntax = variables: Any val = "SRON", Int val2 = 10, Double val, Char Ch.
 	||> Solution 2 : Seprate variable and its type with comma(,).
 	||> Solution 3 : Assign value to variable according to its type. e.g. Int val = \"Hello\" <--- This is wrong.
+	||> Solution 4 : If you are creating variables using type 'Any' then you must have to allocate some value to the variable.
+    ||> Solution 5 : If you are creating variables using type like Int, Double, Char, Bool, String and List then it is not neccessary
+                     to allocate value to it.

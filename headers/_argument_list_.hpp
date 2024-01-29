@@ -1,9 +1,10 @@
 #include "_datatypes_.hpp"
 
 class Argument_List {
+    
 private:
     Any** array;
-    size_t size;
+    unsigned short int size;
 
 public:
     Argument_List() : array(nullptr), size(0) {
@@ -17,7 +18,7 @@ public:
         free(array);
     }
 
-    Any* operator[](size_t index) const {
+    Any* operator[](unsigned short int index) const {
         if (index < size) {
             return array[index];
         } else {
@@ -42,7 +43,7 @@ public:
         size = 0;
     }
 
-    inline size_t LEN(){
+    inline unsigned short int LEN(){
         return size;
     }
 };

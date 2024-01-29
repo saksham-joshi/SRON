@@ -1,4 +1,15 @@
-#include "headers/lexical_analyst.hpp"
+/*
+ * Copyright (c) 2024 SAKSHAM JOSHI
+ * All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ * 
+ * You can freely redistribute it but cannot modify the source code without the permission from the author.
+*/
+
+#include "headers/_execution_engine_.hpp"
+
 
 #ifndef SRON_H
 #define SRON_H
@@ -26,6 +37,12 @@ int main(int argc, char **argv)
         LEXICAL_ANALYSER::LEX(file_content);
 
         Logs::line_number = 0;
+
+        EXECUTION_ENGINE::function_vector = LEXICAL_ANALYSER::FunctionVector;
+
+        auto& main_fnc = EXECUTION_ENGINE::FIND_USER_DEFINED_FUNCTION("MAIN");
+        EXECUTION_ENGINE::FunctionStack.push(main_fnc);
+        EXECUTION_ENGINE::EXECUTE();
 
         
     }

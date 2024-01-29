@@ -1,3 +1,4 @@
 > Reason 1 : You forgot to create the main function.
 
     ||> Solution 1 : Main function is written in uppercase like this 'MAIN'.
+    ||> Solution 2 : Make a function named as 'MAIN'.

@@ -1,7 +1,16 @@
+/*
+ * Copyright (c) 2024 SAKSHAM JOSHI
+ * All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ * 
+ * You can freely redistribute it but cannot modify the source code without the permission from the author.
+*/
+
 #include <stack>
 #include "_function_.hpp"
 #include "_support_.hpp"
-#include <iostream>
 
 #ifndef _LEXICAL_H
 #define _LEXICAL_H
