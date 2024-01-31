@@ -67,14 +67,13 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
 {
     try
     {
-
         printf("\nIn %s :\nAt Line %d: \nException Caught :\n||>> While %s \n    ", Logs::filename, Logs::GET_LINE_NUMBER(), during);
 
         std::string filename = "";
 
         switch (code)
         {
-        case NoException : exit(-1);
+        case NoException : exit(0);
         case ArgumentException:
             filename = "ArgumentException";
             break;
@@ -180,6 +179,7 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
         case MathEvaluationException : 
             filename = "MathEvaluationException";
             break;
+        
         default:
             printf("Invalid Exception Code !\n Contact SAKSHAM JOSHI via linkedin(/sakshamjoshi27) or twitter(X) to fix this.");
             break;

@@ -39,6 +39,15 @@ using std::vector;
 #ifndef DATATYPES_H
 #define DATATYPES_H
 
+#define TYPE_VOID 0
+#define TYPE_INT 1
+#define TYPE_DOUBLE 2
+#define TYPE_CHAR 3
+#define TYPE_BOOL 4
+#define TYPE_STRING 5
+#define TYPE_LIST 6
+#define IDENTIFIER 7
+
 class Any;
 class Void;
 class Int;
@@ -64,11 +73,15 @@ class Any{
         // prints the type of the datatype
         inline virtual string TYPE() const = 0;
 
+        // returns the type number 
+        inline virtual const unsigned short int TYPE_NUMBER() const = 0;
+
         // returns the size of the value in bytes
         inline virtual long long int SIZE_OF() const = 0;
 
         // returns the string form of value
         inline virtual string TO_STRING() const = 0;
+
 
         // methods to return object's pointers
         inline virtual Void* GET_VOID() const = 0;
@@ -119,6 +132,10 @@ class Void : public Any{
         }
         inline virtual string TYPE() const override{
             return "Void";
+        }
+
+        inline virtual const unsigned short int TYPE_NUMBER() const override{
+            return TYPE_VOID;
         }
 
         inline virtual Void* GET_VOID() const override{
@@ -188,6 +205,10 @@ class Double : public Any{
             return "Double";
         }
 
+        inline virtual const unsigned short int TYPE_NUMBER() const override{
+            return TYPE_DOUBLE;
+        }
+
         inline virtual Void* GET_VOID() const override{
             return nullptr;
         }
@@ -255,6 +276,10 @@ class Int: public Any {
 
         inline virtual string TYPE() const override{
             return "Int";
+        }
+
+        inline virtual const unsigned short int TYPE_NUMBER() const override{
+            return TYPE_INT;
         }
 
         inline virtual string TO_STRING() const override{
@@ -327,6 +352,9 @@ class Char : public Any{
         inline virtual string TYPE() const override{
             return "Char";
         }
+        inline virtual const unsigned short int TYPE_NUMBER() const override{
+            return TYPE_CHAR;
+        }
 
         inline virtual Void* GET_VOID() const override{
             return nullptr;
@@ -396,6 +424,9 @@ class Bool : public Any{
 
         inline virtual string TYPE() const override{
             return "Bool";
+        }
+        inline virtual const unsigned short int TYPE_NUMBER() const override{
+            return TYPE_BOOL;
         }
 
         inline virtual Void* GET_VOID() const override{
@@ -482,6 +513,9 @@ class String : public Any{
 
         inline virtual string TYPE() const override{
             return "String";
+        }
+        inline virtual const unsigned short int TYPE_NUMBER() const override{
+            return TYPE_STRING;
         }
 
         inline virtual Void* GET_VOID() const override{
@@ -601,6 +635,9 @@ class List : public Any{
                 DISPLAY_EXCEPTION("displaying the list into the console",UnknownException);
             }
             
+        }
+        inline virtual const unsigned short int TYPE_NUMBER() const override{
+            return TYPE_LIST;
         }
 
         inline virtual long long int SIZE_OF() const override{

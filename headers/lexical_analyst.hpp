@@ -4,9 +4,9 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- * 
+ *
  * You can freely redistribute it but cannot modify the source code without the permission from the author.
-*/
+ */
 
 #include <stack>
 #include "_function_.hpp"
@@ -344,7 +344,7 @@ namespace LEXICAL_ANALYSER
                ++it;
                while (it < filecode.end())
                {
-                    
+
                     JUMP_SPACE_AND_NEWLINE();
                     GET_ATTRIBUTE();
 
@@ -368,7 +368,6 @@ namespace LEXICAL_ANALYSER
                               }
                               BREAK_INSTRUCTION_TO_LEX();
                               ADD_PAIR();
-                              
                          }
                          else if (attribute == "comment")
                          {
@@ -410,11 +409,11 @@ namespace LEXICAL_ANALYSER
 // }
 
 // for (const auto j : LEXICAL_ANALYSER::FunctionVector)
-        // {
-        //     printf("\n |> Function =  '%s' <|",j.fnc_name.c_str());
-        //     for (const auto i : j.codemap)
-        //     {
-        //         std::cout << "\nAttribute -> " << i.first << "\n\t Vector -> ";
-        //         print_vector(i.second);
-        //     }
-        // }
+// {
+//     printf("\n |> Function =  '%s' <|",j.fnc_name.c_str());
+//     for (const auto i : j.codemap)
+//     {
+//         std::cout << "\nAttribute -> " << i.first << "\n\t Vector -> ";
+//         print_vector(i.second);
+//     }
+// }

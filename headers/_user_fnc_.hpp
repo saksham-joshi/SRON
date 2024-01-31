@@ -69,5 +69,9 @@ inline static FunctionMap& GET_FUNCTION_MAP(){
     return fmap;
 }
 
+inline static bool CHECK_IF_FUNCTION_EXISTS(std::string* str){
+    static FunctionMap fmap = GET_FUNCTION_MAP();
+    return fmap.find(*str) != fmap.end();
+}
 
 #endif

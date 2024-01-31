@@ -3,13 +3,7 @@
 #ifndef SUPPORT_H
 #define SUPPORT_H
 
-#define TYPE_INT 1
-#define TYPE_DOUBLE 2
-#define TYPE_CHAR 3
-#define TYPE_BOOL 4
-#define TYPE_STRING 5
-#define TYPE_LIST 6
-#define IDENTIFIER 7
+
 
 inline namespace Support
 {
@@ -44,6 +38,16 @@ inline namespace Support
         return (str == "+" || str == "-" || str == "*" || str == "/" || str == "%" || str == "^" || str == "(" || str == ")");
     }
 
+    inline static bool IS_LOGICAL_OPERATOR(char ch){
+        return (ch == '<' || ch == '>' );
+    }
+    inline static bool IS_LOGICAL_OPERATOR(std::string str){
+        return (str == "&&" || str == "||" || str == "<" || str == ">" || str == "<=" || str == ">=");
+    }
+    inline static bool IS_OPERATOR(char ch){
+        return ( IS_MATH_OPERATOR((std::string)""+ch) || IS_LOGICAL_OPERATOR((std::string)""+ch) || ch == ':' || ch == '!' || ch == '=' || ch == '~' || ch == ',' );
+    }
+
     inline static bool is_number(int ch)
     {
         return (ch >= 48 && ch <= 57);
@@ -65,7 +69,7 @@ inline namespace Support
      * 2. variable name can only contain alphabetic characters, numbers and underscores.
      * 3. length of the variable cannot exceed limit of 32 characters.
     */
-    inline static bool CHECK_VALID_VARIABLE_NAME(std::string& str)
+    inline static bool CHECK_VALID_IDENTIFIER_NAME(std::string& str)
     {
         if (!(str[0] == '_' || isalpha(str[0]) > 0 || str.length() <= 32))
         {
@@ -84,33 +88,33 @@ inline namespace Support
     /*
      * This function will extract the possible type of variable.
     */
-    inline static unsigned short int IDENTIFY_TYPE_FROM_STRING(std::string& str){
-        if(str.length() == 1 && str[0] == '['){
-            return TYPE_LIST;
-        }
-        else if(str.length() > 1 && str[0] == '"'){
-            return TYPE_STRING;
-        }
-        else if(str.length() == 3 && str[0] == '\''){
-            return TYPE_CHAR;
-        }
-        else if(str == "true" || str == "false"){
-            return TYPE_BOOL;
-        }
-        else if(str.length() > 0 && (is_number(str[0]) || str[0] == '.' || str[0] == '-' )){
+    // inline static const unsigned short int IDENTIFY_TYPE_FROM_STRING(std::string& str){
+    //     if(str.length() == 1 && str[0] == '['){
+    //         return TYPE_LIST;
+    //     }
+    //     else if(str.length() > 1 && str[0] == '"'){
+    //         return TYPE_STRING;
+    //     }
+    //     else if(str.length() == 3 && str[0] == '\''){
+    //         return TYPE_CHAR;
+    //     }
+    //     else if(str == "true" || str == "false"){
+    //         return TYPE_BOOL;
+    //     }
+    //     else if(str.length() > 0 && (is_number(str[0]) || str[0] == '.' || str[0] == '-' )){
 
-            for(const auto& i : str){
-                if(i == '.'){
-                    return TYPE_DOUBLE;
-                }
-                else if(!is_number(i)){
-                    DISPLAY_EXCEPTION("allocating memory for the variables.",InvalidValueException);
-                }
-            }
-            return TYPE_INT;
-        }
-        return IDENTIFIER;
-    }
+    //         for(const auto& i : str){
+    //             if(i == '.'){
+    //                 return TYPE_DOUBLE;
+    //             }
+    //             else if(!is_number(i)){
+    //                 DISPLAY_EXCEPTION("allocating memory for the variables.",InvalidValueException);
+    //             }
+    //         }
+    //         return TYPE_INT;
+    //     }
+    //     return IDENTIFIER;
+    // }
 }
 
 #endif

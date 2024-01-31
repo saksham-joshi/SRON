@@ -16,7 +16,6 @@
 
 int main(int argc, char **argv)
 {
-    std::string str;
     try
     {
         std::ifstream code_file(argv[1]);
@@ -44,7 +43,6 @@ int main(int argc, char **argv)
         EXECUTION_ENGINE::FunctionStack.push(main_fnc);
         EXECUTION_ENGINE::EXECUTE();
 
-        
     }
     catch (const std::exception &)
     {
