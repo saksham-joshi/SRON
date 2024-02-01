@@ -1,6 +1,7 @@
 #include "_support_.hpp"
 #include "_user_fnc_.hpp"
 #include <stack>
+#include "_flags_.hpp"
 
 #ifndef BYTECODE_H
 #define BYTECODE_H
@@ -26,14 +27,16 @@ namespace ByteCodeGenerator
     // contains the record of scopes.
     std::stack<char> scope_stack;
 
+    // contains the tokens
+    std::vector<std::string> token_vector;
+
     inline static void EXTRACT_CHAR();
     inline static void EXTRACT_IDENTIFIER();
-    inline static void EXTRACT_LIST();
     inline static void EXTRACT_STRING();
     inline static void EXTRACT_NUMBER();
 
     inline static void FILE_WRITE();
-    inline static void GENERATE(std::ifstream*);
+    inline static void GENERATE(std::ifstream *);
 
     inline static void HANDLE_SCOPES();
 
@@ -44,7 +47,7 @@ namespace ByteCodeGenerator
     inline static void TOKENIZER();
 
     /*
-     * Implementation of above functions starts from here !
+     * Implementation of above forward declared functions starts from here !
      */
 
     inline static void EXTRACT_CHAR()
@@ -94,7 +97,6 @@ namespace ByteCodeGenerator
             temp_string += *iterator;
         }
     }
-
     inline static void EXTRACT_NUMBER()
     {
         temp_string += *iterator;
@@ -104,6 +106,7 @@ namespace ByteCodeGenerator
         }
     }
 
+    
     inline static void EXTRACT_STRING()
     {
         ++iterator;
@@ -134,21 +137,82 @@ namespace ByteCodeGenerator
         }
     }
 
+    
     inline static void FILE_WRITE()
     {
-        try{
-        std::string temp = std::string(Logs::filename);
-        //std::ofstream outfile(temp.substr(0, temp.find_last_of('.')) + ".srb");
-        std::ofstream outfile("SampleCodes/factorial.srb");
-
-        outfile.write(filecode.c_str(), filecode.size());
-
-        outfile.close();
+        try
+        {
+            std::string temp = std::string(Logs::filename);
+            temp = temp.substr(0, temp.find_last_of('.')) + ".srb";
+            std::ofstream outfile(temp);
+    
+            if (outfile.is_open())
+            {
+                outfile.write(filecode.c_str(), filecode.size());
+                outfile.close();
+            }
+            else
+            {
+                DISPLAY_EXCEPTION("saving the bytecode to '" + temp + "'.", ByteCodeCannotbeSavedException);
+            }
         }
-        catch(const std::exception&){
-            printf("\n\n\t|> Something going wrong !");
+        catch (const std::exception &)
+        {
+            DISPLAY_EXCEPTION("saving the bytecode.", SystemOutofMemoryException);
         }
     }
+
+    /*
+     * This function is used to handle scopes.
+     * NOTE : the if statement written within the case of ']' works like this :
+     * the ascii of '[' is 91, ']' is 93, '{' is 123 and '}' is 125.
+     * So, that statement converts the charcter to int and then subtract it by 2.
+     * In case of '()', the ascii of '(' is 40 and ')' is 41.
+     * Therefore, it is made in a different case. 
+    */
+    inline static void HANDLE_SCOPES()
+    {
+        try
+        {
+            switch (*iterator)
+            {
+
+            case '{':
+            case '[':
+            case '(':
+                scope_stack.push(*iterator); 
+                break;
+            case '}':
+            case ']':
+                if (!scope_stack.empty() && (scope_stack.top() == (char)(((int)*iterator) - 2)))
+                {
+                    scope_stack.pop();
+                }
+                else
+                {
+                    throw std::exception();
+                }
+                break;
+            case ')':
+                if (!scope_stack.empty() && scope_stack.top() == '(')
+                {
+                    scope_stack.pop();
+                }
+                else
+                {
+                    throw std::exception();
+                }
+                break;
+            default :
+            DISPLAY_EXCEPTION("generating bytecode and handling scopes.",NoException);
+            }
+        }
+        catch (const std::exception &)
+        {
+            DISPLAY_EXCEPTION("generating bytecode and handling scopes.", InvalidScopeException);
+        }
+    }
+
     inline static void JUMP_SPACE_AND_NEWLINE()
     {
         while ((*iterator == ' ' || *iterator == '\n') && iterator++ < filecode.end())
@@ -184,9 +248,13 @@ namespace ByteCodeGenerator
 
             // actual compilation starts from here.
             ByteCodeGenerator::TOKENIZER();
-            
+
+            for(const auto& i : token_vector){
+                printf("%s | ", i.c_str());
+            }
+
             // Saving bytecode to the .srb file !
-            ByteCodeGenerator::FILE_WRITE();
+            //ByteCodeGenerator::FILE_WRITE();
 
             printf("\n\t +---------------------------------+\n\t<|| Compilation done successfully ||>\n\t +---------------------------------+\n\n");
         }
@@ -196,37 +264,57 @@ namespace ByteCodeGenerator
         }
     }
 
-    inline static void TOKENIZER(){
+    inline static void TOKENIZER()
+    {
 
-        for(; iterator < filecode.end() ; ++iterator){
-            if(*iterator == ' '){
+        for (; iterator < filecode.end(); ++iterator)
+        {
+            if (*iterator == ' ')
+            {
                 continue;
             }
-            else if(*iterator == '"'){
+            else if (*iterator == '"')
+            {
                 ByteCodeGenerator::EXTRACT_STRING();
             }
-            else if(*iterator == '\''){
+            else if (*iterator == '\'')
+            {
                 ByteCodeGenerator::EXTRACT_CHAR();
             }
-            else if(*iterator == '['){
-                ByteCodeGenerator::EXTRACT_LIST();
-            }
-            else if(Support::is_alphabet(*iterator) || *iterator =='_' ){
+            else if (Support::is_alphabet(*iterator) || *iterator == '_')
+            {
                 ByteCodeGenerator::EXTRACT_IDENTIFIER();
+                --iterator;
             }
-            else if(Support::is_number(*iterator) || *iterator == '-' || *iterator == '.'){
+            else if (Support::is_number(*iterator) || *iterator == '-' || *iterator == '.')
+            {
                 ByteCodeGenerator::EXTRACT_NUMBER();
+                --iterator;
             }
-            else if(*iterator == '{' || *iterator == '}'){
+            else if (*iterator == '{' || *iterator == '}' || *iterator == '[' || *iterator == ']' || *iterator == '(' || *iterator == ')' )
+            {
+                
                 ByteCodeGenerator::HANDLE_SCOPES();
-            }
-            else if(Support::IS_OPERATOR(*iterator)){
                 temp_string+=*iterator;
             }
-            else{
-                DISPLAY_EXCEPTION("tokenizing and analyzing the code. Found this Token '"+*iterator+(std::string)"'." ,InvalidTokenException);
+            else if (Support::IS_OPERATOR(*iterator) || *iterator == '\n')
+            {
+                temp_string += *iterator;
+
             }
+            else
+            {
+                DISPLAY_EXCEPTION("tokenizing the code. Found this Token '" + *iterator + (std::string) "'.", InvalidTokenException);
+            }
+            token_vector.push_back(temp_string);
+            temp_string = "";
         }
+
+        if(!scope_stack.empty()){
+            DISPLAY_EXCEPTION("tokenizing the code.",InvalidScopeException);
+        }
+
+        
     }
 }
 #endif

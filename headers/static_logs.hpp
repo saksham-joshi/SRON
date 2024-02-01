@@ -3,17 +3,17 @@
 
 class Logs{
     public :
-    static int line_number;
+    static unsigned short int line_number;
     static const char * filename;
-    static int GET_LINE_NUMBER();
+    static unsigned short int GET_LINE_NUMBER();
     static void INCREMENT_LINE_NUMBER();
 };
 
-int Logs::line_number=1;
+unsigned short int Logs::line_number=1;
 
 const char *Logs::filename;
 
-int Logs::GET_LINE_NUMBER(){
+unsigned short int Logs::GET_LINE_NUMBER(){
     return Logs::line_number;    
 }
 void Logs::INCREMENT_LINE_NUMBER(){

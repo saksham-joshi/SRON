@@ -1,5 +1,4 @@
 {
-
     name: factorial
     type: Int
     variables: Int fac=1,Int i

@@ -58,6 +58,7 @@
 #define SourceCodeChangedException 33
 #define MathEvaluationException 34
 #define DivisionByZeroException 35
+#define ByteCodeCannotbeSavedException 36
 
 inline static void DISPLAY_EXCEPTION(const std::string& during, unsigned short int code){
     DISPLAY_EXCEPTION(during.c_str(),code);
@@ -76,6 +77,9 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
         case NoException : exit(0);
         case ArgumentException:
             filename = "ArgumentException";
+            break;
+        case ByteCodeCannotbeSavedException :
+            filename = "ByteCodeCannotBeSavedException";
             break;
         case DatatypeConversionError:
             filename = "DatatypeConversionError";
@@ -188,7 +192,7 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
         std::ifstream input("headers/Exception/" + filename + ".txt");
         std::string content((std::istreambuf_iterator<char>(input)), (std::istreambuf_iterator<char>()));
 
-        printf("%s", content.c_str());
+        printf("\t%s", content.c_str());
         exit(-1);
     }
     catch (const std::exception &)

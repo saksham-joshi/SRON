@@ -4,7 +4,6 @@
 #define SUPPORT_H
 
 
-
 inline namespace Support
 {
 
@@ -27,6 +26,12 @@ inline namespace Support
     inline static bool IS_CURLY_BRACES(char &ch)
     {
         return (ch == '{' || ch == '}');
+    }
+    inline static bool IS_SQUARE_BRACKET(char &ch){
+        return (ch == '[' || ch == ']');
+    }
+    inline static bool IS_SCOPE_OPERATOR(char &ch){
+        return (IS_CURLY_BRACES(ch) || IS_SQUARE_BRACKET(ch) || ch == '(' || ch == ')');
     }
 
     inline static bool IS_INNER_SCOPE_ATTRIBUTE(std::string &str)
