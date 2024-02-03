@@ -1,5 +1,5 @@
 {
-    name: main
+    name: MAIN
     type: Void
     variables:Int val
     0 : val = INPUT_INT("Enter the value :-")

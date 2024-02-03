@@ -1,9 +1,6 @@
-This file will contain the implementation to find if a number
-is armstrong or not.
-
 {
     name : Armstrong
-    args: Int val, Any
+    args: Int val, Any y
     type: Int
     variables : Int arm,Int temp,Int len
     comment : getting the number of digits in the number.
@@ -16,7 +13,6 @@ is armstrong or not.
     }
     return : arm
 }
-
 {
     name : MAIN
     variables:Int val

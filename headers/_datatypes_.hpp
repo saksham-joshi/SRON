@@ -29,6 +29,7 @@
 #include<vector>
 #include<cmath>
 #include "_exception_.hpp"
+#include "_flags_.hpp"
 
 using std::exception;
 using std::string;
@@ -38,15 +39,6 @@ using std::vector;
 
 #ifndef DATATYPES_H
 #define DATATYPES_H
-
-#define TYPE_VOID 0
-#define TYPE_INT 1
-#define TYPE_DOUBLE 2
-#define TYPE_CHAR 3
-#define TYPE_BOOL 4
-#define TYPE_STRING 5
-#define TYPE_LIST 6
-#define IDENTIFIER 7
 
 class Any;
 class Void;

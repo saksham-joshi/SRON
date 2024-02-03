@@ -4,7 +4,8 @@ int main(int argc, char **argv){
 
     try{
         std::ifstream code_file(argv[1]);
-
+        clock_t start,end;
+        start = clock();
         if (code_file.fail())
         {
             if (argc == 1)
@@ -16,9 +17,15 @@ int main(int argc, char **argv){
 
         Logs::filename = argv[1];
 
-        ByteCodeGenerator::GENERATE(&code_file);
+        Logs::mainfile = &code_file;
+
+        ByteCodeGenerator::GENERATE();
 
         code_file.close();
+
+        end = clock();
+
+        printf("\n\t=---> Time Taken: %lf .\n",double(end-start)/double(CLOCKS_PER_SEC));
     }
     catch(const std::exception&){
         DISPLAY_EXCEPTION("reading the file from the specified path.",FileNotFoundException);

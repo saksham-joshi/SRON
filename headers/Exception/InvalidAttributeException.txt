@@ -2,5 +2,4 @@
 
 	||> Solution 1 : Always type attributes in small-case.
 	||> Solution 2 : Attribute can only contain alphabets only or unsigned(positive) integers only.
-	||> Solution 3 : '{' can only be used in a seperate line either for starting a new function otherwise in case of if, elif, else, for and while it should be used after colon(:).
-	||> Solution 4 : Refer to the documentation of SRON to find out all valid attributes out there.
+	||> Solution 3 : Refer to the documentation of SRON to find out all valid attributes out there.

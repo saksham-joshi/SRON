@@ -1,5 +1,8 @@
 #include "_datatypes_.hpp"
 
+#ifndef ARGLIST_H
+#define ARGLIST_H
+
 class Argument_List {
     
 private:
@@ -47,3 +50,5 @@ public:
         return size;
     }
 };
+
+#endif

@@ -18,6 +18,11 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
+struct ThrowException {
+    std::string during;
+    unsigned short int code;
+    ThrowException(const std::string& msg, const unsigned short int num) : during(msg),code(num) {}
+};
 
 // used to display no reason and solution to the occured exception.
 #define NoException 0
@@ -59,6 +64,8 @@
 #define MathEvaluationException 34
 #define DivisionByZeroException 35
 #define ByteCodeCannotbeSavedException 36
+#define InvalidArgsSyntaxException 37
+#define WaveCountIsNotEvenException 38
 
 inline static void DISPLAY_EXCEPTION(const std::string& during, unsigned short int code){
     DISPLAY_EXCEPTION(during.c_str(),code);
@@ -120,7 +127,7 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
         case InvalidTypeException:
             filename = "InvalidTypeException";
             break;
-        case 14:
+        case InvalidVectorDeclaration :
             filename = "InvalidVectorDeclaration";
             break;
         case InvalidScopeException:
@@ -183,20 +190,33 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
         case MathEvaluationException : 
             filename = "MathEvaluationException";
             break;
-        
+        case InvalidArgsSyntaxException :
+            filename = "InvalidArgsSyntaxException";
+            break;
+        case WaveCountIsNotEvenException :
+            filename = "WaveCountIsNotEvenException";
+            break;
         default:
             printf("Invalid Exception Code !\n Contact SAKSHAM JOSHI via linkedin(/sakshamjoshi27) or twitter(X) to fix this.");
             break;
         }
 
         std::ifstream input("headers/Exception/" + filename + ".txt");
-        std::string content((std::istreambuf_iterator<char>(input)), (std::istreambuf_iterator<char>()));
+        if(input.fail()){
+            printf("\n\n Something goes wrong while displaying the exception message. This happen due to unavailability of a particular file.");
+        }
+        else{
+            std::string content((std::istreambuf_iterator<char>(input)), (std::istreambuf_iterator<char>()));
+            printf("\t%s", content.c_str());
+        }
+        input.close();
+        Logs::mainfile->close();
 
-        printf("\t%s", content.c_str());
         exit(-1);
     }
-    catch (const std::exception &)
+    catch (const std::exception &ex)
     {
+        printf("\n | Error : %s.",ex.what());
         printf("\n\n\t\t <||> SERIOUS ERROR <||>\n\t\t Something is going wrong ! Report to SAKSHAM JOSHI(developer of SRON) via linkedin(/sakshamjoshi27) or twitter (X) to fix this.");
     }
 }

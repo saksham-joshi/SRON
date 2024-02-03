@@ -4,3 +4,4 @@
 	||> Solution 2 : Remove Special Characters like +, -, *, $ etc.
 	||> Solution 3 : First letter of variable must be a alphabet or underscore.
 	||> Solution 4 : Maximum number of characters in a variable can be 32.
+	||> Solution 5 : Variable name cannot match with a keyword.

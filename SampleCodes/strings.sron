@@ -1,0 +1,5 @@
+{
+    name : MAIN
+    variables : String val="SRON\\",Char ch='A'
+    0 : PRINTLN(val)
+}
