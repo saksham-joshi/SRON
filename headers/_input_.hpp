@@ -13,32 +13,21 @@
 #define INPUT_H
 // ====================================FOR STRING USER INPUTS
 inline static std::string INPUT_STRING(){
-    char* x = nullptr;
-    char c;
-    size_t size = 0;
-
- 
-    while ((c = getchar()) != '\n' && c != EOF) {
-       
-        x = (char*)realloc(x, (size + 1) * sizeof(char));
-
-        if (x == nullptr) {
-            DISPLAY_EXCEPTION("taking string user input from user.",SystemOutofMemoryException);
-        }
-        x[size++] = c;
+    try{
+        std::string x;
+        std::getline(std::cin,x );
+        return x;
     }
-
-    x = (char*)realloc(x, (size + 1) * sizeof(char));
-    if (x == nullptr) {
-        DISPLAY_EXCEPTION("taking string user input from user.",SystemOutofMemoryException); 
+    catch(const std::exception&)
+    {
+        DISPLAY_EXCEPTION("taking string user input.",SystemOutofMemoryException);
     }
-    x[size] = '\0';
-    return std::string(x);
+    return " ";
 }
 
 inline static std::string INPUT_STRING(std::string msg)
 {
-    printf("%s", msg.c_str());
+    std::cout<<msg;
     return INPUT_STRING();
 }
 
@@ -48,10 +37,11 @@ inline static double INPUT_DOUBLE()
     double d = 0;
     try
     {
-        if (!scanf("%lf", &d))
-        {
-            throw std::exception();
-        }
+        // if (!scanf("%lf", &d))
+        // {
+        //     throw std::exception();
+        // }
+        std::cin>>d;
     }
     catch (const std::exception &)
     {

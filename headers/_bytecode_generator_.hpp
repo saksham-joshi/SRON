@@ -1,19 +1,19 @@
-#include "_support_.hpp"
-#include "_user_fnc_.hpp"
-#include <stack>
-#include "_flags_.hpp"
-
 #ifndef BYTECODE_H
 #define BYTECODE_H
 
+#include <queue>
+#include "_bytecode_writer_.hpp"
+
 /* This namespace is used to create the bytecode.
- * It has function named as 'GENERATE' which takes a character array 'filename' as parameter,
- * read the file and save its content to a .srb file.
+
+ * It has function named as 'GENERATE' which takes a std::ifstream pointer object
+ * from Logs::mainfile, extracts the whole file content and starts tokenizing the
+ * code and performs the semantic analysis, then creates the Sron Bytecode and
+ * saves it in a .srb file.
  */
 namespace ByteCodeGenerator
 {
-    // contains the full bytecode to be saved on .srb file
-    std::string bytecode;
+    
 
     // contains the content from the file.
     std::string filecode;
@@ -30,6 +30,9 @@ namespace ByteCodeGenerator
     // contains the tokens
     std::vector<std::string> token_vector;
 
+    // an iterator to iterate over a vector of string
+    std::vector<std::string>::iterator vecit;
+
     inline static void ANALYZER();
 
     inline static void EXTRACT_CHAR();
@@ -37,16 +40,101 @@ namespace ByteCodeGenerator
     inline static void EXTRACT_STRING();
     inline static void EXTRACT_NUMBER();
 
-    inline static void FILE_WRITE();
-    inline static void GENERATE(std::ifstream *);
+    inline static void GENERATE();
 
     inline static void HANDLE_SCOPES();
 
     inline static void JUMP_SPACE_AND_NEWLINE();
-    inline static void JUMP_TILL_CHAR_REPEATS(char);
+    // inline static void JUMP_TILL_CHAR_REPEATS(char);
     inline static void JUMP_TO_NEXT_FIRST_OCCURENCE(char);
 
+    inline static void POSTFIX();
+
     inline static void TOKENIZER();
+    inline static void TOKEN_VECTOR_REFINER();
+
+    inline static void POSTFIX()
+    {
+        try
+        {
+            std::stack<char> stk;
+            std::vector<std::string> exp;
+            for (vecit = token_vector.begin(); vecit < token_vector.end(); ++vecit)
+            {
+                if (*vecit == "~")
+                {
+                    ++vecit;
+                    auto start = vecit;
+                    while (vecit < token_vector.end() && *vecit != "~")
+                    {
+                        const auto temp = Support::IDENTIFY_TYPE_FROM_STRING(*vecit);
+
+                        // checking if the std::string is a number or a variable
+                        if (temp == TYPE_DOUBLE || temp == TYPE_INT || Support::IS_IDENTIFIER(*vecit) )
+                        {
+                            exp.push_back(*vecit);
+                        }
+                        else if (*vecit == "(")
+                        {
+                            stk.push((*vecit)[0]);
+                        }
+                        else if (Support::IS_MATH_OPERATOR((*vecit)[0]))
+                        {
+                            char ch = (*vecit)[0];
+                            while (!stk.empty() && Support::PRECEDENCE(ch) <= Support::PRECEDENCE(stk.top()))
+                            {
+                                exp.push_back(*vecit);
+                                stk.pop();
+                            }
+                            stk.push((*vecit)[0]);
+                        }
+                        else if (*vecit == ")")
+                        {
+                            while (!stk.empty() && stk.top() != '(')
+                            {
+                                exp.push_back(std::string(1, stk.top()));
+                                stk.pop();
+                            }
+                            if (!stk.empty())
+                            {
+                                stk.pop();
+                            }
+                        }
+                        else
+                        {
+                            DISPLAY_EXCEPTION("parsing and optimizing a mathematical expression.", MathEvaluationException);
+                        }
+                        ++vecit; // incrementing the iterator
+
+                    }
+
+                    // transferring all the element in the stack to the vector
+                    while (!stk.empty())
+                    {
+                        exp.push_back(std::string(1, stk.top()));
+                        stk.pop();
+                    }
+
+                    // deleting the expression from the the element next to the 
+                    token_vector.erase(start,vecit);
+
+                    
+
+                    token_vector.insert(start, exp.begin(), exp.end());
+
+
+                    // clearing the std::vector<std::string> exp .
+                    exp.clear();
+
+                }
+            }
+        }
+        catch (const std::exception &)
+        {
+            DISPLAY_EXCEPTION("parsing and optimizing the mathematical expression.", SystemOutofMemoryException);
+        }
+        // adding the solved expression to the token vector
+    }
 
     /*
      * Implementation of above forward declared functions starts from here !
@@ -54,11 +142,14 @@ namespace ByteCodeGenerator
 
     // This function will find the string in the vector
     // If the string is not found, it will push it into the vector
-    // otherwise will throw an exception 
-    inline static void FIND_AND_PUSH(std::vector<std::string> *vec, std::string& str){
-        for(auto& i : *vec){
-            if(i == str){
-                DISPLAY_EXCEPTION("analyzing the code. You are redeclaring identifier(function or variable name).",NoException);
+    // otherwise will throw an exception
+    inline static void FIND_AND_PUSH(std::vector<std::string> *vec, std::string &str)
+    {
+        for (auto &i : *vec)
+        {
+            if (i == str)
+            {
+                DISPLAY_EXCEPTION("analyzing the code. You are redeclaring identifier(function or variable name).", NoException);
             }
         }
         vec->push_back(str);
@@ -72,69 +163,84 @@ namespace ByteCodeGenerator
         try
         {
             std::vector<std::string> identifier_vector; // it contains the identifiers in a current function
-            std::vector<std::string> function_vector; // it contains the name of the function
-            
+            std::vector<std::string> function_vector;   // it contains the name of the function
+
             auto iterator = token_vector.begin();
 
-            auto INLINE_ITERATE_AND_DELETE =[] (std::vector<std::string>::iterator iterator){
+            // lambda function
+            auto INLINE_ITERATE_AND_DELETE = [](std::vector<std::string>::iterator iterator)
+            {
                 auto temp = iterator;
-                        iterator+=2;
-                        while(iterator++ < ByteCodeGenerator::token_vector.end() && !Support::IS_VALID_END(*iterator) ){
-                        }
-                        ByteCodeGenerator::token_vector.erase(temp,iterator);
+                iterator += 2;
+                while (iterator++ < ByteCodeGenerator::token_vector.end() && !Support::IS_VALID_END(*iterator))
+                {
+                }
+                ByteCodeGenerator::token_vector.erase(temp, iterator);
             };
 
-            
             for (; iterator < token_vector.end(); ++iterator)
             {
-                if(Support::IS_CURLY_BRACES(*iterator)){
+                if (Support::IS_CURLY_BRACES(*iterator))
+                {
                     continue;
                 }
-                else if(Support::IS_INBUILT_ATTRIBUTE(*iterator)){
+                else if (Support::IS_INBUILT_ATTRIBUTE(*iterator))
+                {
                     //  name : function
-                    if(*iterator == AttributeName && *(iterator+1) == ":" && Support::CHECK_VALID_IDENTIFIER_NAME(*(iterator+2)) && Support::IS_VALID_END(*(iterator+4) ) ){
-                        FIND_AND_PUSH(&function_vector,*(iterator+2));
-                        iterator+=4;
+                    if (*iterator == AttributeName && *(iterator + 1) == ":" && Support::CHECK_VALID_IDENTIFIER_NAME(*(iterator + 2)) && Support::IS_VALID_END(*(iterator + 4)))
+                    {
+                        FIND_AND_PUSH(&function_vector, *(iterator + 2));
+                        iterator += 4;
                         continue;
                     }
-                    else if(*iterator == AttributeComment && *(iterator+1) == ":"){
+                    // comment : this is how you comment in SRON
+                    else if (*iterator == AttributeComment && *(iterator + 1) == ":")
+                    {
                         INLINE_ITERATE_AND_DELETE(iterator);
-                         // deleting the comment statement
+                        // deleting the comment statement
                     }
-                    else if(*iterator == AttributeType && *(iterator+1) == ":" && Support::IS_DATATYPE(*(iterator+2)) && Support::IS_VALID_END(*(iterator+3))){
-                        INLINE_ITERATE_AND_DELETE(iterator); 
+                    // type : Int
+                    else if (*iterator == AttributeType && *(iterator + 1) == ":" && Support::IS_DATATYPE(*(iterator + 2)) && Support::IS_VALID_END(*(iterator + 3)))
+                    {
+                        INLINE_ITERATE_AND_DELETE(iterator);
                         // deleting the type statement
                     }
-                    else if((*iterator == AttributeIf || *iterator == AttributeElif || *iterator == AttributeElse) && *(iterator+1) == ":" && (*(iterator+2) == "\n" || *(iterator+2) == "{")){
-                        iterator+=2;
+                    // if : {       // for : {
+                    else if ((*iterator == AttributeIf || *iterator == AttributeElif || *iterator == AttributeElse) && *(iterator + 1) == ":" && (*(iterator + 2) == "\n" || *(iterator + 2) == "{"))
+                    {
+                        iterator += 2;
                         continue;
                     }
-                    else if(*iterator == AttributeArgs && *(iterator+1) == ":" && !Support::IS_VALID_END(*(iterator+2)) ){
-                        iterator+=2;
-                        while(iterator < token_vector.end() && !Support::IS_VALID_END (*iterator)){
-                            if(!(Support::IS_DATATYPE(*iterator) && Support::CHECK_VALID_IDENTIFIER_NAME(*(iterator+1)) )){
-                                DISPLAY_EXCEPTION("analyzing the code and checking the 'args' attribute.",InvalidArgsSyntaxException);
+                    else if (*iterator == AttributeArgs && *(iterator + 1) == ":" && !Support::IS_VALID_END(*(iterator + 2)))
+                    {
+                        iterator += 2;
+                        while (iterator < token_vector.end() && !Support::IS_VALID_END(*iterator))
+                        {
+                            if (!(Support::IS_DATATYPE(*iterator) && Support::CHECK_VALID_IDENTIFIER_NAME(*(iterator + 1))))
+                            {
+                                DISPLAY_EXCEPTION("analyzing the code and checking the 'args' attribute.", InvalidArgsSyntaxException);
                             }
-                            FIND_AND_PUSH(&identifier_vector,*(iterator+1));
-                            iterator+=2;
-                            if(*iterator == ","){
+                            FIND_AND_PUSH(&identifier_vector, *(iterator + 1));
+                            iterator += 2;
+                            if (*iterator == ",")
+                            {
                                 ++iterator;
                             }
                         }
                     }
                 }
-                else if(Support::IS_NUMBER(*iterator)){
-
+                else if (Support::IS_NUMBER(*iterator))
+                {
                 }
-                
             }
         }
         catch (const std::exception &ex)
         {
-            printf("\nError : %s.\n",ex.what());
+            std::cout << "\nError : " << ex.what();
             DISPLAY_EXCEPTION("analyzing the code syntax and format.", SystemOutofMemoryException);
         }
     }
+
 
     inline static void EXTRACT_CHAR()
     {
@@ -166,8 +272,13 @@ namespace ByteCodeGenerator
                 }
                 iterator += 2;
             }
+
             else
             {
+                if (*iterator == '\n')
+                {
+                    Logs::INCREMENT_LINE_NUMBER();
+                }
                 temp_string += *iterator;
                 ++iterator;
             }
@@ -178,11 +289,12 @@ namespace ByteCodeGenerator
         }
         catch (const std::exception &ex)
         {
-            printf("Error : %s", ex.what());
+            std::cout << "\nError : " << ex.what();
             exit(-1);
         }
     }
 
+    // This function will extract the identifier means any word staring from an alphabet or an underscore
     inline static void EXTRACT_IDENTIFIER()
     {
         temp_string += *iterator;
@@ -191,6 +303,8 @@ namespace ByteCodeGenerator
             temp_string += *iterator;
         }
     }
+
+    // This function will extract the numeric values
     inline static void EXTRACT_NUMBER()
     {
         temp_string += *iterator;
@@ -200,12 +314,12 @@ namespace ByteCodeGenerator
         }
     }
 
+    // This function will extract the string values string from an quote until an another quote arrives
     inline static void EXTRACT_STRING()
     {
         ++iterator;
         try
         {
-
             while (iterator < filecode.end() && *iterator != '"')
             {
                 if (*iterator == '\\')
@@ -228,42 +342,21 @@ namespace ByteCodeGenerator
                     iterator += 2;
                     continue;
                 }
+                else if (*iterator == '\n')
+                {
+                    Logs::INCREMENT_LINE_NUMBER();
+                }
                 temp_string += *iterator;
                 ++iterator;
             }
         }
         catch (const std::exception &ex)
         {
-            printf("\nError : %s.", ex.what());
+            std::cout << "\nError : " << ex.what();
             exit(-1);
         }
     }
 
-    inline static void FILE_WRITE()
-    {
-        try
-        {
-            std::string temp = std::string(Logs::filename);
-            temp = temp.substr(0, temp.find_last_of('.')) + ".srb";
-            std::ofstream outfile(temp);
-
-            if (outfile.is_open())
-            {
-                outfile.write(filecode.c_str(), filecode.size());
-                outfile.close();
-                printf("\n\n =|> Succesfully saved SRON's Bytecode to %s.\n", temp.c_str());
-            }
-            else
-            {
-                DISPLAY_EXCEPTION("saving the bytecode to '" + temp + "'.", ByteCodeCannotbeSavedException);
-            }
-        }
-        catch (const std::exception &ex)
-        {
-            printf("Error : %s.\n", ex.what());
-            DISPLAY_EXCEPTION("saving the bytecode.", SystemOutofMemoryException);
-        }
-    }
 
     /*
      * This function is used to handle scopes.
@@ -312,62 +405,42 @@ namespace ByteCodeGenerator
         }
         catch (const std::exception &ex)
         {
-            printf("Error : %s.\n", ex.what());
+            std::cout << "\nError : " << ex.what();
             DISPLAY_EXCEPTION("generating bytecode and handling scopes.", InvalidScopeException);
         }
     }
 
+    // This function will jump spaces and newline in the token_vector using vecit iteratior
     inline static void JUMP_SPACE_AND_NEWLINE()
     {
-        while ((*iterator == ' ' || *iterator == '\n') && iterator++ < filecode.end())
+        while ((*vecit == " " || *vecit == "\n") && vecit++ < token_vector.end())
         {
         }
     }
-    inline static void JUMP_TILL_CHAR_REPEATS(char ch)
-    {
-        while (*iterator == ch && iterator++ < filecode.end())
-        {
-        }
-    }
+    // inline static void JUMP_TILL_CHAR_REPEATS(char ch)
+    // {
+    //     while (*iterator == ch && iterator++ < filecode.end())
+    //     {
+    //     }
+    // }
 
     inline static void JUMP_TO_NEXT_FIRST_OCCURENCE(char ch)
     {
+        if (*iterator == '\n')
+        {
+            Logs::INCREMENT_LINE_NUMBER();
+        }
         while (*iterator != ch && iterator++ < filecode.end())
         {
+            if (*iterator == '\n')
+            {
+                Logs::INCREMENT_LINE_NUMBER();
+            }
         }
     }
 
-    inline static void GENERATE()
-    {
-        try
-        {
-            // reading the whole content of the file.
-            ByteCodeGenerator::filecode = std::string(std::istreambuf_iterator<char>(*Logs::mainfile), (std::istreambuf_iterator<char>()));
-
-            // assigning the iterator at the beginning of the file
-            ByteCodeGenerator::iterator = filecode.begin();
-
-            // Jumping to the first occurrence of the Open braces.
-            ByteCodeGenerator::JUMP_TO_NEXT_FIRST_OCCURENCE('{');
-
-            // actual compilation starts from here.
-            ByteCodeGenerator::TOKENIZER();
-
-            // analyzing the code
-            ByteCodeGenerator::ANALYZER();
-
-            // Saving bytecode to the .srb file !
-            // ByteCodeGenerator::FILE_WRITE();
-
-            printf("\n\t +---------------------------------+\n\t<|| Compilation done successfully ||>\n\t +---------------------------------+\n");
-        }
-        catch (const std::exception &ex)
-        {
-            printf("Error : %s.\n", ex.what());
-            DISPLAY_EXCEPTION("creating bytecode and analyzing the source code.", SystemOutofMemoryException);
-        }
-    }
-
+    // This function will tokenize the code means that it will split the code into different tokens like
+    // strings, numbers, operators, identifiers etc. and saves it to ByteCodeGenerator::token_vector.
     inline static void TOKENIZER()
     {
         try
@@ -379,8 +452,19 @@ namespace ByteCodeGenerator
                 {
                     continue;
                 }
-                else if(*iterator == '~'){
+                else if (*iterator == '\n')
+                {
+                    Logs::INCREMENT_LINE_NUMBER();
+                    if (token_vector.size() > 0 && *(token_vector.end() - 1) == "\n")
+                    {
+                        continue;
+                    }
+                    temp_string += '\n';
+                }
+                else if (*iterator == '~')
+                {
                     ++wave_count;
+                    temp_string = "~";
                 }
                 else if (*iterator == '"')
                 {
@@ -407,31 +491,151 @@ namespace ByteCodeGenerator
                     ByteCodeGenerator::HANDLE_SCOPES();
                     temp_string += *iterator;
                 }
-                else if (Support::IS_OPERATOR(*iterator) || *iterator == '\n')
+                else if (*iterator == '!' && *(iterator + 1) == '=')
+                {
+                    temp_string += "!=";
+                    ++iterator;
+                }
+                else if ((*iterator == '&' || *iterator == '|') && (*iterator == *(iterator + 1)))
+                {
+                    temp_string += ((std::string) "" + *iterator) + *(iterator + 1);
+                    ++iterator;
+                }
+                else if (Support::IS_OPERATOR(*iterator))
                 {
                     temp_string += *iterator;
                 }
                 else
                 {
-                    DISPLAY_EXCEPTION("tokenizing the code. Found this Token '" + *iterator + (std::string) "'.", InvalidTokenException);
+                    DISPLAY_EXCEPTION((std::string) "tokenizing the code. Found this Token '" + *iterator + "'.", InvalidTokenException);
                 }
                 token_vector.push_back(temp_string);
                 temp_string = "";
             }
-
             if (!scope_stack.empty())
             {
                 DISPLAY_EXCEPTION("tokenizing the code.", InvalidScopeException);
             }
-            
-            if(wave_count%2 != 0){
-                DISPLAY_EXCEPTION("tokenizing the code.",WaveCountIsNotEvenException);
+
+            if (wave_count % 2 != 0)
+            {
+                DISPLAY_EXCEPTION("tokenizing the code.", WaveCountIsNotEvenException);
             }
         }
         catch (const std::exception &ex)
         {
-            printf("Error : %s.\n", ex.what());
+            std::cout << "\nError : " << ex.what();
             DISPLAY_EXCEPTION("tokenizing the code.", NoException);
+        }
+    }
+
+    inline static void TOKEN_VECTOR_REFINER()
+    {
+        ByteCodeGenerator::vecit = token_vector.begin();
+        try
+        {
+            for (; vecit < ByteCodeGenerator::token_vector.end(); ++vecit)
+            {
+                if (*vecit == "\n")
+                {
+                    auto temp = *(vecit + 1);
+                    if (temp == "}" || temp == "{")
+                    {
+                        ByteCodeGenerator::token_vector.erase(vecit);
+                        --vecit;
+                    }
+                    else if (temp == "\n")
+                    {
+                        auto first = vecit + 1;
+
+                        // jumping till the newline is occuring
+                        while (vecit < token_vector.end() && *vecit == "\n")
+                        {
+                            ++vecit;
+                        }
+
+                        ByteCodeGenerator::token_vector.erase(first, vecit);
+
+                        vecit = first - 1;
+                    }
+                }
+                else if (*vecit == "{" && *(vecit + 1) == "\n")
+                {
+                    ByteCodeGenerator::token_vector.erase(vecit + 1);
+                    --vecit;
+                }
+                else if (*vecit == "comment") // removing comments from the code
+                {
+                    if ((*(vecit + 1)) == ":")
+                    {
+                        auto first = vecit;
+                        vecit += 2;
+
+                        while (vecit < token_vector.end() && *vecit != "\n")
+                        {
+                            ++vecit;
+                        }
+                        ++vecit;
+
+                        ByteCodeGenerator::token_vector.erase(first, vecit);
+                        vecit = first - 2;
+                    }
+                    else
+                    {
+                        DISPLAY_EXCEPTION("refining the code and removing comments.", InvalidCommentSyntaxException);
+                    }
+                }
+            }
+        }
+        catch (const std::exception &)
+        {
+            DISPLAY_EXCEPTION("refining the code.", SystemOutofMemoryException);
+        }
+    }
+
+    // This function will generate the bytecode and uses all the function within this ByteCodeGenerator namespace.
+    // To create the bytecode..
+    // Step 1 : Read the file and store its address to 'Logs::mainfile'.
+    // Step 2 : Call ByteCodeGenerator::GENERATE();
+    inline static void GENERATE()
+    {
+        try
+        {
+            // reading the whole content of the file.
+            ByteCodeGenerator::filecode = std::string(std::istreambuf_iterator<char>(*Logs::mainfile), (std::istreambuf_iterator<char>()));
+
+            // assigning the iterator at the beginning of the file
+            ByteCodeGenerator::iterator = filecode.begin();
+
+            // Jumping to the first occurrence of the Open braces.
+            ByteCodeGenerator::JUMP_TO_NEXT_FIRST_OCCURENCE('{');
+
+            // actual compilation starts from here.
+            ByteCodeGenerator::TOKENIZER();
+
+            // removing the comments and unnecessary newlines
+            ByteCodeGenerator::TOKEN_VECTOR_REFINER();
+
+            // analyzing the code
+            // ByteCodeGenerator::ANALYZER();
+
+            // This function will convert the mathematical expression in the token vector to the postfix expression.
+            ByteCodeGenerator::POSTFIX();
+
+            // for (auto &i : token_vector)
+            // {
+            //     cout << i << " | ";
+            // }
+
+            // creating the bytecode using token_vector.
+            ByteCodeWriter::WRITE(token_vector);
+
+            std::cout << "\n\t +---------------------------------+\n\t<|| Compilation done successfully ||>\n\t +---------------------------------+\n";
+        }
+        catch (const std::exception &ex)
+        {
+            std::cout << "\nError : " << ex.what();
+            DISPLAY_EXCEPTION("creating bytecode and analyzing the source code.", SystemOutofMemoryException);
         }
     }
 }

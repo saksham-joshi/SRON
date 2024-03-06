@@ -3,7 +3,15 @@
     args: Int val, Any y
     type: Int
     variables : Int arm,Int temp,Int len
-    comment : getting the number of digits in the number.
+
+    comment : "
+    asdfas getting the number of
+    digits in the number.asdfasd
+    "
+
+
+
+    variables : Int x
     0 : len = LEN(val)
     while:{
         condition:~val != 0~
@@ -12,8 +20,7 @@
         2 : ~val = val%10~
     }
     return : arm
-}
-{
+}{
     name : MAIN
     variables:Int val
     0 : val = INPUT_INT("\n ==> Enter the value :- ")
@@ -26,3 +33,7 @@
     }
     return : 0
 }
+
+
+
+

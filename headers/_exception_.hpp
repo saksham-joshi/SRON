@@ -4,30 +4,31 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- * 
+ *
  * You can freely redistribute it but cannot modify the source code without the permission from the author.
-*/
-
-#include <exception>
-#include <cstdio>
-#include <cstdlib>
-#include <string>
-#include <fstream>
-#include "static_logs.hpp"
-
+ */
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
-struct ThrowException {
+#include <exception>
+#include <iostream>
+#include <string>
+#include "static_logs.hpp"
+
+using std::cout;
+using std::cerr;
+
+struct ThrowException
+{
     std::string during;
     unsigned short int code;
-    ThrowException(const std::string& msg, const unsigned short int num) : during(msg),code(num) {}
+    ThrowException(const std::string &msg, const unsigned short int num) : during(msg), code(num) {}
 };
 
 // used to display no reason and solution to the occured exception.
 #define NoException 0
 
-// The exception below which be used
+// The exception below which be used to extract files from the Exception directory and display
 #define ArgumentException 1
 #define DatatypeConversionError 2
 #define EmptyAttributeCode 3
@@ -66,32 +67,31 @@ struct ThrowException {
 #define ByteCodeCannotbeSavedException 36
 #define InvalidArgsSyntaxException 37
 #define WaveCountIsNotEvenException 38
-
-inline static void DISPLAY_EXCEPTION(const std::string& during, unsigned short int code){
-    DISPLAY_EXCEPTION(during.c_str(),code);
-}
+#define InvalidCommentSyntaxException 39
+#define InvalidAttributeSyntaxException 40
 
 inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short int code)
 {
     try
-    {
-        printf("\nIn %s :\nAt Line %d: \nException Caught :\n||>> While %s \n    ", Logs::filename, Logs::GET_LINE_NUMBER(), during);
-
+    {   
+        std::cout << "\nIn " << Logs::filename << ":\nAt Line " << Logs::GET_LINE_NUMBER() << ": \nException Caught :\n||>> While " << during << "\n";
+    
         std::string filename = "";
 
         switch (code)
         {
-        case NoException : exit(0);
+        case NoException:
+            exit(0);
         case ArgumentException:
             filename = "ArgumentException";
             break;
-        case ByteCodeCannotbeSavedException :
+        case ByteCodeCannotbeSavedException:
             filename = "ByteCodeCannotBeSavedException";
             break;
         case DatatypeConversionError:
             filename = "DatatypeConversionError";
             break;
-        case DivisionByZeroException :
+        case DivisionByZeroException:
             filename = "DivisionByZeroException";
             break;
         case EmptyAttributeCode:
@@ -127,7 +127,7 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
         case InvalidTypeException:
             filename = "InvalidTypeException";
             break;
-        case InvalidVectorDeclaration :
+        case InvalidVectorDeclaration:
             filename = "InvalidVectorDeclaration";
             break;
         case InvalidScopeException:
@@ -175,40 +175,48 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
         case WrongSyntaxException:
             filename = "WrongSyntaxException";
             break;
-        case NoValidCodeFoundException :
+        case NoValidCodeFoundException:
             filename = "NoValidCodeFoundException";
             break;
-        case FunctionNotFoundException : 
+        case FunctionNotFoundException:
             filename = "FunctionNotFoundException";
             break;
-        case MainFunctionNotFoundException :
+        case MainFunctionNotFoundException:
             filename = "MainFunctionNotFoundException";
             break;
-        case SourceCodeChangedException :
+        case SourceCodeChangedException:
             filename = "SourceCodeChangedException";
             break;
-        case MathEvaluationException : 
+        case MathEvaluationException:
             filename = "MathEvaluationException";
             break;
-        case InvalidArgsSyntaxException :
+        case InvalidArgsSyntaxException:
             filename = "InvalidArgsSyntaxException";
             break;
-        case WaveCountIsNotEvenException :
+        case WaveCountIsNotEvenException:
             filename = "WaveCountIsNotEvenException";
             break;
+        case InvalidCommentSyntaxException :
+            filename = "InvalidCommentSyntaxException";
+            break;
+        case InvalidAttributeSyntaxException :
+            filename = "InvalidAttributeSyntaxException";
         default:
-            printf("Invalid Exception Code !\n Contact SAKSHAM JOSHI via linkedin(/sakshamjoshi27) or twitter(X) to fix this.");
+            std::cerr << "Invalid Exception Code !\n Contact SAKSHAM JOSHI via linkedin(/sakshamjoshi27) or twitter(X) to fix this.";
             break;
         }
 
         std::ifstream input("headers/Exception/" + filename + ".txt");
-        if(input.fail()){
-            printf("\n\n Something goes wrong while displaying the exception message. This happen due to unavailability of a particular file.");
+        if (input.fail())
+        {
+            std::cerr << "\n\n Something goes wrong while displaying the exception message. This happen due to unavailability of a particular file.";
         }
-        else{
+        else
+        {
             std::string content((std::istreambuf_iterator<char>(input)), (std::istreambuf_iterator<char>()));
-            printf("\t%s", content.c_str());
+            std::cerr <<'\t'<<content;
         }
+    
         input.close();
         Logs::mainfile->close();
 
@@ -216,9 +224,14 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
     }
     catch (const std::exception &ex)
     {
-        printf("\n | Error : %s.",ex.what());
-        printf("\n\n\t\t <||> SERIOUS ERROR <||>\n\t\t Something is going wrong ! Report to SAKSHAM JOSHI(developer of SRON) via linkedin(/sakshamjoshi27) or twitter (X) to fix this.");
+        std::cerr << "\n | Error : " << ex.what();
+        std::cerr << "\n\n\t\t <||> SERIOUS ERROR <||>\n\t\t Something is going wrong ! Report to SAKSHAM JOSHI(developer of SRON) via linkedin(/sakshamjoshi27) or twitter (X) to fix this.";
     }
+}
+
+inline static void DISPLAY_EXCEPTION(const std::string &during, unsigned short int code)
+{
+    DISPLAY_EXCEPTION(during.c_str(), code);
 }
 
 #endif

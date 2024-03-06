@@ -1,7 +1,7 @@
-#include "_datatypes_.hpp"
-
 #ifndef ARGLIST_H
 #define ARGLIST_H
+
+#include "_datatypes_.hpp"
 
 class Argument_List {
     

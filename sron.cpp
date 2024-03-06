@@ -10,7 +10,6 @@
 
 #include "headers/_execution_engine_.hpp"
 
-
 #ifndef SRON_H
 #define SRON_H
 
@@ -19,6 +18,10 @@ int main(int argc, char **argv)
     try
     {
         std::ifstream code_file(argv[1]);
+        
+        std::ios_base::sync_with_stdio(false);
+        std::cin.tie(NULL);
+        std::cout<<std::fixed<<std::setprecision(8);
 
         if (code_file.fail())
         {
@@ -31,17 +34,11 @@ int main(int argc, char **argv)
 
         Logs::filename = argv[1];
 
-        std::string file_content((std::istreambuf_iterator<char>(code_file)), (std::istreambuf_iterator<char>()));
-        
-        LEXICAL_ANALYSER::LEX(file_content);
+        Logs::mainfile = &code_file;
 
-        Logs::line_number = 0;
-
-        EXECUTION_ENGINE::function_vector = LEXICAL_ANALYSER::FunctionVector;
-
-        auto& main_fnc = EXECUTION_ENGINE::FIND_USER_DEFINED_FUNCTION("MAIN");
-        EXECUTION_ENGINE::FunctionStack.push(main_fnc);
         EXECUTION_ENGINE::EXECUTE();
+
+        Logs::mainfile->close();
 
     }
     catch (const std::exception &)

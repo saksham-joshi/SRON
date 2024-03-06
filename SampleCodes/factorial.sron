@@ -1,18 +1,18 @@
 {
     name: factorial
     type: Int
-    variables: Int fac=1,Int i
+    variables: Int fac=1,Int i, Int val
     
     for:{
         range: i = [2,~val+1~]
-        0 : ~fac = fac*i~
+        0 : fac = ~fac*i~
     }
     return : fac
 
 }
 
 {
-    name: main
+    name: MAIN
     type : Void
     0 : PRINTLN(factorial(5))
 }

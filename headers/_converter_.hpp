@@ -2,25 +2,25 @@
 /*
 The converter Class provides conversion from one datatype to another
 It includes functions :
-    1. string to long double
-    2. bool to long double
-    3. long long int to long double
-    4. long double to long double
+    1. string to double
+    2. bool to double
+    3. long long int to double
+    4. double to double
 
     5. long long int to string
-    6. long double to string
+    6. double to string
     7. char to string
     8. bool to string
     9. string to string
 
     10. string to long long int
-    11. long double to long long int
+    11. double to long long int
     12. char to long long int
     13. bool to long long int
 
     14. string to bool
     15. long long int to bool
-    16. long double to bool
+    16. double to bool
 */
 
 #include "_exception_.hpp"
@@ -58,18 +58,18 @@ inline namespace Converter
 
     /*
         |==========  TO_DOUBLE ==========|
-        Conversion to long double type ....
-        1. string         ->    long double
-        2. long double    ->    long double
-        3. bool           ->    long double
-        4. long long int  ->    long double
+        Conversion to double type ....
+        1. string         ->    double
+        2. double    ->    double
+        3. bool           ->    double
+        4. long long int  ->    double
     */
 
-    inline static long double TO_DOUBLE(std::string str)
+    inline static double TO_DOUBLE(std::string str)
     {
         try
         {
-            long double result = 0;
+            double result = 0;
 
             // creating the till an invalid character or decimal point '.' doesn't arrive.
             int i = (str[0] == '-') ? 1 : 0;
@@ -81,7 +81,7 @@ inline namespace Converter
 
             // now creating the after decimal point part
             ++i;
-            long double j = 10;
+            double j = 10;
             while (i < str.length())
             {
                 result += get_number_from_char(str[i++]) / j;
@@ -95,11 +95,11 @@ inline namespace Converter
         }
         return 0;
     }
-    inline static long double TO_DOUBLE(long long int i)
+    inline static double TO_DOUBLE(long long int i)
     {
         try
         {
-            return (long double)i;
+            return (double)i;
         }
         catch (const std::exception &)
         {
@@ -107,11 +107,11 @@ inline namespace Converter
         }
         return 0;
     }
-    inline static long double TO_DOUBLE(long double d)
+    inline static double TO_DOUBLE(double d)
     {
         return d;
     }
-    inline static long double TO_DOUBLE(bool b)
+    inline static double TO_DOUBLE(bool b)
     {
         return (b) ? 1 : 0;
     }
@@ -120,7 +120,7 @@ inline namespace Converter
         |==========  TO_STRING ==========|
         Conversion to string type ....
         1. long long int  ->    string
-        2. long double    ->    string
+        2. double    ->    string
         3. bool           ->    string
         4. char           ->    string
         5. string         ->    string
@@ -130,7 +130,7 @@ inline namespace Converter
     {
         return std::to_string(i);
     }
-    inline static std::string TO_STRING(long double d)
+    inline static std::string TO_STRING(double d)
     {
         return std::to_string(d);
     }
@@ -151,7 +151,7 @@ inline namespace Converter
         |==========  TO_INT ==========|
         Conversion to long long int type ....
         1. string         ->    long long int
-        2. long double    ->    long long int
+        2. double    ->    long long int
         3. bool           ->    long long int
         4. char           ->    long long int
         5. string         ->    long long int
@@ -182,7 +182,7 @@ inline namespace Converter
         }
         return 0;
     }
-    inline static long long int TO_INT(long double d)
+    inline static long long int TO_INT(double d)
     {
         return (long long int)d;
     }
@@ -216,7 +216,7 @@ inline namespace Converter
         |==========  TO_BOOL ==========|
         Conversion to bool type ....
         1. string         ->    bool
-        2. long double    ->    bool
+        2. double    ->    bool
         3. bool           ->    bool
         4. long long int  ->    bool
     */
@@ -245,7 +245,7 @@ inline namespace Converter
     {
         return (i > 0);
     }
-    inline static bool TO_BOOL(long double d)
+    inline static bool TO_BOOL(double d)
     {
         return (d > 0);
     }

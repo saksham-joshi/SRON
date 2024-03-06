@@ -1,11 +1,18 @@
 #include "headers/_bytecode_generator_.hpp"
+#include "headers/_exception_.hpp"
 
-int main(int argc, char **argv){
+int main(int argc, char **argv)
+{
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    try
+    {
+        clock_t start, end;
 
-    try{
-        std::ifstream code_file(argv[1]);
-        clock_t start,end;
         start = clock();
+
+        std::ifstream code_file(argv[1]);
+
         if (code_file.fail())
         {
             if (argc == 1)
@@ -25,9 +32,11 @@ int main(int argc, char **argv){
 
         end = clock();
 
-        printf("\n\t=---> Time Taken: %lf .\n",double(end-start)/double(CLOCKS_PER_SEC));
+        std::cout <<std::setprecision(4)<< "\n\t=---> Time Taken : " << double(end - start) / double(CLOCKS_PER_SEC) << " seconds.\n";
     }
-    catch(const std::exception&){
-        DISPLAY_EXCEPTION("reading the file from the specified path.",FileNotFoundException);
+    catch (const std::exception&)
+    {
+        DISPLAY_EXCEPTION("reading the file from the specified path.", FileNotFoundException);
     }
+    return 0;
 }

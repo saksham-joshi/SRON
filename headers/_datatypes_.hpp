@@ -25,8 +25,8 @@
   9. Vector.
 */
 
-#include<string>
 #include<vector>
+#include<iomanip>
 #include<cmath>
 #include "_exception_.hpp"
 #include "_flags_.hpp"
@@ -66,7 +66,7 @@ class Any{
         inline virtual string TYPE() const = 0;
 
         // returns the type number 
-        inline virtual const unsigned short int TYPE_NUMBER() const = 0;
+        inline virtual unsigned short int TYPE_NUMBER() const = 0;
 
         // returns the size of the value in bytes
         inline virtual long long int SIZE_OF() const = 0;
@@ -114,7 +114,7 @@ class Void : public Any{
         }
 
         inline virtual void PRINT() const override{
-            printf("");
+            std::cout<<"";
         }
         inline virtual long long int SIZE_OF() const override{
             return 0;
@@ -126,7 +126,7 @@ class Void : public Any{
             return "Void";
         }
 
-        inline virtual const unsigned short int TYPE_NUMBER() const override{
+        inline virtual unsigned short int TYPE_NUMBER() const override{
             return TYPE_VOID;
         }
 
@@ -161,20 +161,20 @@ class Void : public Any{
 
 /*
   |====================== DOUBLE ===============================|
- 'Double' datatype uses long double to store values.
-  > long double take 16 bytes.
+ 'Double' datatype use double to store values.
+  > long double take 8 bytes.
   > Syntax in SRON : Double x = 1235.123124
 */
 
 class Double : public Any{
     private :
-        long double value=0;
+        double value=0;
 
     public :
         Double(){}
-        Double(long double val) : value(val){}
+        Double(double val) : value(val){}
         Double(long long int val){
-            value = (long double)val;
+            value = (double)val;
         }
 
         inline virtual size_t LEN() const override{
@@ -182,7 +182,7 @@ class Double : public Any{
         }
         
         inline virtual void PRINT() const override{
-            printf("%0.8Lf",value);
+            std::cout<<value;
         }
 
         inline virtual long long int SIZE_OF() const override{
@@ -197,7 +197,7 @@ class Double : public Any{
             return "Double";
         }
 
-        inline virtual const unsigned short int TYPE_NUMBER() const override{
+        inline virtual unsigned short int TYPE_NUMBER() const override{
             return TYPE_DOUBLE;
         }
 
@@ -223,7 +223,7 @@ class Double : public Any{
             return nullptr;
         }
 
-        inline long double GET(){
+        inline double GET(){
             return value;
         }
 
@@ -231,7 +231,7 @@ class Double : public Any{
             return new Double();
         }
 
-        inline static Double* MAKE(long double val){
+        inline static Double* MAKE(double val){
             return new Double(val);
         }
 
@@ -259,7 +259,7 @@ class Int: public Any {
         }
 
         inline virtual void PRINT() const override{
-            printf("%lld",value);
+            std::cout<<value;
         }
 
         inline virtual long long int SIZE_OF() const override{
@@ -270,7 +270,7 @@ class Int: public Any {
             return "Int";
         }
 
-        inline virtual const unsigned short int TYPE_NUMBER() const override{
+        inline virtual unsigned short int TYPE_NUMBER() const override{
             return TYPE_INT;
         }
 
@@ -333,7 +333,7 @@ class Char : public Any{
             return 1;
         }
         inline virtual void PRINT() const override{
-            printf("%c",value);
+            std::cout<<value;
         }
         inline virtual long long int SIZE_OF() const override{
             return sizeof(value);
@@ -344,7 +344,7 @@ class Char : public Any{
         inline virtual string TYPE() const override{
             return "Char";
         }
-        inline virtual const unsigned short int TYPE_NUMBER() const override{
+        inline virtual unsigned short int TYPE_NUMBER() const override{
             return TYPE_CHAR;
         }
 
@@ -403,7 +403,7 @@ class Bool : public Any{
         }
         
         inline virtual void PRINT() const override{
-            printf("%s",this->TO_STRING().c_str());
+           std::cout<<this->TO_STRING();
         }
 
         inline virtual long long int SIZE_OF() const override{
@@ -417,7 +417,7 @@ class Bool : public Any{
         inline virtual string TYPE() const override{
             return "Bool";
         }
-        inline virtual const unsigned short int TYPE_NUMBER() const override{
+        inline virtual unsigned short int TYPE_NUMBER() const override{
             return TYPE_BOOL;
         }
 
@@ -492,7 +492,7 @@ class String : public Any{
         }
 
         inline virtual void PRINT() const override{
-            printf("%s",value.c_str());
+            std::cout<<value;
         }
 
         inline virtual long long int SIZE_OF() const override{
@@ -506,7 +506,7 @@ class String : public Any{
         inline virtual string TYPE() const override{
             return "String";
         }
-        inline virtual const unsigned short int TYPE_NUMBER() const override{
+        inline virtual unsigned short int TYPE_NUMBER() const override{
             return TYPE_STRING;
         }
 
@@ -533,7 +533,7 @@ class String : public Any{
         }
 
         inline char AT(int index){
-            if(index >= 0 && index < value.length()){
+            if(index >= 0 && (unsigned)index < value.length()){
                 return value[index];
             }
             DISPLAY_EXCEPTION("extracting the elements from the string.",StringIndexException );
@@ -607,28 +607,28 @@ class List : public Any{
         inline virtual void PRINT() const override{
             try{
                 if(value.size() == 0){
-                    printf("[]");
+                    std::cout<<"[]";
                     return;
                 }
 
-                printf("[");
+                std::cout<<"[";
             
                 std::vector<Any*>::const_iterator it = value.begin();
                 for(; it != value.end()-1; ++it){
                     (*it)->PRINT();
-                    printf(", ");
+                    std::cout<<", ";
                 }
 
                 (*it)->PRINT();
 
-                printf("]");
+                std::cout<<"]";
             }
             catch(const std::exception&){
                 DISPLAY_EXCEPTION("displaying the list into the console",UnknownException);
             }
             
         }
-        inline virtual const unsigned short int TYPE_NUMBER() const override{
+        inline virtual unsigned short int TYPE_NUMBER() const override{
             return TYPE_LIST;
         }
 
@@ -729,30 +729,5 @@ class List : public Any{
 
   NOTE: It's implementation is causing troubles with the speed and efficieny so it will be implemented further.
 */
-// template<typename T>class Vector : public Any{
-
-//     private:
-//         vector<T> value;
-//     public :
-//         Vector(){ }
-//         Vector(vector<T>& val) : value(val){ }
-        
-//         inline virtual size_t LEN() const override{
-//             return value.size();
-//         }
-
-//         inline virtual void PRINT() const override{
-//             if(value.size() == 0){
-//                 printf("[]");
-//                 return;
-//             }
-//             printf("[");
-//             typename const std::vector<T>::const_iterator it = value.begin();
-//             for(; it != value.end() - 1; ++it){
-                
-//             }
-
-//         }
-// };
 
 #endif

@@ -1,5 +1,7 @@
 > Reason : Specified function not found or may be unaccessible.
     
-    ||> Solution 1 : Make sure the function you are calling has same letter casing(uppercase, lowercase etc.) as the original function.
+    ||> Solution 1 : Make sure the function you are calling has same letter casing(uppercase, lowercase etc.) as 
+                     the original function.
     ||> Solution 2 : Maybe you are mis-spelling the function name.
-    ||> Solution 3 : Maybe the specified function is not actually a function but a variable. If this is the case, then remove the brackets just after the function name.
+    ||> Solution 3 : Maybe the specified function is not actually a function but a variable. If this is the case, 
+                     then remove the brackets just after the function name.
