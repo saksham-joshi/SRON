@@ -25,6 +25,5 @@ It first converts the source code to a bytecode and saves it to a .srb file. Thi
 1. Arithmetic : +, -, *, /, %, ^ .
 2. Assignment : = .
 3. Logical : || , && , !.
-4. Access : ~
-5. Range : (, ), {, }, ], [.
-6. Relationship : != , ==.
+4. Relational : <, <=, >, >=
+5. Relationship : != , ==.
