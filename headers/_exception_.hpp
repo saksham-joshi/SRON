@@ -70,12 +70,16 @@ struct ThrowException
 #define InvalidCommentSyntaxException 39
 #define InvalidAttributeSyntaxException 40
 
-inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short int code)
+inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short int code, bool print_line_number = true)
 {
     try
     {   
-        std::cout << "\nIn " << Logs::filename << ":\nAt Line " << Logs::GET_LINE_NUMBER() << ": \nException Caught :\n||>> While " << during << "\n";
-    
+        std::cout << "\nIn " << Logs::filename;
+
+        if(print_line_number){
+            std::cout<<":\nAt Line " << Logs::GET_LINE_NUMBER()<<':';
+        }
+        std::cout << "\nException Caught :\n||>> While " << during << "\n";
         std::string filename = "";
 
         switch (code)
@@ -229,9 +233,9 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
     }
 }
 
-inline static void DISPLAY_EXCEPTION(const std::string &during, unsigned short int code)
+inline static void DISPLAY_EXCEPTION(const std::string &during, unsigned short int code, bool print_line_number = true)
 {
-    DISPLAY_EXCEPTION(during.c_str(), code);
+    DISPLAY_EXCEPTION(during.c_str(), code, print_line_number);
 }
 
 #endif

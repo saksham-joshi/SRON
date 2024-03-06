@@ -4,6 +4,6 @@
     > Reason 4 : You are trying to call a function inside the mathematical block.
     > Reason 5 : If you are using the assignment operator(=), then this error will rise.
 
-    ||> Solution 1 : To solve a mathematical expression, only +, -, *, /, % and ^ operators are allowed.
+    ||> Solution 1 : To solve an expression, only +, -, *, /, %,^ operators are allowed.
     ||> Solution 2 : Use only Int and Double type of values to the expression.
     ||> Solution 3 : Try not to call a function inside the mathematical block.

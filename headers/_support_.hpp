@@ -13,13 +13,16 @@ inline namespace Support
     inline static bool IS_KEYWORD(std::string &);
     inline static bool IS_LOGICAL_OPERATOR(std::string &);
     inline static bool CHECK_VALID_IDENTIFIER_NAME(std::string &);
-    inline static unsigned short int IDENTIFY_TYPE_FROM_STRING(const std::string &);
-    
+    inline static unsigned short int IDENTIFY_TYPE_FROM_STRING(std::string &);
+
+    inline static char TO_LOWER(char&);
+    inline static std::string TO_LOWER(std::string);
+
     inline static bool is_number(int ch)
     {
         return (ch >= 48 && ch <= 57);
     }
- 
+
     inline static bool IS_NUMBER(std::string &str)
     {
         for (const auto &i : str)
@@ -34,18 +37,18 @@ inline namespace Support
 
     // This will return true if the string is number. Even if it is not decimal, it will return true
     inline static bool IS_DECIMAL_NUMBER(const std::string &str)
+    {
+        char ch = str[0];
+        if ((ch >= '0' && ch <= '9'))
         {
-            char ch = str[0];
-            if ((ch >= '0' && ch <= '9'))
-            {
-                return true;
-            }
-            else if ((ch == '.' || ch == '-') && str.length() > 1 && ((str[1] >= '0' && str[1] <= '9') || str[1] == '.'))
-            {
-                return true;
-            }
-            return false;
+            return true;
         }
+        else if ((ch == '.' || ch == '-') && str.length() > 1 && ((str[1] >= '0' && str[1] <= '9') || str[1] == '.'))
+        {
+            return true;
+        }
+        return false;
+    }
 
     inline static bool is_alphabet(int ch)
     {
@@ -95,8 +98,9 @@ inline namespace Support
         return (str == "{" || str == "}");
     }
 
-    inline static bool IS_IDENTIFIER(const std::string &str){
-        return str.length() > 0 && (str[0] == '_' || is_alphabet(str[0])) ;
+    inline static bool IS_IDENTIFIER(const std::string &str)
+    {
+        return str.length() > 0 && (str[0] == '_' || is_alphabet(str[0]));
     }
 
     inline static bool IS_SQUARE_BRACKET(char &ch)
@@ -119,11 +123,11 @@ inline namespace Support
 
     inline static bool IS_LOGICAL_OPERATOR(std::string &str)
     {
-        return (str == "and" || str == "or" || str == "not");
+        return (str == "&&" || str == "||" || str == "!");
     }
     inline static bool IS_COMPARISON_OPERATOR(std::string &str)
     {
-        return (str == "==" || str == "<" || str == ">" || str == "<=" || str == ">=");
+        return (str == "==" || str == "!=" || str == "<" || str == ">" || str == "<=" || str == ">=");
     }
     inline static bool IS_OPERATOR(char &ch)
     {
@@ -135,21 +139,63 @@ inline namespace Support
     }
 
     inline static int PRECEDENCE(char &ch)
+    {
+        switch (ch)
         {
-            switch (ch)
-            {
-            case '^':
-                return 3;
-            case '/':
-            case '*':
-            case '%' :
-                return 2;
-            case '+':
-            case '-':
-                return 1;
-            }
+        case '^':
+            return 3;
+        case '/':
+        case '*':
+        case '%':
+            return 2;
+        case '+':
+        case '-':
+            return 1;
+        case '!':
             return 0;
         }
+        return 0;
+    }
+    inline static int PRECEDENCE(std::string &str)
+    {
+        if (str == "(" || str == ")")
+        {
+            return 9;
+        }
+        else if (str == "!")
+        {
+            return 8;
+        }
+        else if (str == "^")
+        {
+            return 7;
+        }
+        else if (str == "*" || str == "/" || str == "%")
+        {
+            return 6;
+        }
+        else if (str == "+" || str == "-")
+        {
+            return 5;
+        }
+        else if (str == "==" || str == "!=")
+        {
+            return 4;
+        }
+        else if (str == ">" || str == ">=" || str == "<" || str == "<=")
+        {
+            return 3;
+        }
+        else if (str == "&&")
+        {
+            return 2;
+        }
+        else if (str == "||")
+        {
+            return 1;
+        }
+        return 0;
+    }
 
     /*
      * This function is used to check if the passes string is a valid variable name or not.
@@ -212,7 +258,8 @@ inline namespace Support
         {
             return TYPE_BOOL;
         }
-        else if(Support::IS_OPERATOR(str)){
+        else if (Support::IS_OPERATOR(str))
+        {
             return TYPE_OPERATOR;
         }
         else if (str.length() > 0 && (is_number(str[0]) || str[0] == '.' || (str[0] == '-' && str.length() > 1 && (is_number(str[1]) || str[1] == '.'))))
@@ -270,6 +317,28 @@ inline namespace Support
             return TYPE_LIST;
         }
         return IDENTIFIER;
+    }
+
+    // this function returns the lowercase of the character type value
+    inline static char TO_LOWER(char& val)
+    {
+        int ch = (int)val;
+        if (ch >= 65 && ch <= 90)
+        {
+            return ch + 32;
+        }
+        return ch;
+    }
+
+    // this function returns the lowercase of the string
+    inline static std::string TO_LOWER(std::string str)
+    {
+        std::string fin = "";
+        for (auto i : str)
+        {
+            fin+=TO_LOWER(i);
+        }
+        return fin;
     }
 }
 

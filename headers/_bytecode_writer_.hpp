@@ -19,6 +19,9 @@ inline namespace ByteCodeWriter
     // stack to keep track of scopes
     std::stack<std::string> scope_stack;
 
+    // contains the name of the function which is being converted to the bytecode
+    std::string fnc_name;
+
     std::unordered_map<std::string, std::string> token_to_flag_map{
         {"{", Flag_ScopeStart},
         {"}", Flag_ScopeEnd},
@@ -26,7 +29,7 @@ inline namespace ByteCodeWriter
         {")", Flag_Args_End},
         {"[", Flag_ListStart},
         {"]", Flag_ListEnd},
-        {"~", Flag_MathEvalStart},
+        {"~", Flag_EvalStart},
         {",", Flag_Comma},
         {"=", Flag_Assign},
         {"\n", Flag_LineEnd},
@@ -37,15 +40,23 @@ inline namespace ByteCodeWriter
         {"String", Flag_String},
         {"List", Flag_List},
         {"return", Flag_Return},
-        {"args", Flag_FunctionArgsScopeStart}};
+        {"args", Flag_FunctionArgsScopeStart},
+        {"range", Flag_Range},
+        {"if", Flag_IfScopeStart},
+        {"elif", Flag_ElifScopeStart},
+        {"else", Flag_IfScopeStart},
+        {"for", Flag_ForScopeStart},
+        {"while", Flag_WhileScopeStart},
+    };
 
     inline static void ADD_ELEMENT_TO_BYTECODE(const std::string &);
     inline static void ADD_ELEMENT_TO_BYTECODE(const std::string &, const std::string &);
+    inline static void ADD_ENDING_FLAG_TO_STACK();
 
     inline static void CREATE_BYTECODE();
     inline static void CONVERT_CHAR_TO_RAW_STRING();
 
-    inline static void FILE_WRITE(std::string &);
+    inline static void FILE_WRITE();
 
     // this function will start converting the token_vector to bytecode
     // it calls the CREATE_BYTECODE function.
@@ -92,13 +103,42 @@ inline namespace ByteCodeWriter
             scope_stack.push(Flag_FunctionArgsScopeEnd);
             ++vecit;
         }
+        // if the token is simply a variable
+        else
+        {
+            ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Identifier_Variable, *vecit);
+        }
+    }
+
+    // This function will add a ending scope flag of inner scope attribute to the scope stack
+    inline static void ADD_ENDING_FLAG_TO_STACK()
+    {
+        if (*vecit == AttributeIf)
+        {
+            ByteCodeWriter::scope_stack.push(Flag_IfScopeSEnd);
+        }
+        else if (*vecit == AttributeElif)
+        {
+            ByteCodeWriter::scope_stack.push(Flag_ElifScopeEnd);
+        }
+        else if (*vecit == AttributeElse)
+        {
+            ByteCodeWriter::scope_stack.push(Flag_ElseScopeEnd);
+        }
+        else if (*vecit == AttributeFor)
+        {
+            ByteCodeWriter::scope_stack.push(Flag_ForScopeEnd);
+        }
+        else if (*vecit == AttributeWhile)
+        {
+            ByteCodeWriter::scope_stack.push(Flag_WhileScopeEnd);
+        }
     }
 
     // This function will iterate the token vector and create the bytecode
     inline static void CREATE_BYTECODE()
     {
-
-        std::string fnc_name = "";
+        bool inside_eval_flag = false;
 
         for (; vecit < token_vector.end(); ++vecit)
         {
@@ -106,6 +146,20 @@ inline namespace ByteCodeWriter
             if (*vecit == "{")
             {
                 scope_stack.push(Flag_ScopeEnd);
+                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_ScopeStart);
+                continue;
+            }
+            else if (*vecit == "(")
+            {
+                scope_stack.push(Flag_Args_End);
+                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Args_Start);
+                continue;
+            }
+            else if (*vecit == "[")
+            {
+                scope_stack.push(Flag_ListEnd);
+                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_ListStart);
+                continue;
             }
             else if (*vecit == "}" || *vecit == ")" || *vecit == "]")
             {
@@ -114,8 +168,16 @@ inline namespace ByteCodeWriter
 
                 if (scope_stack.empty())
                 {
-                    ByteCodeWriter::FILE_WRITE(fnc_name);
+                    ByteCodeWriter::FILE_WRITE();
                 }
+                std::cout<<scope_stack.size()<<'\n';
+                continue;
+            }
+            else if (*vecit == "~")
+            {
+
+                inside_eval_flag = !inside_eval_flag;
+                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE((inside_eval_flag) ? Flag_EvalStart : Flag_EvalEnd);
                 continue;
             }
             else if (*vecit == ":")
@@ -124,8 +186,21 @@ inline namespace ByteCodeWriter
             }
             else if (*vecit == AttributeName)
             {
-                fnc_name = *(vecit + 2);
                 vecit += 2;
+                ByteCodeWriter::fnc_name = *vecit;
+                continue;
+            }
+            else if(*vecit == AttributeArgs){
+                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_FunctionArgsScopeStart);
+                ByteCodeWriter::scope_stack.push(Flag_FunctionArgsScopeEnd);
+                vecit += 2;
+            }
+            else if (Support::IS_INNER_SCOPE_ATTRIBUTE(*vecit))
+            {
+                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(token_to_flag_map.at(*vecit));
+                ByteCodeWriter::ADD_ENDING_FLAG_TO_STACK();
+                vecit += 2;
+                continue;
             }
 
             auto byte = ByteCodeWriter::token_to_flag_map.find(*vecit);
@@ -143,6 +218,11 @@ inline namespace ByteCodeWriter
             case TYPE_OPERATOR:
                 ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(*vecit);
             case TYPE_INT:
+                if (vecit < token_vector.end() - 1 && *(vecit + 1) == ":")
+                {
+                    ++vecit;
+                    continue;
+                }
                 ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Int, *vecit);
                 break;
             case TYPE_DOUBLE:
@@ -177,26 +257,12 @@ inline namespace ByteCodeWriter
     }
 
     // This function will write the character in the std::string bytecode to a file.
-    inline static void FILE_WRITE(std::string &fnc_name)
+    inline static void FILE_WRITE()
     {
         try
         {
-            // if the name of the function is MAIN, then the function's bytecode
-            // will be saved as the name of the file which is being compiled by the user.
-
-            if (fnc_name == "MAIN")
-            {
-                fnc_name = std::string(Logs::filename);
-                fnc_name = fnc_name.substr(0, fnc_name.find_last_of('.')) + ".srb";
-            }
-            else
-            {
-                // if the function name is not main, then the file name will be same
-                // as the function name adding .srb extension at the end.
-                fnc_name += ".srb";
-            }
-
-            std::ofstream outfile(fnc_name);
+           ByteCodeWriter::fnc_name += ".srb";
+           std::ofstream outfile(ByteCodeWriter::fnc_name);
 
             if (outfile.is_open())
             {
@@ -207,7 +273,8 @@ inline namespace ByteCodeWriter
 
                 std::cout << "\n\n =|> Succesfully saved SRON's Bytecode to " << fnc_name << ".\n";
 
-                bytecode.clear();
+                ByteCodeWriter::bytecode.clear();
+                ByteCodeWriter::fnc_name = "";
             }
             else
             {

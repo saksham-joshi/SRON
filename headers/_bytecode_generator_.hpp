@@ -13,7 +13,6 @@
  */
 namespace ByteCodeGenerator
 {
-    
 
     // contains the content from the file.
     std::string filecode;
@@ -57,7 +56,7 @@ namespace ByteCodeGenerator
     {
         try
         {
-            std::stack<char> stk;
+            std::stack<std::string> stk;
             std::vector<std::string> exp;
             for (vecit = token_vector.begin(); vecit < token_vector.end(); ++vecit)
             {
@@ -70,29 +69,28 @@ namespace ByteCodeGenerator
                         const auto temp = Support::IDENTIFY_TYPE_FROM_STRING(*vecit);
 
                         // checking if the std::string is a number or a variable
-                        if (temp == TYPE_DOUBLE || temp == TYPE_INT || Support::IS_IDENTIFIER(*vecit) )
+                        if (temp == TYPE_DOUBLE || temp == TYPE_INT || Support::IS_IDENTIFIER(*vecit))
                         {
                             exp.push_back(*vecit);
                         }
                         else if (*vecit == "(")
                         {
-                            stk.push((*vecit)[0]);
+                            stk.push((*vecit));
                         }
-                        else if (Support::IS_MATH_OPERATOR((*vecit)[0]))
+                        else if (Support::IS_OPERATOR((*vecit)))
                         {
-                            char ch = (*vecit)[0];
-                            while (!stk.empty() && Support::PRECEDENCE(ch) <= Support::PRECEDENCE(stk.top()))
+                            while (!stk.empty() && Support::PRECEDENCE(*vecit) <= Support::PRECEDENCE(stk.top()))
                             {
                                 exp.push_back(*vecit);
                                 stk.pop();
                             }
-                            stk.push((*vecit)[0]);
+                            stk.push((*vecit));
                         }
                         else if (*vecit == ")")
                         {
-                            while (!stk.empty() && stk.top() != '(')
+                            while (!stk.empty() && stk.top() != "(" )
                             {
-                                exp.push_back(std::string(1, stk.top()));
+                                exp.push_back(stk.top());
                                 stk.pop();
                             }
                             if (!stk.empty())
@@ -102,30 +100,25 @@ namespace ByteCodeGenerator
                         }
                         else
                         {
-                            DISPLAY_EXCEPTION("parsing and optimizing a mathematical expression.", MathEvaluationException);
+                            DISPLAY_EXCEPTION("parsing and optimizing a mathematical expression. Found this token '" + (*vecit) + "'.", MathEvaluationException, false);
                         }
                         ++vecit; // incrementing the iterator
-
                     }
 
                     // transferring all the element in the stack to the vector
                     while (!stk.empty())
                     {
-                        exp.push_back(std::string(1, stk.top()));
+                        exp.push_back(stk.top());
                         stk.pop();
                     }
 
-                    // deleting the expression from the the element next to the 
-                    token_vector.erase(start,vecit);
-
-                    
+                    // deleting the expression from the the element next to the
+                    token_vector.erase(start, vecit);
 
                     token_vector.insert(start, exp.begin(), exp.end());
 
-
                     // clearing the std::vector<std::string> exp .
                     exp.clear();
-
                 }
             }
         }
@@ -133,7 +126,6 @@ namespace ByteCodeGenerator
         {
             DISPLAY_EXCEPTION("parsing and optimizing the mathematical expression.", SystemOutofMemoryException);
         }
-        // adding the solved expression to the token vector
     }
 
     /*
@@ -241,7 +233,6 @@ namespace ByteCodeGenerator
         }
     }
 
-
     inline static void EXTRACT_CHAR()
     {
         try
@@ -298,7 +289,7 @@ namespace ByteCodeGenerator
     inline static void EXTRACT_IDENTIFIER()
     {
         temp_string += *iterator;
-        while (iterator++ < filecode.end() && (is_alpha_number(*iterator)))
+        while (iterator++ < filecode.end() && (Support::is_alpha_number(*iterator) || *iterator == '_'))
         {
             temp_string += *iterator;
         }
@@ -356,7 +347,6 @@ namespace ByteCodeGenerator
             exit(-1);
         }
     }
-
 
     /*
      * This function is used to handle scopes.
@@ -491,7 +481,7 @@ namespace ByteCodeGenerator
                     ByteCodeGenerator::HANDLE_SCOPES();
                     temp_string += *iterator;
                 }
-                else if (*iterator == '!' && *(iterator + 1) == '=')
+                else if (*iterator == '!' && iterator < filecode.end()-1 &&  *(iterator + 1) == '=')
                 {
                     temp_string += "!=";
                     ++iterator;
@@ -500,6 +490,10 @@ namespace ByteCodeGenerator
                 {
                     temp_string += ((std::string) "" + *iterator) + *(iterator + 1);
                     ++iterator;
+                }
+                else if((*iterator == '<' || *iterator == '>') && iterator < filecode.end() - 1 && *(iterator+1) == '=' ){
+                    // if <= or >= is appearing...
+                    temp_string  = (temp_string+(*iterator))+"=";
                 }
                 else if (Support::IS_OPERATOR(*iterator))
                 {
@@ -599,8 +593,10 @@ namespace ByteCodeGenerator
     // Step 2 : Call ByteCodeGenerator::GENERATE();
     inline static void GENERATE()
     {
+        
         try
         {
+            
             // reading the whole content of the file.
             ByteCodeGenerator::filecode = std::string(std::istreambuf_iterator<char>(*Logs::mainfile), (std::istreambuf_iterator<char>()));
 
