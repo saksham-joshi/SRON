@@ -14,8 +14,9 @@ inline namespace Support
     inline static bool IS_LOGICAL_OPERATOR(std::string &);
     inline static bool CHECK_VALID_IDENTIFIER_NAME(std::string &);
     inline static unsigned short int IDENTIFY_TYPE_FROM_STRING(std::string &);
+    inline static bool IS_UNSIGNED_INTEGER(std::string &);
 
-    inline static char TO_LOWER(char&);
+    inline static char TO_LOWER(char &);
     inline static std::string TO_LOWER(std::string);
 
     inline static bool is_number(int ch)
@@ -86,7 +87,7 @@ inline namespace Support
     inline static bool IS_KEYWORD(std::string &word)
     {
         return (IS_INBUILT_ATTRIBUTE(word) || IS_DATATYPE(word) || IS_LOGICAL_OPERATOR(word) || word == "MAIN" || word == "PRINT" || word == "PRINTLN" || word == "LEN" ||
-                word == "SIZE_OF" || word == "TYPE" || word == "TO_STRING");
+                word == "SIZE_OF" || word == "TYPE" || word == "TO_STRING" || word == "break" || word == "continue");
     }
 
     inline static bool IS_CURLY_BRACES(char &ch)
@@ -258,10 +259,6 @@ inline namespace Support
         {
             return TYPE_BOOL;
         }
-        else if (Support::IS_OPERATOR(str))
-        {
-            return TYPE_OPERATOR;
-        }
         else if (str.length() > 0 && (is_number(str[0]) || str[0] == '.' || (str[0] == '-' && str.length() > 1 && (is_number(str[1]) || str[1] == '.'))))
         {
             auto it = str.begin();
@@ -278,9 +275,15 @@ inline namespace Support
             }
             return TYPE_INT;
         }
+        else if (Support::IS_OPERATOR(str))
+        {
+            return TYPE_OPERATOR;
+        }
         return IDENTIFIER;
     }
 
+    // this function will return true if the passed std::string is a possible endings of a line
+    // it returns true if str is "\n" or "}"
     inline static bool IS_VALID_END(std::string &str)
     {
         return (str == "\n" || str == "}");
@@ -320,7 +323,7 @@ inline namespace Support
     }
 
     // this function returns the lowercase of the character type value
-    inline static char TO_LOWER(char& val)
+    inline static char TO_LOWER(char &val)
     {
         int ch = (int)val;
         if (ch >= 65 && ch <= 90)
@@ -336,9 +339,21 @@ inline namespace Support
         std::string fin = "";
         for (auto i : str)
         {
-            fin+=TO_LOWER(i);
+            fin += TO_LOWER(i);
         }
         return fin;
+    }
+
+    inline static bool IS_UNSIGNED_INTEGER(std::string &str)
+    {
+        for (const auto &i : str)
+        {
+            if (!Support::is_number(i))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
 

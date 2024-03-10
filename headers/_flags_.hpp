@@ -44,6 +44,8 @@
 #define Flag_FunctionArgsScopeEnd "`A}"
 
 #define Flag_Variable "`V"
+#define Flag_Break "`Break"
+#define Flag_Continue "`Continue"
 
 #define Flag_ScopeStart "`{"
 #define Flag_ScopeEnd "`}"

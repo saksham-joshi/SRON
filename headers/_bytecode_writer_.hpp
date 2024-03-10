@@ -23,13 +23,13 @@ inline namespace ByteCodeWriter
     std::string fnc_name;
 
     std::unordered_map<std::string, std::string> token_to_flag_map{
-        {"{", Flag_ScopeStart},
-        {"}", Flag_ScopeEnd},
-        {"(", Flag_Args_Start},
-        {")", Flag_Args_End},
-        {"[", Flag_ListStart},
-        {"]", Flag_ListEnd},
-        {"~", Flag_EvalStart},
+        // {"{", Flag_ScopeStart},
+        // {"}", Flag_ScopeEnd},
+        // {"(", Flag_Args_Start},
+        // {")", Flag_Args_End},
+        // {"[", Flag_ListStart},
+        // {"]", Flag_ListEnd},
+        // {"~", Flag_EvalStart},
         {",", Flag_Comma},
         {"=", Flag_Assign},
         {"\n", Flag_LineEnd},
@@ -44,10 +44,11 @@ inline namespace ByteCodeWriter
         {"range", Flag_Range},
         {"if", Flag_IfScopeStart},
         {"elif", Flag_ElifScopeStart},
-        {"else", Flag_IfScopeStart},
+        {"else", Flag_ElseScopeStart},
         {"for", Flag_ForScopeStart},
         {"while", Flag_WhileScopeStart},
-    };
+        {"break", Flag_Break},
+        {"continue", Flag_Continue}};
 
     inline static void ADD_ELEMENT_TO_BYTECODE(const std::string &);
     inline static void ADD_ELEMENT_TO_BYTECODE(const std::string &, const std::string &);
@@ -57,6 +58,11 @@ inline namespace ByteCodeWriter
     inline static void CONVERT_CHAR_TO_RAW_STRING();
 
     inline static void FILE_WRITE();
+
+    inline static void JUMP_TO_FIRST_OCCURRENCE(std::string str);
+
+    // this function will handle identifiers and adds to Bytecode.
+    inline static void IDENTIFY_IDENTIFIER_AND_ADD();
 
     // this function will start converting the token_vector to bytecode
     // it calls the CREATE_BYTECODE function.
@@ -88,7 +94,6 @@ inline namespace ByteCodeWriter
     // then calls the ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE function
     inline static void IDENTIFY_IDENTIFIER_AND_ADD()
     {
-
         // if a identifier is in *vecit and if the value is *(vecit-1) is a datatype
         // then there must be the variable declaration
         if (vecit > token_vector.begin() && Support::IS_DATATYPE(*(vecit - 1)))
@@ -99,9 +104,15 @@ inline namespace ByteCodeWriter
         // is a function call therefore adding a function call flag
         else if (vecit < token_vector.end() - 1 && *(vecit + 1) == "(")
         {
-            ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_FunctionCall, Flag_FunctionArgsScopeStart);
-            scope_stack.push(Flag_FunctionArgsScopeEnd);
+            ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_FunctionCall, *vecit);
+            ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Args_Start );
+            scope_stack.push(Flag_Args_End);
             ++vecit;
+        }
+        else if (vecit < token_vector.end() - 1 && *(vecit + 1) == ":")
+        {
+            ++vecit;
+            return;
         }
         // if the token is simply a variable
         else
@@ -133,126 +144,167 @@ inline namespace ByteCodeWriter
         {
             ByteCodeWriter::scope_stack.push(Flag_WhileScopeEnd);
         }
+        else if (*vecit == "{")
+        {
+            ByteCodeWriter::scope_stack.push(Flag_ScopeEnd);
+        }
+        else if (*vecit == "(")
+        {
+            ByteCodeWriter::scope_stack.push(Flag_Args_End);
+        }
+        else if (*vecit == "[")
+        {
+            ByteCodeWriter::scope_stack.push(Flag_ListEnd);
+        }
     }
 
     // This function will iterate the token vector and create the bytecode
     inline static void CREATE_BYTECODE()
     {
-        bool inside_eval_flag = false;
-
-        for (; vecit < token_vector.end(); ++vecit)
+        try
         {
-            // first handling scopes
-            if (*vecit == "{")
-            {
-                scope_stack.push(Flag_ScopeEnd);
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_ScopeStart);
-                continue;
-            }
-            else if (*vecit == "(")
-            {
-                scope_stack.push(Flag_Args_End);
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Args_Start);
-                continue;
-            }
-            else if (*vecit == "[")
-            {
-                scope_stack.push(Flag_ListEnd);
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_ListStart);
-                continue;
-            }
-            else if (*vecit == "}" || *vecit == ")" || *vecit == "]")
-            {
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(scope_stack.top());
-                scope_stack.pop();
 
-                if (scope_stack.empty())
+            bool inside_eval_flag = false;
+
+            for (; vecit < token_vector.end(); ++vecit)
+            {
+                // first handling scopes
+                if (*vecit == "{")
                 {
-                    ByteCodeWriter::FILE_WRITE();
+                    scope_stack.push(Flag_ScopeEnd);
+                    ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_ScopeStart);
                 }
-                std::cout<<scope_stack.size()<<'\n';
-                continue;
-            }
-            else if (*vecit == "~")
-            {
-
-                inside_eval_flag = !inside_eval_flag;
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE((inside_eval_flag) ? Flag_EvalStart : Flag_EvalEnd);
-                continue;
-            }
-            else if (*vecit == ":")
-            {
-                continue;
-            }
-            else if (*vecit == AttributeName)
-            {
-                vecit += 2;
-                ByteCodeWriter::fnc_name = *vecit;
-                continue;
-            }
-            else if(*vecit == AttributeArgs){
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_FunctionArgsScopeStart);
-                ByteCodeWriter::scope_stack.push(Flag_FunctionArgsScopeEnd);
-                vecit += 2;
-            }
-            else if (Support::IS_INNER_SCOPE_ATTRIBUTE(*vecit))
-            {
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(token_to_flag_map.at(*vecit));
-                ByteCodeWriter::ADD_ENDING_FLAG_TO_STACK();
-                vecit += 2;
-                continue;
-            }
-
-            auto byte = ByteCodeWriter::token_to_flag_map.find(*vecit);
-            if (byte != token_to_flag_map.end())
-            {
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(byte->second);
-                continue;
-            }
-
-            unsigned short int temp = Support::IDENTIFY_TYPE_FROM_STRING(*vecit);
-
-            switch (temp)
-            {
-
-            case TYPE_OPERATOR:
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(*vecit);
-            case TYPE_INT:
-                if (vecit < token_vector.end() - 1 && *(vecit + 1) == ":")
+                else if (*vecit == "(")
                 {
-                    ++vecit;
+                    scope_stack.push(Flag_Args_End);
+                    ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Args_Start);
+                }
+                else if (*vecit == "[")
+                {
+                    scope_stack.push(Flag_ListEnd);
+                    ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_ListStart);
+                }
+                else if (*vecit == "}" || *vecit == ")" || *vecit == "]")
+                {
+                    ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(scope_stack.top());
+                    scope_stack.pop();
+
+                    if (scope_stack.empty())
+                    {
+                        ByteCodeWriter::FILE_WRITE();
+                    }
+                }
+                else if (*vecit == "~")
+                {
+                    inside_eval_flag = !inside_eval_flag;
+                    ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE((inside_eval_flag) ? Flag_EvalStart : Flag_EvalEnd);
+                }
+                else if (*vecit == ":")
+                {
                     continue;
                 }
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Int, *vecit);
-                break;
-            case TYPE_DOUBLE:
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Double, *vecit);
-                break;
-            case TYPE_CHAR:
-                ByteCodeWriter::CONVERT_CHAR_TO_RAW_STRING();
-                break;
-            case TYPE_BOOL:
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Bool, *vecit);
-                break;
-            case TYPE_LIST:
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_List, *vecit);
-                ByteCodeWriter::scope_stack.push(Flag_ListEnd);
-                break;
-            case TYPE_STRING:
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_String, Flag_StringScopeStart);
+                else if (*vecit == AttributeName)
+                {
+                    vecit += 2;
+                    ByteCodeWriter::fnc_name = *vecit;
+                }
+                else if (*vecit == AttributeArgs)
+                {
+                    ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_FunctionArgsScopeStart);
+                    ByteCodeWriter::scope_stack.push(Flag_FunctionArgsScopeEnd);
+                    vecit += 2;
+                }
+                else if (*vecit == AttributeType)
+                {
+                    vecit += 2;
+                    while (vecit < token_vector.end() && !(*vecit == "\n" || *vecit == "}"))
+                    {
+                        ++vecit;
+                    }
+                }
+                else if (*vecit == AttributeReturn)
+                {
+                    ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Return);
+                }
+                else if (Support::IS_INNER_SCOPE_ATTRIBUTE(*vecit))
+                {
+                    ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(token_to_flag_map.at(*vecit));
+                    ByteCodeWriter::ADD_ENDING_FLAG_TO_STACK();
+                    ByteCodeWriter::JUMP_TO_FIRST_OCCURRENCE("{");
+                }
+                else if(Support::IS_UNSIGNED_INTEGER(*vecit) && vecit < token_vector.end()-1 && *(vecit+1) == ":"){
+                    // if a numeric attribute arrives, then we just increment the iterator so that
+                    // it can come to the place of colon(:) and the forloop will further increment it
+                    // to the next token.
+                    ++vecit;
+                }
+                else
+                {
+                    auto byte = ByteCodeWriter::token_to_flag_map.find(*vecit);
+                    if (byte != token_to_flag_map.end())
+                    {
+                        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(byte->second);
+                        continue;
+                    }
 
-                // removing the initial and ending apostrophe (")
-                (*vecit).erase(vecit->begin());
-                (*vecit).erase(vecit->end() - 1);
+                    switch (Support::IDENTIFY_TYPE_FROM_STRING(*vecit))
+                    {
+                    case TYPE_INT:
+                    {
+                        // if the token is a numeric attribute
+                        if (vecit < token_vector.end() - 1 && *(vecit + 1) == ":")
+                        {
+                            ++vecit;
+                            continue;
+                        }
+                        // if it is actually a number
+                        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Int, *vecit);
+                        ++vecit;
+                        break;
+                    }
+                    case TYPE_DOUBLE:
+                    {
+                        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Double, *vecit);
+                        break;
+                    }
+                    case TYPE_CHAR:
+                        ByteCodeWriter::CONVERT_CHAR_TO_RAW_STRING();
+                        break;
+                    case TYPE_BOOL:
+                        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Bool, *vecit);
+                        break;
+                    case TYPE_STRING:
+                    {
+                        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_String, Flag_StringScopeStart);
 
-                // writing to the bytecode
-                ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(*vecit, Flag_StringScopeEnd);
-                break;
+                        // removing the initial and ending apostrophe (")
+                        (*vecit).erase(vecit->begin());
+                        (*vecit).erase(vecit->end() - 1);
 
-            case IDENTIFIER:
-                ByteCodeWriter::IDENTIFY_IDENTIFIER_AND_ADD();
-                break;
+                        // writing to the bytecode
+                        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(*vecit, Flag_StringScopeEnd);
+                        break;
+                    }
+                    case TYPE_LIST:
+                    {
+                        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_List, *vecit);
+                        ByteCodeWriter::scope_stack.push(Flag_ListEnd);
+                        break;
+                    }
+                    case IDENTIFIER:
+                        ByteCodeWriter::IDENTIFY_IDENTIFIER_AND_ADD();
+                        break;
+
+                    case TYPE_OPERATOR:
+                        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(*vecit);
+                        break;
+                    }
+                }
             }
+        }
+        catch (const std::exception &)
+        {
+            DISPLAY_EXCEPTION("generating the bytecode.", SystemOutofMemoryException);
         }
     }
 
@@ -261,8 +313,8 @@ inline namespace ByteCodeWriter
     {
         try
         {
-           ByteCodeWriter::fnc_name += ".srb";
-           std::ofstream outfile(ByteCodeWriter::fnc_name);
+            ByteCodeWriter::fnc_name += ".srb";
+            std::ofstream outfile(ByteCodeWriter::fnc_name);
 
             if (outfile.is_open())
             {
@@ -271,15 +323,17 @@ inline namespace ByteCodeWriter
 
                 outfile.close();
 
-                std::cout << "\n\n =|> Succesfully saved SRON's Bytecode to " << fnc_name << ".\n";
+                std::cout << "\n =|> Succesfully saved SRON's Bytecode to '" << fnc_name << "'.\n";
 
-                ByteCodeWriter::bytecode.clear();
+                ByteCodeWriter::bytecode = "";
                 ByteCodeWriter::fnc_name = "";
             }
             else
             {
                 DISPLAY_EXCEPTION("saving the bytecode to '" + fnc_name + "'.", ByteCodeCannotbeSavedException);
             }
+
+            // std::cout << "\n-> " << *vecit << " | " << *(vecit + 1) << " | " << *(vecit + 2);
         }
         catch (const std::exception &ex)
         {
@@ -315,6 +369,16 @@ inline namespace ByteCodeWriter
         default:
             temp = (std::string) "" + ch;
         }
-        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(temp);
+        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Char,temp);
+    }
+
+    // this function will move the iterator 'vecit' to the first occurrence of the passed
+    // string 'str'.
+    inline static void JUMP_TO_FIRST_OCCURRENCE(std::string str)
+    {
+        while (vecit < token_vector.end() && *vecit != str)
+        {
+            ++vecit;
+        }
     }
 }

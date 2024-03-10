@@ -69,7 +69,7 @@ namespace ByteCodeGenerator
                         const auto temp = Support::IDENTIFY_TYPE_FROM_STRING(*vecit);
 
                         // checking if the std::string is a number or a variable
-                        if (temp == TYPE_DOUBLE || temp == TYPE_INT || Support::IS_IDENTIFIER(*vecit))
+                        if (temp == TYPE_DOUBLE || temp == TYPE_INT || temp == TYPE_CHAR || temp == TYPE_BOOL || temp == TYPE_STRING || Support::IS_IDENTIFIER(*vecit))
                         {
                             exp.push_back(*vecit);
                         }
@@ -263,7 +263,12 @@ namespace ByteCodeGenerator
                 }
                 iterator += 2;
             }
-
+            // if user is trying to enter a empty character like this :
+            // Char ch = ''
+            else if(*iterator == '\''){
+                temp_string=" ";
+                return;
+            }
             else
             {
                 if (*iterator == '\n')
@@ -273,7 +278,7 @@ namespace ByteCodeGenerator
                 temp_string += *iterator;
                 ++iterator;
             }
-            if (*iterator != '\'')
+            if ((*iterator) != '\'')
             {
                 DISPLAY_EXCEPTION("extracting the value of 'Char' type.", InvalidValueException);
             }
@@ -613,7 +618,7 @@ namespace ByteCodeGenerator
             ByteCodeGenerator::TOKEN_VECTOR_REFINER();
 
             // analyzing the code
-            // ByteCodeGenerator::ANALYZER();
+            //ByteCodeGenerator::ANALYZER();
 
             // This function will convert the mathematical expression in the token vector to the postfix expression.
             ByteCodeGenerator::POSTFIX();

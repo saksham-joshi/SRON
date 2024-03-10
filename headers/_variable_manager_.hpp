@@ -13,12 +13,12 @@
 class VariableManager{
     private:
         std::unordered_map<std::string, Any*> vmap;
-        std::string function_name;
+        
 
     public :
-        VariableManager(std::string function_name){
-            this->function_name = function_name;
-        }
+        // VariableManager(std::string function_name){
+        //     this->function_name = function_name;
+        // }
 
         inline void INSERT(std::string type, std::string variable_name){
            if(type == "Int"){ vmap[variable_name] =  Int::MAKE(); }

@@ -540,6 +540,12 @@ class String : public Any{
             return ' ';
         }
 
+        inline void APPENDS(std::string str){
+            this->value.append(str);
+        }
+        inline void POP_BACK(){
+            this->value.erase(this->value.end()-1);
+        }
         inline string GET(){
             return value;
         }

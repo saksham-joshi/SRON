@@ -1,6 +1,6 @@
 {
     name : Armstrong
-    args: Int val, Any y
+    args: (Int val, Any y)
     type: Int
     variables : Int arm,Int temp,Int len
 
@@ -14,26 +14,24 @@
     variables : Int x
     0 : len = LEN(val)
     while:{
-        condition:~val != 0~
-        0 : ~temp = val%10~ 
-        1 : ~arm = arm+temp^len~
-        2 : ~val = val%10~
+        condition:(~val != 0~)
+        0 : temp = ~val%10~ 
+        1 : arm = ~arm+temp^len~
+        2 : val = ~val%10~
     }
     return : arm
-}{
+}
+{
     name : MAIN
-    variables:Int val
+    variables:Int val, Int arm
     0 : val = INPUT_INT("\n ==> Enter the value :- ")
+    1 : arm = Armstrong(val)
     if:{
-        condition: ~val == Armstrong(val)~
-        1 : PRINTLN("Yes, ",val," is an Armstrong Number.")
+        condition: (~val == arm ~)
+        2 : PRINTLN("Yes, ",val," is an Armstrong Number.")
     }
     else:{
-        1 : PRINTLN("No, ",val," is not an Armstrong Number.")
+        2 : PRINTLN("No, ",val," is not an Armstrong Number.")
     }
     return : 0
 }
-
-
-
-

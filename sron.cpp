@@ -6,6 +6,10 @@
  * LICENSE file in the root directory of this source tree.
  * 
  * You can freely redistribute it but cannot modify the source code without the permission from the author.
+ * @author- SAKSHAM JOSHI
+ * @Linkedin- @sakshamjoshi27
+ * @Twitter- @sakshamjoshi27
+ * @email- social.sakshamjoshi@gmail.com
 */
 
 #include "headers/_execution_engine_.hpp"
@@ -13,37 +17,23 @@
 #ifndef SRON_H
 #define SRON_H
 
-int main(int argc, char **argv)
+int main()
 {
     try
     {
-        std::ifstream code_file(argv[1]);
         
         std::ios_base::sync_with_stdio(false);
         std::cin.tie(NULL);
         std::cout<<std::fixed<<std::setprecision(8);
 
-        if (code_file.fail())
-        {
-            if (argc == 1)
-            {
-                DISPLAY_EXCEPTION("getting the file name.", FileNameNotSpecifiedException);
-            }
-            DISPLAY_EXCEPTION("getting the file from the specified path.", FileNotFoundException);
-        }
-
-        Logs::filename = argv[1];
-
-        Logs::mainfile = &code_file;
-
-        EXECUTION_ENGINE::EXECUTE();
+        ExecutionEngine::EXECUTE();
 
         Logs::mainfile->close();
 
     }
     catch (const std::exception &)
     {
-        DISPLAY_EXCEPTION("interpreting the written code.", SystemOutofMemoryException);
+        DISPLAY_EXCEPTION("interpreting the written code.", SystemOutofMemoryException,false);
     }
     return 0;
 }

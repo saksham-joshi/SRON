@@ -1,10 +1,11 @@
 {
     name: factorial
+    args : (Int val)
     type: Int
-    variables: Int fac=1,Int i, Int val
+    variables: Int fac=1,Int i
     
     for:{
-        range: i = [2,~val+1~]
+        range: i = (2,~val+1~)
         0 : fac = ~fac*i~
     }
     return : fac

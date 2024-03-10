@@ -42,6 +42,7 @@ int main(int argc, char **argv)
         end = clock();
 
         std::cout <<std::setprecision(4)<< "\n\t=---> Time Taken : " << double(end - start) / double(CLOCKS_PER_SEC) << " seconds.\n";
+
     }
     catch (const std::exception&)
     {

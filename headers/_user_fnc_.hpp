@@ -15,45 +15,51 @@
 #include <functional>
 #include <unordered_map>
 
-using FunctionMap = std::unordered_map<std::string, std::function<Any *(Argument_List *)>>;
+using UserFunctionMap = std::unordered_map<std::string, std::function<Any*(Argument_List*)>>;
 
 inline namespace Sron
 {
-    inline Any *LEN(Argument_List *);
-    inline Any *SIZE_OF(Argument_List *);
-    inline Any *PRINT(Argument_List *);
-    inline Any *PRINTLN(Argument_List *);
-    inline Any *AT(Argument_List *);
+    inline Any* LEN(Argument_List*);
+    inline Any* SIZE_OF(Argument_List*);
+    inline Any* PRINT(Argument_List*);
+    inline Any* PRINTLN(Argument_List*);
+    inline Any* AT(Argument_List*);
 
-
-    inline static FunctionMap &GET_FUNCTION_MAP()
-    {
-        static FunctionMap fmap{
-            {"PRINTLN", Sron::PRINTLN},
-            {"PRINT", Sron::PRINT},
-            {"LEN", Sron::LEN},
-            {"SIZE_OF", Sron::SIZE_OF},
-            {"AT", Sron::AT}};
-        return fmap;
-    }
+    static UserFunctionMap Fmap{
+        {"PRINTLN", Sron::PRINTLN},
+        {"PRINT", Sron::PRINT},
+        {"LEN", Sron::LEN},
+        {"SIZE_OF", Sron::SIZE_OF},
+        {"AT", Sron::AT}
+    };
 
     inline static bool CHECK_IF_FUNCTION_EXISTS(std::string *str)
     {
-        static FunctionMap fmap = GET_FUNCTION_MAP();
-        return fmap.find(*str) != fmap.end();
+        return Sron::Fmap.find(*str) != Sron::Fmap.end();
     }
 
-    inline Any *LEN(Argument_List *args)
+    // this function takes the std::string as an argument then finds that in the 
+    // Sron::UserFunctionMap. If the function is found then return that function
+    // otherwise returns nullptr.
+    inline static std::function<Any*(Argument_List*)> GET_SRON_FUNCTION(std::string& fnc_name){
+        auto temp = Fmap.find(fnc_name);
+        if(temp != Fmap.end()){
+            return temp->second;
+        }
+        return nullptr;
+    }
+
+    inline Any* LEN(Argument_List *args)
     {
         return Int::MAKE((*args)[0]->LEN());
     }
 
-    inline Any *SIZE_OF(Argument_List *args)
+    inline Any* SIZE_OF(Argument_List *args)
     {
         return Int::MAKE((*args)[0]->SIZE_OF());
     }
 
-    inline Any *PRINT(Argument_List *args)
+    inline Any* PRINT(Argument_List *args)
     {
         for (size_t i = 0; i < (*args).LEN(); ++i)
         {
@@ -62,13 +68,13 @@ inline namespace Sron
         return Void::MAKE();
     }
 
-    inline Any *PRINTLN(Argument_List *args)
+    inline Any* PRINTLN(Argument_List *args)
     {
         PRINT(args);
         std::cout << '\n';
         return Void::MAKE();
     }
-    inline Any *AT(Argument_List *args)
+    inline Any* AT(Argument_List *args)
     {
         try
         {
@@ -78,7 +84,7 @@ inline namespace Sron
             }
             return Char::MAKE((*args)[0]->GET_STRING()->AT((*args)[1]->GET_INT()->GET()));
         }
-        catch (std::exception &)
+        catch (const std::exception &)
         {
             DISPLAY_EXCEPTION("executing the AT function and extracting elements from it.", ArgumentException);
         }
