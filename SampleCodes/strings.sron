@@ -3,7 +3,7 @@
     args : (Int val)
 }
 {
-    name : MAIN
+    name : experimental
     variables : String val="",Char ch='A'
     variables : Int val1 =-123, Double val2 = -0.45, Bool val3
 

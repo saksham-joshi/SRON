@@ -15,6 +15,7 @@ inline namespace Support
     inline static bool CHECK_VALID_IDENTIFIER_NAME(std::string &);
     inline static unsigned short int IDENTIFY_TYPE_FROM_STRING(std::string &);
     inline static bool IS_UNSIGNED_INTEGER(std::string &);
+    inline static bool IS_RESERVED_FILENAME(std::string&);
 
     inline static char TO_LOWER(char &);
     inline static std::string TO_LOWER(std::string);
@@ -354,6 +355,18 @@ inline namespace Support
             }
         }
         return true;
+    }
+    inline static bool IS_RESERVED_FILENAME(std::string& str ){
+        str = Support::TO_LOWER(str);
+        return (
+        str == "con" || str == "prn" || str == "aux" || str == "nul"
+        || str == "com0" || str == "com1" || str == "com2" || str == "com3" 
+        || str == "com4" ||str == "com5" || str == "com6" || str == "com7" 
+        || str == "com8" || str == "com9" 
+        || str == "lpt0" || str == "lpt1" || str == "lpt2" || str == "lpt3"
+        || str == "lpt4" || str == "lpt5" || str == "lpt6" || str == "lpt7" 
+        || str == "lpt8" || str == "lpt9");
+        
     }
 }
 

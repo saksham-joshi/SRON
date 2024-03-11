@@ -140,11 +140,11 @@ inline namespace ExecutionEngine
 
         // this method will map the flags to the functions
         // this method will work like a central point for all the function.
-        inline Any *FLAG_TO_FUNCTION_MAPPER()
+        inline Any* FLAG_TO_FUNCTION_MAPPER()
         {
             if (this->codeline == Flag_FunctionArgsScopeStart)
             {
-
+                
             }
             else if (this->codeline == Flag_FunctionCall)
             {

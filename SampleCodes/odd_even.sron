@@ -1,5 +1,5 @@
 {
-    name: MAIN
+    name: odd_even
     type: Void
     variables:Int val
     0 : val = INPUT_INT("Enter the value :-")

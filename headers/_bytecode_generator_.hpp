@@ -88,7 +88,7 @@ namespace ByteCodeGenerator
                         }
                         else if (*vecit == ")")
                         {
-                            while (!stk.empty() && stk.top() != "(" )
+                            while (!stk.empty() && stk.top() != "(")
                             {
                                 exp.push_back(stk.top());
                                 stk.pop();
@@ -226,9 +226,9 @@ namespace ByteCodeGenerator
                 }
             }
         }
-        catch (const std::exception &ex)
+        catch (const std::exception &)
         {
-            std::cout << "\nError : " << ex.what();
+
             DISPLAY_EXCEPTION("analyzing the code syntax and format.", SystemOutofMemoryException);
         }
     }
@@ -265,8 +265,9 @@ namespace ByteCodeGenerator
             }
             // if user is trying to enter a empty character like this :
             // Char ch = ''
-            else if(*iterator == '\''){
-                temp_string=" ";
+            else if (*iterator == '\'')
+            {
+                temp_string = " ";
                 return;
             }
             else
@@ -283,9 +284,9 @@ namespace ByteCodeGenerator
                 DISPLAY_EXCEPTION("extracting the value of 'Char' type.", InvalidValueException);
             }
         }
-        catch (const std::exception &ex)
+        catch (const std::exception &)
         {
-            std::cout << "\nError : " << ex.what();
+
             exit(-1);
         }
     }
@@ -346,9 +347,9 @@ namespace ByteCodeGenerator
                 ++iterator;
             }
         }
-        catch (const std::exception &ex)
+        catch (const std::exception &)
         {
-            std::cout << "\nError : " << ex.what();
+
             exit(-1);
         }
     }
@@ -398,10 +399,9 @@ namespace ByteCodeGenerator
                 DISPLAY_EXCEPTION("generating bytecode and handling scopes.", NoException);
             }
         }
-        catch (const std::exception &ex)
+        catch (const std::exception &)
         {
-            std::cout << "\nError : " << ex.what();
-            DISPLAY_EXCEPTION("generating bytecode and handling scopes.", InvalidScopeException);
+            DISPLAY_EXCEPTION(std::string("generating bytecode and handling scopes.\n Current Value = '") + *iterator + "'.", InvalidScopeException);
         }
     }
 
@@ -412,13 +412,9 @@ namespace ByteCodeGenerator
         {
         }
     }
-    // inline static void JUMP_TILL_CHAR_REPEATS(char ch)
-    // {
-    //     while (*iterator == ch && iterator++ < filecode.end())
-    //     {
-    //     }
-    // }
 
+    // moves the std::string::iterator iterator which is iterating over the
+    // ByteCodeGenerator::filecode, to the next first occurrence of the passed character.
     inline static void JUMP_TO_NEXT_FIRST_OCCURENCE(char ch)
     {
         if (*iterator == '\n')
@@ -458,6 +454,9 @@ namespace ByteCodeGenerator
                 }
                 else if (*iterator == '~')
                 {
+                    if(*(token_vector.end()-1) == "~" ){
+                        DISPLAY_EXCEPTION("tokenizing the code and going through a mathematical block.",MathematicalBlockSyntaxException);
+                    }
                     ++wave_count;
                     temp_string = "~";
                 }
@@ -485,8 +484,13 @@ namespace ByteCodeGenerator
                 {
                     ByteCodeGenerator::HANDLE_SCOPES();
                     temp_string += *iterator;
+                    if (*iterator == '}' && scope_stack.empty())
+                    {
+                        ByteCodeGenerator::JUMP_TO_NEXT_FIRST_OCCURENCE('{');
+                        --iterator;
+                    }
                 }
-                else if (*iterator == '!' && iterator < filecode.end()-1 &&  *(iterator + 1) == '=')
+                else if (*iterator == '!' && iterator < filecode.end() - 1 && *(iterator + 1) == '=')
                 {
                     temp_string += "!=";
                     ++iterator;
@@ -496,9 +500,10 @@ namespace ByteCodeGenerator
                     temp_string += ((std::string) "" + *iterator) + *(iterator + 1);
                     ++iterator;
                 }
-                else if((*iterator == '<' || *iterator == '>') && iterator < filecode.end() - 1 && *(iterator+1) == '=' ){
+                else if ((*iterator == '<' || *iterator == '>') && iterator < filecode.end() - 1 && *(iterator + 1) == '=')
+                {
                     // if <= or >= is appearing...
-                    temp_string  = (temp_string+(*iterator))+"=";
+                    temp_string = (temp_string + (*iterator)) + "=";
                 }
                 else if (Support::IS_OPERATOR(*iterator))
                 {
@@ -521,9 +526,9 @@ namespace ByteCodeGenerator
                 DISPLAY_EXCEPTION("tokenizing the code.", WaveCountIsNotEvenException);
             }
         }
-        catch (const std::exception &ex)
+        catch (const std::exception &)
         {
-            std::cout << "\nError : " << ex.what();
+
             DISPLAY_EXCEPTION("tokenizing the code.", NoException);
         }
     }
@@ -563,14 +568,14 @@ namespace ByteCodeGenerator
                     ByteCodeGenerator::token_vector.erase(vecit + 1);
                     --vecit;
                 }
-                else if (*vecit == "comment") // removing comments from the code
+                else if (*vecit == AttributeComment) // removing comments from the code
                 {
                     if ((*(vecit + 1)) == ":")
                     {
                         auto first = vecit;
                         vecit += 2;
 
-                        while (vecit < token_vector.end() && *vecit != "\n")
+                        while (vecit < token_vector.end() && (!Support::IS_VALID_END(*vecit)) )
                         {
                             ++vecit;
                         }
@@ -581,7 +586,27 @@ namespace ByteCodeGenerator
                     }
                     else
                     {
-                        DISPLAY_EXCEPTION("refining the code and removing comments.", InvalidCommentSyntaxException);
+                        DISPLAY_EXCEPTION("refining the code and removing comments.", InvalidCommentSyntaxException,false);
+                    }
+                }
+                else if(*vecit == AttributeType){
+                    if( vecit < token_vector.end()-1 && *(vecit + 1)  == ":"){
+                        auto first = vecit;
+                        vecit+=2;
+                        
+                        // jumping to the next first occurence of newline(\n)
+                        while(vecit < token_vector.end() && (!Support::IS_VALID_END(*vecit))){
+                            ++vecit;
+                        }
+                        ++vecit;
+
+                        // deleting from the starting of AttributeType to the first occurence of newline
+                        // including the newline.
+                        ByteCodeGenerator::token_vector.erase(first,vecit);
+                        --vecit;
+                    }
+                    else{
+                        DISPLAY_EXCEPTION("refining the code and analyzing the attribute 'type'.",InvalidAttributeException,false);
                     }
                 }
             }
@@ -598,10 +623,8 @@ namespace ByteCodeGenerator
     // Step 2 : Call ByteCodeGenerator::GENERATE();
     inline static void GENERATE()
     {
-        
         try
         {
-            
             // reading the whole content of the file.
             ByteCodeGenerator::filecode = std::string(std::istreambuf_iterator<char>(*Logs::mainfile), (std::istreambuf_iterator<char>()));
 
@@ -614,18 +637,21 @@ namespace ByteCodeGenerator
             // actual compilation starts from here.
             ByteCodeGenerator::TOKENIZER();
 
+            // clearing the filecode to free up memory.
+            ByteCodeGenerator::filecode.clear();
+
             // removing the comments and unnecessary newlines
             ByteCodeGenerator::TOKEN_VECTOR_REFINER();
 
             // analyzing the code
-            //ByteCodeGenerator::ANALYZER();
+            // ByteCodeGenerator::ANALYZER();
 
             // This function will convert the mathematical expression in the token vector to the postfix expression.
             ByteCodeGenerator::POSTFIX();
 
             // for (auto &i : token_vector)
             // {
-            //     cout << i << " | ";
+            //     std::cout << i << " | ";
             // }
 
             // creating the bytecode using token_vector.
@@ -633,9 +659,9 @@ namespace ByteCodeGenerator
 
             std::cout << "\n\t +---------------------------------+\n\t<|| Compilation done successfully ||>\n\t +---------------------------------+\n";
         }
-        catch (const std::exception &ex)
+        catch (const std::exception &)
         {
-            std::cout << "\nError : " << ex.what();
+
             DISPLAY_EXCEPTION("creating bytecode and analyzing the source code.", SystemOutofMemoryException);
         }
     }

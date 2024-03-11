@@ -23,13 +23,6 @@ inline namespace ByteCodeWriter
     std::string fnc_name;
 
     std::unordered_map<std::string, std::string> token_to_flag_map{
-        // {"{", Flag_ScopeStart},
-        // {"}", Flag_ScopeEnd},
-        // {"(", Flag_Args_Start},
-        // {")", Flag_Args_End},
-        // {"[", Flag_ListStart},
-        // {"]", Flag_ListEnd},
-        // {"~", Flag_EvalStart},
         {",", Flag_Comma},
         {"=", Flag_Assign},
         {"\n", Flag_LineEnd},
@@ -74,8 +67,14 @@ inline namespace ByteCodeWriter
         ByteCodeWriter::vecit = token_vector.begin();
 
         ByteCodeWriter::CREATE_BYTECODE();
-    }
 
+        // std::cout<<"\nLogs:\t stack_size = "<<scope_stack.size()<<"\t";
+        // //std::cout<<" value = "<<*vecit;
+        // if(scope_stack.size() > 0){
+        //     std::cout<<"\t stack_top = "<<scope_stack.top();
+        // }
+        // std::cout<<bytecode;
+    }
     // this function will add new element to the bytecode and also appends a newline at the end
     inline static void ADD_ELEMENT_TO_BYTECODE(const std::string &str)
     {
@@ -101,11 +100,11 @@ inline namespace ByteCodeWriter
             ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Variable, *vecit);
         }
         // if after a identifier there is a opening bracket '(' , then there
-        // is a function call therefore adding a function call flag
+        // is a function call, therefore adding a function call flag
         else if (vecit < token_vector.end() - 1 && *(vecit + 1) == "(")
         {
             ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_FunctionCall, *vecit);
-            ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Args_Start );
+            ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Args_Start);
             scope_stack.push(Flag_Args_End);
             ++vecit;
         }
@@ -165,6 +164,8 @@ inline namespace ByteCodeWriter
         {
 
             bool inside_eval_flag = false;
+
+            
 
             for (; vecit < token_vector.end(); ++vecit)
             {
@@ -232,7 +233,8 @@ inline namespace ByteCodeWriter
                     ByteCodeWriter::ADD_ENDING_FLAG_TO_STACK();
                     ByteCodeWriter::JUMP_TO_FIRST_OCCURRENCE("{");
                 }
-                else if(Support::IS_UNSIGNED_INTEGER(*vecit) && vecit < token_vector.end()-1 && *(vecit+1) == ":"){
+                else if (Support::IS_UNSIGNED_INTEGER(*vecit) && vecit < token_vector.end() - 1 && *(vecit + 1) == ":")
+                {
                     // if a numeric attribute arrives, then we just increment the iterator so that
                     // it can come to the place of colon(:) and the forloop will further increment it
                     // to the next token.
@@ -259,7 +261,6 @@ inline namespace ByteCodeWriter
                         }
                         // if it is actually a number
                         ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Int, *vecit);
-                        ++vecit;
                         break;
                     }
                     case TYPE_DOUBLE:
@@ -275,7 +276,7 @@ inline namespace ByteCodeWriter
                         break;
                     case TYPE_STRING:
                     {
-                        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_String, Flag_StringScopeStart);
+                        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_StringScopeStart);
 
                         // removing the initial and ending apostrophe (")
                         (*vecit).erase(vecit->begin());
@@ -311,6 +312,11 @@ inline namespace ByteCodeWriter
     // This function will write the character in the std::string bytecode to a file.
     inline static void FILE_WRITE()
     {
+        // std::cout<<"\nLogs:\t stack_size = "<<scope_stack.size()<<"\t";
+        // std::cout<<" value = "<<*vecit;
+        // if(scope_stack.size() > 0){
+        //     std::cout<<"\t stack_top = "<<scope_stack.top();
+        // }
         try
         {
             ByteCodeWriter::fnc_name += ".srb";
@@ -332,12 +338,9 @@ inline namespace ByteCodeWriter
             {
                 DISPLAY_EXCEPTION("saving the bytecode to '" + fnc_name + "'.", ByteCodeCannotbeSavedException);
             }
-
-            // std::cout << "\n-> " << *vecit << " | " << *(vecit + 1) << " | " << *(vecit + 2);
         }
-        catch (const std::exception &ex)
+        catch (const std::exception &)
         {
-            std::cout << "\nError : " << ex.what();
             DISPLAY_EXCEPTION("saving the bytecode.", SystemOutofMemoryException);
         }
     }
@@ -369,7 +372,7 @@ inline namespace ByteCodeWriter
         default:
             temp = (std::string) "" + ch;
         }
-        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Char,temp);
+        ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Char, temp);
     }
 
     // this function will move the iterator 'vecit' to the first occurrence of the passed

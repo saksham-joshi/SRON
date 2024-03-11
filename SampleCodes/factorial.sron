@@ -1,7 +1,7 @@
 {
     name: factorial
     args : (Int val)
-    type: Int
+    type: Int, Double, Char
     variables: Int fac=1,Int i
     
     for:{

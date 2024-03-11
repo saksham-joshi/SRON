@@ -69,6 +69,7 @@ struct ThrowException
 #define WaveCountIsNotEvenException 38
 #define InvalidCommentSyntaxException 39
 #define InvalidAttributeSyntaxException 40
+#define MathematicalBlockSyntaxException 41
 
 inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short int code, bool print_line_number = true)
 {
@@ -205,6 +206,10 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
             break;
         case InvalidAttributeSyntaxException :
             filename = "InvalidAttributeSyntaxException";
+            break;
+        case MathematicalBlockSyntaxException :
+            filename = "MathematicalBlockSyntaxException";
+            break;
         default:
             std::cerr << "Invalid Exception Code !\n Contact SAKSHAM JOSHI via linkedin(/sakshamjoshi27) or twitter(X) to fix this.";
             break;
