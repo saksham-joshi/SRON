@@ -90,6 +90,9 @@ inline namespace Sron
         }
         return nullptr;
     }
+    // inline Any* TO_INT(Argument_List *args){
+        
+    // }
 }
 
 #endif

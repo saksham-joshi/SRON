@@ -56,6 +56,10 @@ class List;
 */
 class Any{
     public:
+
+        // calls the destructor
+        inline virtual void FREE() const = 0;
+
         // Returns the length of the datatype 
         inline virtual size_t LEN() const = 0;
 
@@ -108,6 +112,10 @@ class Void : public Any{
 
     public :
         Void(){}
+
+        inline virtual void FREE() const override{
+            this->~Void();
+        }
 
         inline virtual size_t LEN() const override{
             return 0;
@@ -177,6 +185,10 @@ class Double : public Any{
             value = (double)val;
         }
 
+        inline virtual void FREE() const override{
+            this->~Double();
+        }
+
         inline virtual size_t LEN() const override{
             return std::to_string(value).length();
         }
@@ -235,7 +247,9 @@ class Double : public Any{
             return new Double(val);
         }
 
-        ~Double(){}
+        ~Double(){
+            this->value = 0;
+        }
 };
 
 /*
@@ -253,6 +267,10 @@ class Int: public Any {
 
         Int(){}
         Int(long long int val) : value(val){}
+
+        inline virtual void FREE() const override{
+            this->~Int();
+        }
 
         inline virtual size_t LEN() const override{
             return floor(log10(value)+1 );
@@ -312,7 +330,9 @@ class Int: public Any {
             return new Int(val) ;
         }
 
-        ~Int(){}
+        ~Int(){
+            this->value = 0;
+        }
 };
 
 /*
@@ -328,6 +348,10 @@ class Char : public Any{
     public :
         Char(){ }
         Char(char val): value(val){}
+
+        inline virtual void FREE() const override{
+            this->~Char();
+        }
 
         inline virtual size_t LEN() const override{
             return 1;
@@ -381,7 +405,9 @@ class Char : public Any{
         inline static Char* MAKE(char val){
             return new Char(val);
         }
-        ~Char(){}
+        ~Char(){
+            this->value = ' ';
+        }
 };
 
 /*
@@ -397,6 +423,10 @@ class Bool : public Any{
     public :
         Bool(){}
         Bool(bool val) : value(val){}
+
+        inline virtual void FREE() const override{
+            this->~Bool();
+        }
 
         inline virtual size_t LEN() const override{
             return (value)?4:5;
@@ -464,7 +494,9 @@ class Bool : public Any{
             DISPLAY_EXCEPTION("creating a variable of type 'Bool' from '"+str+"' value.",InvalidValueException);
             return new Bool();
         }
-        ~Bool(){}
+        ~Bool(){
+            this->value = false;
+        }
 };
 
 /*
@@ -485,6 +517,10 @@ class String : public Any{
             }catch(const std::exception&){
                 DISPLAY_EXCEPTION("creating a variable of type 'String'.",SystemOutofMemoryException);
             }
+        }
+
+        inline virtual void FREE() const override{
+            this->~String();
         }
 
         inline virtual size_t LEN() const override{
@@ -557,7 +593,9 @@ class String : public Any{
         inline static String* MAKE(string val){
             return new String(val);
         }
-        ~String(){}
+        ~String(){
+            this->value.~basic_string();
+        }
 };
 
 /*
@@ -604,6 +642,10 @@ class List : public Any{
             }catch(const std::exception&){
                 DISPLAY_EXCEPTION("creating a variable of type 'List'.",SystemOutofMemoryException);
             }
+        }
+
+        inline virtual void FREE() const override{
+            this->~List();
         }
 
         inline virtual size_t LEN() const override{
@@ -724,7 +766,13 @@ class List : public Any{
             return val;
         }
 
-        ~List(){}
+        ~List(){
+            for(auto& i : this->value){
+                i->FREE();
+                i = nullptr;
+            }
+            this->value.~vector();
+        }
 };
 
 /*

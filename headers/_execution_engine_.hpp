@@ -28,175 +28,263 @@
 #include "_user_fnc_.hpp"
 #include "_support_.hpp"
 #include "_converter_.hpp"
-#include "_argument_list_.hpp"
-#include "_variable_manager_.hpp"
-
-#include <stack>
+#include "_function_.hpp"
 
 #ifndef EXECUTOR_H
 #define EXECUTOR_H
 
 inline namespace ExecutionEngine
 {
-    // this function will start execution of the code from the file in
-    // Logs::mainfile
-    inline static void EXECUTE();
+    
+    //This stack contains the pointer to the struct SronFunction.
+    std::stack<SronFunction *> _FunctionStack_;
 
-    // this class is capable of executing codes
-    class Function;
+    // this function is called whenn Flag_Assign is found!
+    inline static Any *ASSIGN_VALUE();
 
-    // this stack will contains the function according to the order of how they are called.
-    std::stack<Function *> FunctionStack;
+    // this function is called when Flag_FunctionArgsStart is found!
+    inline static Any *ASSIGN_ARGUMENTS();
 
-    inline static void EXECUTE()
+    // this function creates a variable 
+    inline static Any *CREATE_VARIABLE();
+
+    inline static Any *CALL_FUNCTION();
+
+    // this function is used to call function by user
+    //inline static Any *CALL_FUNCTION(std::string function_name, Argument_List *args);
+
+    // executes the user-defined function..
+    inline static Any *EXECUTE_FUNCTION(std::string &function_name, Argument_List *args);
+
+    // this function extracts the arguments required to execute the functions
+    inline static Argument_List* EXTRACT_ARGUMENTS();
+
+    // this function is called when Flag_String_Value is found!
+    inline static Any* EXTRACT_STRING();
+
+    // this function is called when Flag_Char_Value is found!
+    inline static Any* EXTRACT_CHAR();
+
+    // this function is called when Flag_Double_Value is found!
+    inline static Any* EXTRACT_DOUBLE();
+
+    // this function is called when Flag_Int_Value is found!
+    inline static Any* EXTRACT_INT();
+
+    // this function is called when Flag_ListStart is found!
+    inline static Any* EXTRACT_LIST();
+
+    //this function is called when Flag_Bool_Value is found!
+    inline static Any* EXTRACT_BOOL();
+
+    // this function is called when Flag_Identifier_Variable is found!
+    inline static Any* EXTRACT_IDENTIFIER();
+
+    // this function is called when Flag_EvalStart is found!
+    inline static Any* EVALUATE();
+    
+    // this function is called when any flag is found!
+    inline static Any* FLAG_TO_FUNCTION_MAP();
+
+    // this function handles the scopes
+    inline static Any* HANDLE_OPENING_SCOPES();
+
+    inline static Any* HANDLE_CLOSING_SCOPES();
+
+    // // substitute for ++_FunctionStack_.top()->_iterator
+    // inline static std::vector<std::string>& INCREMENT_TOP_ITERATOR(){
+    //     auto& it = ++_FunctionStack_.top()->_iterator;
+    //     return it;
+    // }
+
+    using ExecutionEngineFuncMap = std::unordered_map<std::string, std::function<Any*()>>;
+
+    static ExecutionEngineFuncMap _funcmap_{
+            {Flag_Int_Value, ExecutionEngine::EXTRACT_INT },
+            {Flag_Double_Value, ExecutionEngine::EXTRACT_DOUBLE},
+            {Flag_Char_Value, ExecutionEngine::EXTRACT_CHAR},
+            {Flag_StringScopeStart, ExecutionEngine::EXTRACT_STRING},
+            {Flag_Bool_Value, ExecutionEngine::EXTRACT_BOOL},
+            {Flag_Identifier_Variable, ExecutionEngine::EXTRACT_IDENTIFIER},
+            {Flag_EvalStart, ExecutionEngine::EVALUATE},
+            {Flag_Variable, ExecutionEngine::CREATE_VARIABLE},
+            {Flag_Assign, ExecutionEngine::ASSIGN_VALUE},
+            {Flag_FunctionArgsScopeStart, ExecutionEngine::ASSIGN_ARGUMENTS},
+            {Flag_ScopeStart, ExecutionEngine::HANDLE_OPENING_SCOPES},
+            {Flag_ScopeEnd, ExecutionEngine::HANDLE_CLOSING_SCOPES},
+            {Flag_FunctionCall, ExecutionEngine::CALL_FUNCTION}
+        };
+
+    // this function loads the MAIN.srb file and starts the execution of the code.
+    inline static void MAIN(List *arglist)
     {
-        SronFunction _main_("MAIN");
-
-        _main_.codefile = std::ifstream("MAIN.srb");
-
-        if (_main_.codefile.fail())
+        try
         {
-            DISPLAY_EXCEPTION("searching for MAIN.srb file.", MainFunctionNotFoundException, false);
+            SronFunction _main_("MAIN", new Argument_List(arglist));
+
+            Logs::filename = "MAIN.srb";
+
+            ExecutionEngine::_FunctionStack_.push(&_main_);
         }
-
-        Logs::filename = "MAIN.srb";
-
-        _main_.EXECUTE(nullptr);
+        catch (const std::exception &)
+        {
+            DISPLAY_EXCEPTION("executing the 'MAIN' function.", SystemOutofMemoryException);
+        }
     }
 
-    class SronFunction
+    inline static Any *ASSIGN_ARGUMENTS(){
+        unsigned int index = 0;
+
+        auto *it = &(++_FunctionStack_.top()->_iterator);
+        while(*it < _FunctionStack_.top()->_codevector.end() && **it != Flag_FunctionArgsScopeEnd){
+            if(**it == Flag_Variable){
+                ++(*it);
+                _FunctionStack_.top()->_Vmanager.INSERT(**it, _FunctionStack_.top()->_arglist->GET(index));
+                ++index;
+            }
+        }
+
+        return nullptr;
+    }
+
+    inline static Any *ASSIGN_VALUE(){
+        auto *it = &(++_FunctionStack_.top()->_iterator);
+        Any *temp;
+        if(Support::IS_FLAG(**it)){
+            temp = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
+            _FunctionStack_.top()->_Vmanager.INSERT(**(it-2), temp);
+        }
+        return temp;
+    }
+
+    inline static Any *CREATE_VARIABLE(){
+        auto *it = &(++_FunctionStack_.top()->_iterator);
+        _FunctionStack_.top()->_Vmanager.INSERT(**(it-2), **it);
+        return nullptr;
+    }
+
+    // this function will check if the function is in-built then it
+    // it is executed otherwise it will call the EXECUTE_FUNCTION() functioN.
+    inline static Any *CALL_FUNCTION()
     {
-
-    private:
-        std::ifstream codefile;
-        VariableManager Vmanager;
-        std::string codeline;
-        std::string function_name;
-
-        // this function will call the other functions
-        inline Any *CALL_FUNCTION()
+        std::string fnc_name = *(++_FunctionStack_.top()->_iterator);
+        
+        // checking if the function is in-built
+        auto fnc = Sron::GET_SRON_FUNCTION(fnc_name);
+        if (fnc != nullptr)
         {
-            ExecutionEngine::SronFunction obj(codeline);
-            auto output = obj.EXECUTE(PREPARE_ARGUMENTS());
-            Logs::filename = this->function_name;
-            return output;
+            return fnc(ExecutionEngine::EXTRACT_ARGUMENTS());
+        }
+        return EXECUTE_FUNCTION(fnc_name, ExecutionEngine::EXTRACT_ARGUMENTS());
+    }
+
+    inline static Argument_List* EXTRACT_ARGUMENTS(){
+        Argument_List *args = new Argument_List();
+
+        auto *it = &(++_FunctionStack_.top()->_iterator);
+        while(*it < _FunctionStack_.top()->_codevector.end() && **it != Flag_Args_End){
+            args->PUT(ExecutionEngine::FLAG_TO_FUNCTION_MAP());
+            ++(*it);
+        }
+        return args;
+    }
+
+    // if the function is user-defined then this function is called.
+    inline static Any *EXECUTE_FUNCTION(std::string &function_name, Argument_List *args)
+    {
+        SronFunction fnc(function_name, args);
+
+        ExecutionEngine::_FunctionStack_.push(&fnc);
+
+        Logs::filename = function_name+".srb";
+
+        // code here
+        
+        for(; fnc._iterator < fnc._codevector.end() ; ++fnc._iterator){
+            ExecutionEngine::FLAG_TO_FUNCTION_MAP();
         }
 
-        // this function evalutes the mathematical block when Flag_EvalStart appears
-        inline Any *EVALUATE()
-        {
-            this->GETLINE();
+        fnc.~SronFunction();
 
-            // used to store the values from the mathematical block
-            // whenever an operator arrives, the two variables from the 
-            // top of the stack is popped and evaluated!
-            std::stack<Any*> stk;
-            while(this->codeline != Flag_EvalEnd){
+        ExecutionEngine::_FunctionStack_.pop();
 
-            }
+        Logs::filename = function_name+".srb";
+
+        return new Void();
+    }
+
+    inline static Any* EXTRACT_INT(){
+        auto *it = &(++_FunctionStack_.top()->_iterator);
+        return new Int(Converter::TO_INT(**it));
+    }
+
+    inline static Any* EXTRACT_DOUBLE(){
+        auto *it = &(++_FunctionStack_.top()->_iterator);
+        return new Double(Converter::TO_DOUBLE(**it));
+    }
+
+    inline static Any* EXTRACT_CHAR(){
+        auto *it = &(++_FunctionStack_.top()->_iterator);
+        
+        if(**it == "\n"){
+            return new Char('\n');
         }
-
-        inline Char *EXTRACT_CHAR()
-        {
+        else if(**it == "\t"){
+            return new Char('\t');
         }
+        return new Char((**it)[0]);
+    }
 
-        inline Int *EXTRACT_INT()
-        {
+    inline static Any* EXTRACT_BOOL(){
+        auto *it = &(++_FunctionStack_.top()->_iterator);
+
+        return new Bool((**it == "true")?true:false);
+    }
+
+    inline static Any* EXTRACT_STRING(){
+        auto *it = &(++_FunctionStack_.top()->_iterator);
+        String *str = new String();
+
+        while(*it < _FunctionStack_.top()->_codevector.end() && **it != Flag_StringScopeEnd){
+            str->APPENDS(**it+'\n');
         }
-        inline Double *EXTRACT_DOUBLE()
-        {
+        str->POP_BACK();
+        return str;
+    }
+
+    inline static Any* EXTRACT_IDENTIFIER(){
+        return _FunctionStack_.top()->_Vmanager.GET(*(++_FunctionStack_.top()->_iterator));
+    }
+
+    inline static Any* EXTRACT_LIST(){
+        List *lst;
+        // code here
+        return lst;
+    }
+
+    inline static Any* EVALUATE(){
+
+       return nullptr; 
+    }
+
+    inline static Any* FLAG_TO_FUNCTION_MAP(){
+        auto it = ExecutionEngine::_funcmap_.find(*(_FunctionStack_.top()->_iterator));
+        if(it == _funcmap_.end()){
+            DISPLAY_EXCEPTION("executing the SRON's bytecode.",InvalidByteCodeException);
         }
+        return (*it).second();
+    }
 
-        inline List *EXTRACT_LIST()
-        {
-        }
+    inline static Any* HANDLE_OPENING_SCOPES(){
+        _FunctionStack_.top()->_scopestack.push(*(_FunctionStack_.top()->_iterator));
+        return nullptr;
+    }
+    inline static Any* HANDLE_CLOSING_SCOPES(){
+        _FunctionStack_.top()->_scopestack.pop();
+        return nullptr;
+    }
 
-        inline String *EXTRACT_STRING()
-        {
-            this->GETLINE();
-            String *str = String::MAKE();
-            while (this->codeline != Flag_StringScopeEnd)
-            {
-                str->APPENDS(codeline);
-                str->APPENDS("\n");
-            }
-            str->POP_BACK();
-            return str;
-        }
 
-        // this function extracts the line of the file one by one
-        inline void GETLINE()
-        {
-            if(!std::getline(this->codefile, this->codeline)){
-                
-            }
-        }
-
-        // this method will prepare the arguments for function to be called by user
-        inline Argument_List *PREPARE_ARGUMENTS()
-        {
-            return nullptr;
-        }
-
-        // this method will map the flags to the functions
-        // this method will work like a central point for all the function.
-        inline Any* FLAG_TO_FUNCTION_MAPPER()
-        {
-            if (this->codeline == Flag_FunctionArgsScopeStart)
-            {
-                
-            }
-            else if (this->codeline == Flag_FunctionCall)
-            {
-                this->GETLINE();
-                return this->CALL_FUNCTION();
-            }
-            else if (this->codeline == Flag_StringScopeStart)
-            {
-                return this->EXTRACT_STRING();
-            }
-            else if (this->codeline == Flag_EvalStart)
-            {
-                return this->EVALUATE();
-            }
-            else if (this->codeline == Flag_Identifier_Variable)
-            {
-                this->GETLINE();
-                this->Vmanager.GET(this->codeline);
-            }
-            else if(this->codeline == Flag_ListStart){
-
-            }
-        }
-
-    public:
-        SronFunction(std::string fnc_name)
-        {
-            try
-            {
-                this->function_name = fnc_name;
-                this->codefile = std::ifstream(fnc_name + ".srb");
-                if (this->codefile.fail())
-                {
-                    DISPLAY_EXCEPTION("calling the function named as '" + fnc_name + "'.", FunctionNotFoundException, false);
-                }
-            }
-            catch (const std::exception &)
-            {
-                DISPLAY_EXCEPTION("executing the function '" + fnc_name + "'.", FunctionNotFoundException, false);
-            }
-        }
-
-        ~SronFunction() {}
-
-        // this function will start the execution of the code
-        inline Any *EXECUTE(Argument_List *args)
-        {
-            Logs::filename = function_name + ".srb";
-        }
-
-        friend void ExecutionEngine::EXECUTE();
-    };
 }
 
 #endif

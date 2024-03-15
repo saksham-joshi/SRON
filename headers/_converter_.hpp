@@ -72,7 +72,7 @@ inline namespace Converter
             double result = 0;
 
             // creating the till an invalid character or decimal point '.' doesn't arrive.
-            int i = (str[0] == '-') ? 1 : 0;
+            size_t i = (str[0] == '-') ? 1 : 0;
 
             while (i < str.length() && str[i] != '.')
             {

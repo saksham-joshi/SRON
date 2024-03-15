@@ -16,18 +16,30 @@ public:
             DISPLAY_EXCEPTION("allocating a memory to call a function.",SystemOutofMemoryException);
         }
     }
+    Argument_List(Any* value) : array(nullptr), size(0){
+        array = reinterpret_cast<Any**>(calloc(1,sizeof(Any*)));
+        if(!array){
+            DISPLAY_EXCEPTION("allocating a memory to call a function.",SystemOutofMemoryException);
+        }
+        this->PUT(value);
+    }
 
     ~Argument_List() {
         free(array);
+        this->size = 0;
     }
 
-    Any* operator[](unsigned short int index) const {
+    Any* operator[](unsigned short int index){
         if (index < size) {
             return array[index];
         } else {
             DISPLAY_EXCEPTION("extracting the passed arguments.",IndexNotWithinRange);
             return nullptr;
         }
+    }
+
+    Any* GET(unsigned short int index){
+        return this->operator[](index);
     }
 
     inline void PUT(Any* arg) {

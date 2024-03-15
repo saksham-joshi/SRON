@@ -637,8 +637,11 @@ namespace ByteCodeGenerator
             // actual compilation starts from here.
             ByteCodeGenerator::TOKENIZER();
 
+            // clearing the temp_string
+            ByteCodeGenerator::temp_string.~basic_string();
+
             // clearing the filecode to free up memory.
-            ByteCodeGenerator::filecode.clear();
+            ByteCodeGenerator::filecode.~basic_string();
 
             // removing the comments and unnecessary newlines
             ByteCodeGenerator::TOKEN_VECTOR_REFINER();
@@ -656,6 +659,8 @@ namespace ByteCodeGenerator
 
             // creating the bytecode using token_vector.
             ByteCodeWriter::WRITE(token_vector);
+
+            ByteCodeGenerator::token_vector.~vector();
 
             std::cout << "\n\t +---------------------------------+\n\t<|| Compilation done successfully ||>\n\t +---------------------------------+\n";
         }

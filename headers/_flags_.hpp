@@ -22,7 +22,7 @@
 
 
 //=================== Datatypes Flags
-
+#define Flag_Any "`Any"
 #define Flag_Int "`I"
 #define Flag_Double "`D"
 #define Flag_Char "`C"
@@ -30,13 +30,17 @@
 #define Flag_Bool "`B"
 #define Flag_List "`L"
 
+#define Flag_Int_Value "`Iv"
+#define Flag_Double_Value "`Dv"
+#define Flag_Char_Value "`Cv"
+#define Flag_Bool_Value "`Bv"
 //===================
 
 #define Flag_Comma "`,"
 #define Flag_Assign "`="
 
 #define Flag_StringScopeStart "`S{"
-#define Flag_StringScopeEnd "`S}"
+#define Flag_StringScopeEnd "`S\"}"
 
 #define Flag_FunctionCall "`F"
 
@@ -89,8 +93,7 @@
 #define Flag_EvalEnd "`E~}"
 
 
-
-//=================== Flags for Datatypes !
+//=================== Flags for Datatypes and Operatos !
 
 #define TYPE_VOID 0
 #define TYPE_INT 1
