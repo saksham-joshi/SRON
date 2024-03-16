@@ -29,6 +29,7 @@
 #define Flag_String "`S"
 #define Flag_Bool "`B"
 #define Flag_List "`L"
+#define Flag_Void "`void"
 
 #define Flag_Int_Value "`Iv"
 #define Flag_Double_Value "`Dv"

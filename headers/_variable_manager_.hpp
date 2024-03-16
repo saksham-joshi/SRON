@@ -16,14 +16,14 @@ class VariableManager{
         
     public :
 
-        inline void INSERT(std::string type, std::string variable_name){
-           if(type == "Int"){ vmap[variable_name] =  Int::MAKE(); }
-           else if(type == "String"){ vmap[variable_name] =  String::MAKE(); }
-           else if(type == "List"){ vmap[variable_name] =  List::MAKE(); }
-           else if(type == "Double"){ vmap[variable_name] =  Double::MAKE(); }
-           else if(type == "Void"){ vmap[variable_name] = Void::MAKE();}
-           else if(type == "Char"){ vmap[variable_name] =  Char::MAKE(); }
-           else if(type == "Bool"){ vmap[variable_name] =  Bool::MAKE(); }
+        inline void INSERT(std::string& type, std::string& variable_name){
+           if(type == Flag_Int ){ vmap[variable_name] =  new Int() ; }
+           else if(type == Flag_String){ vmap[variable_name] =  new String(); }
+           else if(type == Flag_List ){ vmap[variable_name] =  new List() ; }
+           else if(type == Flag_Double ){ vmap[variable_name] =  new Double() ; }
+           else if(type == Flag_Void ){ vmap[variable_name] = new Void();}
+           else if(type == Flag_Char ){ vmap[variable_name] =  new Char(); }
+           else if(type == Flag_Bool ){ vmap[variable_name] =  new Bool(); }
            else{ DISPLAY_EXCEPTION("declaring and allocating memory space for variables.",InvalidTypeException);}
         }
         inline void INSERT(std::string variable_name, Any* value){
