@@ -107,6 +107,7 @@ inline namespace ExecutionEngine
         {Flag_Char_Value, ExecutionEngine::EXTRACT_CHAR},
         {Flag_StringScopeStart, ExecutionEngine::EXTRACT_STRING},
         {Flag_Bool_Value, ExecutionEngine::EXTRACT_BOOL},
+        {Flag_ListStart, ExecutionEngine::EXTRACT_LIST},
         {Flag_Identifier_Variable, ExecutionEngine::EXTRACT_IDENTIFIER},
         {Flag_EvalStart, ExecutionEngine::EVALUATE},
         {Flag_Variable, ExecutionEngine::CREATE_VARIABLE},
@@ -123,8 +124,7 @@ inline namespace ExecutionEngine
         {Flag_Bool, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_String, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_List, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
-        {Flag_Comma, ExecutionEngine::NOTHING_PERFORMING_FUNCTION}
-    };
+        {Flag_Comma, ExecutionEngine::NOTHING_PERFORMING_FUNCTION}};
 
     // this function loads the MAIN.srb file and starts the execution of the code.
     inline static void MAIN(List *arglist)
@@ -176,14 +176,14 @@ inline namespace ExecutionEngine
 
     inline static Any *ASSIGN_VALUE()
     {
-        std::string variable_name = *(_FunctionStack_.top()->_iterator-1);
+        std::string variable_name = *(_FunctionStack_.top()->_iterator - 1);
 
         auto it = &(++_FunctionStack_.top()->_iterator);
 
         Any *value;
- 
+
         value = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
-         
+
         _FunctionStack_.top()->_Vmanager.INSERT(variable_name, value);
 
         return value;
@@ -191,9 +191,9 @@ inline namespace ExecutionEngine
 
     inline static Any *CREATE_VARIABLE()
     {
-        
+
         auto it = &(++_FunctionStack_.top()->_iterator);
-    
+
         _FunctionStack_.top()->_Vmanager.INSERT(*(*it - 2), **it);
 
         return nullptr;
@@ -259,30 +259,29 @@ inline namespace ExecutionEngine
 
     inline static Any *EXTRACT_INT()
     {
-        //// std::cout<<"\n-->Extract_Argument"<<'\n';
-        auto *it = &(++_FunctionStack_.top()->_iterator);
+        auto it = &(++_FunctionStack_.top()->_iterator);
         return new Int(Converter::TO_INT(**it));
     }
 
     inline static Any *EXTRACT_DOUBLE()
     {
-        auto *it = &(++_FunctionStack_.top()->_iterator);
+        auto it = &(++_FunctionStack_.top()->_iterator);
         return new Double(Converter::TO_DOUBLE(**it));
     }
 
     inline static Any *EXTRACT_CHAR()
     {
-        auto *it = &(++_FunctionStack_.top()->_iterator);
+        auto char_value = *(++_FunctionStack_.top()->_iterator);
 
-        if (**it == "\n")
+        if (char_value == "\\n")
         {
             return new Char('\n');
         }
-        else if (**it == "\t")
+        else if (char_value == "\\t")
         {
             return new Char('\t');
         }
-        return new Char((**it)[0]);
+        return new Char((char_value)[0]);
     }
 
     inline static Any *EXTRACT_BOOL()
@@ -308,15 +307,28 @@ inline namespace ExecutionEngine
 
     inline static Any *EXTRACT_IDENTIFIER()
     {
-        // std::cout<<"\n->nextracting identifer\n";
         return _FunctionStack_.top()->_Vmanager.GET(*(++_FunctionStack_.top()->_iterator));
     }
 
     inline static Any *EXTRACT_LIST()
     {
-        List *lst;
-        // code here
-        return lst;
+        try
+        {
+            List *lst = new List();
+            auto it = &(++_FunctionStack_.top()->_iterator);
+            while (*it < _FunctionStack_.top()->_codevector.end() && ((**it) != Flag_ListEnd))
+            {
+                lst->PUSH(ExecutionEngine::FLAG_TO_FUNCTION_MAP());
+                ++(*it);
+            }
+            return lst;
+        }
+        catch (const std::exception &ex)
+        {
+            std::cout<<ex.what();
+            DISPLAY_EXCEPTION("creating the list.", SystemOutofMemoryException);
+        }
+        return nullptr;
     }
 
     inline static Any *EVALUATE()
@@ -332,7 +344,7 @@ inline namespace ExecutionEngine
         {
             DISPLAY_EXCEPTION("executing the SRON's bytecode.", InvalidByteCodeException);
         }
-        
+
         return (*it).second();
     }
 
