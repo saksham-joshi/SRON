@@ -33,6 +33,8 @@ int main(int argc, char **argv)
 
         Logs::filename = filename;
 
+        Logs::SET_DIRECTORY_PATH();
+
         Logs::mainfile = &code_file;
 
         ByteCodeGenerator::GENERATE();
