@@ -45,7 +45,7 @@ void Logs::SET_DIRECTORY_PATH()
 {
     int i = Logs::filename.length() - 1;
 
-    while (i > 0 && Logs::filename[i] != '/')
+    while (i > 0 && !(Logs::filename[i] == '/' || Logs::filename[i] == '\\'))
     {
         --i;
     }

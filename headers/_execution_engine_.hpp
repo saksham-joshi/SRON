@@ -45,13 +45,16 @@ inline namespace ExecutionEngine
     // this function is called when Flag_FunctionArgsStart is found!
     inline static Any *ASSIGN_ARGUMENTS();
 
+    // this function handles the code when break keyword arrives
+    inline static Any* BREAK_KEYWORD();
+
+    // this function handles the code when continue keyword arrives
+    inline static Any* CONTINUE_KEYWORD();
+
     // this function creates a variable
     inline static Any *CREATE_VARIABLE();
 
     inline static Any *CALL_FUNCTION();
-
-    // this function is used to call function by user
-    // inline static Any *CALL_FUNCTION(std::string function_name, Argument_List *args);
 
     // executes the user-defined function..
     inline static Any *EXECUTE_FUNCTION(std::string &function_name, Argument_List *args);
@@ -82,6 +85,15 @@ inline namespace ExecutionEngine
 
     // this function is called when Flag_EvalStart is found!
     inline static Any *EVALUATE();
+
+    // this function handles the if-elif-else statement
+    inline static Any* EXECUTE_CONDITIONAL_STATEMENT();
+
+    // this function handles the for statement
+    inline static Any* EXECUTE_FOR_STATEMENT();
+
+    // this function handles the while statement
+    inline static Any* EXECUTE_WHILE_STATEMENT();
 
     // this function is called when any flag is found!
     inline static Any *FLAG_TO_FUNCTION_MAP();
@@ -116,7 +128,6 @@ inline namespace ExecutionEngine
         {Flag_ScopeStart, ExecutionEngine::HANDLE_OPENING_SCOPES},
         {Flag_ScopeEnd, ExecutionEngine::HANDLE_CLOSING_SCOPES},
         {Flag_FunctionCall, ExecutionEngine::CALL_FUNCTION},
-        //{Flag_Args_Start, ExecutionEngine::EXTRACT_ARGUMENTS},
         {Flag_LineEnd, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_Int, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_Double, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
@@ -129,8 +140,6 @@ inline namespace ExecutionEngine
     // this function loads the MAIN.srb file and starts the execution of the code.
     inline static void MAIN(List *arglist)
     {
-        // // std::cout << "MAIN- ";
-        // arglist->PRINT();
         try
         {
             SronFunction _main_("MAIN", new Argument_List(arglist));
@@ -187,6 +196,15 @@ inline namespace ExecutionEngine
         _FunctionStack_.top()->_Vmanager.INSERT(variable_name, value);
 
         return value;
+    }
+
+    inline static Any* BREAK_KEYWORD(){
+
+        return nullptr;
+    }
+
+    inline static Any* CONTINUE_KEYWORD(){
+        return nullptr;
     }
 
     inline static Any *CREATE_VARIABLE()
@@ -325,15 +343,105 @@ inline namespace ExecutionEngine
         }
         catch (const std::exception &ex)
         {
-            std::cout<<ex.what();
+            std::cout << ex.what();
             DISPLAY_EXCEPTION("creating the list.", SystemOutofMemoryException);
         }
         return nullptr;
     }
 
+    inline static Any* EXECUTE_CONDITIONAL_STATEMENT(){
+        return nullptr;
+    }
+
+    inline static Any* EXECUTE_FOR_STATEMENT(){
+        return nullptr;
+    }
+
+    inline static Any* EXECUTE_WHILE_STATEMENT(){
+        return nullptr;
+    }
+
     inline static Any *EVALUATE()
     {
+        try
+        {
+            auto it = &(_FunctionStack_.top()->_iterator);
 
+            std::stack<Any *> stk;
+
+            while (*it < _FunctionStack_.top()->_codevector.end() && ((**it) != Flag_EvalEnd))
+            {
+
+                // if the element is a flag then there must be a value there next to it
+                if (Support::IS_FLAG(**it))
+                {
+                    stk.push(ExecutionEngine::FLAG_TO_FUNCTION_MAP());
+                }
+                else
+                {
+                    // if no flag is there then there must be a operator
+                    Any *val1 = stk.top();
+                    stk.pop();
+                    Any *val2 = stk.top();
+                    stk.pop();
+
+                    std::string op = **it;
+                    if (op == "+")
+                    {
+                    }
+                    else if (op == "-")
+                    {
+                    }
+                    else if (op == "*")
+                    {
+                    }
+                    else if (op == "/")
+                    {
+                    }
+                    else if (op == "%")
+                    {
+                    }
+                    else if (op == "^")
+                    {
+                    }
+                    else if (op == "&&")
+                    {
+                    }
+                    else if (op == "||")
+                    {
+                    }
+                    else if (op == "==")
+                    {
+                    }
+                    else if (op == "!=")
+                    {
+                    }
+                    else if (op == "!")
+                    {
+                    }
+                    else if (op == ">")
+                    {
+                    }
+                    else if (op == ">=")
+                    {
+                    }
+                    else if (op == "<")
+                    {
+                    }
+                    else if (op == "<=")
+                    {
+                    }
+                    else
+                    {
+                        DISPLAY_EXCEPTION("solving the mathematical expression.", MathEvaluationException);
+                    }
+                }
+                ++(*it);
+            }
+        }
+        catch(const std::exception&){
+            DISPLAY_EXCEPTION("solving the mathematical expression.", SystemOutofMemoryException);
+        }
         return nullptr;
     }
 

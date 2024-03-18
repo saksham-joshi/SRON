@@ -13,10 +13,11 @@
 #include <exception>
 #include <iostream>
 #include <string>
+#include <windows.h>
 #include "static_logs.hpp"
 
-using std::cout;
 using std::cerr;
+using std::cout;
 
 struct ThrowException
 {
@@ -75,11 +76,12 @@ struct ThrowException
 inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short int code, bool print_line_number = true)
 {
     try
-    {   
+    {
         std::cout << "\nIn " << Logs::filename;
 
-        if(print_line_number){
-            std::cout<<":\nAt Line " << Logs::GET_LINE_NUMBER()<<':';
+        if (print_line_number)
+        {
+            std::cout << ":\nAt Line " << Logs::GET_LINE_NUMBER() << ':';
         }
         std::cout << "\nException Caught :\n||>> While " << during << "\n";
         std::string filename = "";
@@ -202,16 +204,16 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
         case WaveCountIsNotEvenException:
             filename = "WaveCountIsNotEvenException";
             break;
-        case InvalidCommentSyntaxException :
+        case InvalidCommentSyntaxException:
             filename = "InvalidCommentSyntaxException";
             break;
-        case InvalidAttributeSyntaxException :
+        case InvalidAttributeSyntaxException:
             filename = "InvalidAttributeSyntaxException";
             break;
-        case MathematicalBlockSyntaxException :
+        case MathematicalBlockSyntaxException:
             filename = "MathematicalBlockSyntaxException";
             break;
-        case InvalidByteCodeException :
+        case InvalidByteCodeException:
             filename = "InvalidByteCodeException";
             break;
         default:
@@ -219,17 +221,30 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
             break;
         }
 
-        std::ifstream input("headers/Exception/" + filename + ".txt");
+        char path[MAX_PATH];
+        DWORD length = GetModuleFileName(NULL, path, MAX_PATH);
+
+        if (length == 0){
+            std::cout<<"\n =| Failed to get the executable's path |=\n";
+            exit(1);
+        }
+
+        Logs::filename = path;
+
+        Logs::SET_DIRECTORY_PATH();
+
+        std::ifstream input(Logs::directory_path + "headers/Exception/" + filename + ".txt");
+
         if (input.fail())
         {
-            std::cerr << "\n\n Something goes wrong while displaying the exception message. This happen due to unavailability of a particular file.";
+            std::cerr << "\n\n Something goes wrong while displaying the exception message. This happens due to unavailability of a particular file.";
         }
         else
         {
             std::string content((std::istreambuf_iterator<char>(input)), (std::istreambuf_iterator<char>()));
-            std::cerr <<'\t'<<content;
+            std::cerr<<"    " << content;
         }
-    
+
         input.close();
         Logs::mainfile->close();
 
@@ -238,7 +253,7 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
     catch (const std::exception &ex)
     {
         std::cerr << "\n | Error : " << ex.what();
-        std::cerr << "\n\n\t\t <||> SERIOUS ERROR <||>\n\t\t Something is going wrong ! Report to SAKSHAM JOSHI(developer of SRON) via linkedin(/sakshamjoshi27) or twitter (X) to fix this.";
+        std::cerr << "\n\n\t\t <||> SERIOUS ERROR <||>\n\t\t Something is going wrong ! Report to SAKSHAM JOSHI(developer of SRON) via linkedin(/sakshamjoshi27) or twitter(X - @sakshamjoshi27) to fix this.";
     }
 }
 
