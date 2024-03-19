@@ -1,0 +1,15 @@
+`{
+`LE
+`A{
+`L
+`V
+lst
+`A}
+`LE
+`F
+PRINTLN
+`(
+`identifier
+lst
+`)
+`}
