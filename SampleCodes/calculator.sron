@@ -20,7 +20,7 @@
             2 : d1 = ~d1*d2~
         }
         elif : {
-            condition : (~operator == '/' ~)
+            condition : (~operator == '/'~)
             2 : d1 = ~d1/d2~
         }
         else : {

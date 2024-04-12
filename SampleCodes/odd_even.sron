@@ -1,13 +1,11 @@
 {
     name: odd_even
-    type: Void
-    variables:Int val
-    0 : val = INPUT_INT("Enter the value :-")
-    if:{
-        condition:(~val % 2 == 0~ )
-        1 : PRINTLN("Even number.")
-    }
-    else:{
-        1 : PRINTLN("Odd number.")
-    }
+    args : Int val
+    return : ~val%2 == 0~
+}
+
+{
+    name : MAIN
+    1 : Int val = INPUT_INT("Enter the value :- ")
+     0 : PRINTLN(odd_even(val))
 }

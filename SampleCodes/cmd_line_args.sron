@@ -1,0 +1,5 @@
+{
+    name : MAIN
+    args : (List lst)
+    0 : PRINTLN(lst)
+}

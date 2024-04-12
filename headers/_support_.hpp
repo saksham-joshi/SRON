@@ -17,6 +17,8 @@ inline namespace Support
     inline static bool IS_UNSIGNED_INTEGER(std::string &);
     inline static bool IS_RESERVED_FILENAME(std::string &);
     inline static bool IS_FLAG(std::string &);
+    inline static bool IS_LOOP_OPENING_FLAG(std::string& str);
+    inline static bool IS_LOOP_ENDING_FLAG(std::string& str);
 
     inline static char TO_LOWER(char &);
     inline static std::string TO_LOWER(std::string);
@@ -386,6 +388,13 @@ inline namespace Support
             return false;
         }
         return true;
+    }
+
+    inline static bool IS_LOOP_OPENING_FLAG(std::string& str){
+        return (str == Flag_ForScopeStart || str == Flag_WhileScopeStart);
+    }
+    inline static bool IS_LOOP_ENDING_FLAG(std::string& str){
+        return (str == Flag_ForScopeEnd || str == Flag_WhileScopeEnd);
     }
 }
 

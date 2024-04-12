@@ -43,17 +43,13 @@ struct ThrowException
 #define InvalidValueException 11
 #define InvalidVariableSyntaxException 12
 #define InvalidTypeException 13
-#define InvalidVectorDeclaration 14
 #define InvalidScopeException 15
 #define RectifyingException 16
 #define SystemOutofMemoryException 17
 #define StringTooLongException 18
 #define StringIndexException 19
 #define TypeConversionException 20
-#define VectorInputError 21
-#define VectorCreationError 22
 #define IndexNotWithinRange 23
-#define VectorEmptyException 24
 #define VariableExistAlreadyException 25
 #define VariableNotFoundException 26
 #define UnknownIdentifierException 27
@@ -135,9 +131,6 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
         case InvalidTypeException:
             filename = "InvalidTypeException";
             break;
-        case InvalidVectorDeclaration:
-            filename = "InvalidVectorDeclaration";
-            break;
         case InvalidScopeException:
             filename = "InvalidScopeException";
             break;
@@ -156,17 +149,8 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
         case TypeConversionException:
             filename = "TypeConversionException";
             break;
-        case VectorInputError:
-            filename = "VectorInputError";
-            break;
-        case VectorCreationError:
-            filename = "VectorCreationError";
-            break;
         case IndexNotWithinRange:
             filename = "IndexNotWithinRange";
-            break;
-        case VectorEmptyException:
-            filename = "VectorEmptyException";
             break;
         case VariableExistAlreadyException:
             filename = "VariableExistAlreadyException";

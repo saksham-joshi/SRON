@@ -77,6 +77,19 @@ namespace ByteCodeGenerator
                         {
                             stk.push((*vecit));
                         }
+                        else if (*vecit == ")")
+                        {
+                            while (!stk.empty() && stk.top() != "(")
+                            {
+                                exp.push_back(stk.top());
+                                stk.pop();
+                            }
+
+                            if (!stk.empty())
+                            {
+                                stk.pop();
+                            }
+                        }
                         else if (Support::IS_OPERATOR((*vecit)))
                         {
                             while (!stk.empty() && Support::PRECEDENCE(*vecit) <= Support::PRECEDENCE(stk.top()))
@@ -85,18 +98,6 @@ namespace ByteCodeGenerator
                                 stk.pop();
                             }
                             stk.push((*vecit));
-                        }
-                        else if (*vecit == ")")
-                        {
-                            while (!stk.empty() && stk.top() != "(")
-                            {
-                                exp.push_back(stk.top());
-                                stk.pop();
-                            }
-                            if (!stk.empty())
-                            {
-                                stk.pop();
-                            }
                         }
                         else
                         {
@@ -454,8 +455,9 @@ namespace ByteCodeGenerator
                 }
                 else if (*iterator == '~')
                 {
-                    if(*(token_vector.end()-1) == "~" ){
-                        DISPLAY_EXCEPTION("tokenizing the code and going through a mathematical block.",MathematicalBlockSyntaxException);
+                    if (*(token_vector.end() - 1) == "~")
+                    {
+                        DISPLAY_EXCEPTION("tokenizing the code and going through a mathematical block.", MathematicalBlockSyntaxException);
                     }
                     ++wave_count;
                     temp_string = "~";
@@ -495,15 +497,22 @@ namespace ByteCodeGenerator
                     temp_string += "!=";
                     ++iterator;
                 }
-                else if ((*iterator == '&' || *iterator == '|') && (*iterator == *(iterator + 1)))
+                else if ((*iterator == '&' || *iterator == '|' || *iterator == '=') && (*iterator == *(iterator + 1)))
                 {
                     temp_string += ((std::string) "" + *iterator) + *(iterator + 1);
                     ++iterator;
                 }
-                else if ((*iterator == '<' || *iterator == '>') && iterator < filecode.end() - 1 && *(iterator + 1) == '=')
+                else if ((*iterator == '<' || *iterator == '>'))
                 {
-                    // if <= or >= is appearing...
-                    temp_string = (temp_string + (*iterator)) + "=";
+                    // checking if <= or >= is appearing...
+                    if (iterator < filecode.end() - 1 && *(iterator + 1) == '=')
+                    {
+                        temp_string = (temp_string + (*iterator)) + "=";
+                        ++iterator;
+                    }
+                    else{
+                        temp_string = temp_string + (*iterator);
+                    }
                 }
                 else if (Support::IS_OPERATOR(*iterator))
                 {
@@ -575,7 +584,7 @@ namespace ByteCodeGenerator
                         auto first = vecit;
                         vecit += 2;
 
-                        while (vecit < token_vector.end() && (!Support::IS_VALID_END(*vecit)) )
+                        while (vecit < token_vector.end() && (!Support::IS_VALID_END(*vecit)))
                         {
                             ++vecit;
                         }
@@ -586,27 +595,31 @@ namespace ByteCodeGenerator
                     }
                     else
                     {
-                        DISPLAY_EXCEPTION("refining the code and removing comments.", InvalidCommentSyntaxException,false);
+                        DISPLAY_EXCEPTION("refining the code and removing comments.", InvalidCommentSyntaxException, false);
                     }
                 }
-                else if(*vecit == AttributeType){
-                    if( vecit < token_vector.end()-1 && *(vecit + 1)  == ":"){
+                else if (*vecit == AttributeType)
+                {
+                    if (vecit < token_vector.end() - 1 && *(vecit + 1) == ":")
+                    {
                         auto first = vecit;
-                        vecit+=2;
-                        
+                        vecit += 2;
+
                         // jumping to the next first occurence of newline(\n)
-                        while(vecit < token_vector.end() && (!Support::IS_VALID_END(*vecit))){
+                        while (vecit < token_vector.end() && (!Support::IS_VALID_END(*vecit)))
+                        {
                             ++vecit;
                         }
                         ++vecit;
 
                         // deleting from the starting of AttributeType to the first occurence of newline
                         // including the newline.
-                        ByteCodeGenerator::token_vector.erase(first,vecit);
+                        ByteCodeGenerator::token_vector.erase(first, vecit);
                         --vecit;
                     }
-                    else{
-                        DISPLAY_EXCEPTION("refining the code and analyzing the attribute 'type'.",InvalidAttributeException,false);
+                    else
+                    {
+                        DISPLAY_EXCEPTION("refining the code and analyzing the attribute 'type'.", InvalidAttributeException, false);
                     }
                 }
             }
@@ -637,6 +650,12 @@ namespace ByteCodeGenerator
             // actual compilation starts from here.
             ByteCodeGenerator::TOKENIZER();
 
+            // for (auto &i : token_vector)
+            // {
+            //     std::cout << i << " | ";
+            // }
+            
+            std::cout<<"\n\n";
             // clearing the temp_string
             ByteCodeGenerator::temp_string.~basic_string();
 

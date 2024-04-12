@@ -1,14 +1,10 @@
 {
-    name : string_manip
-    args : (Int val)
-}
-{
     name : experimental
-    variables : String val="",Char ch='A'
+    comment: "variables : String val="",Char ch='\\'"
     variables : Int val1 =-123, Double val2 = -0.45, Bool val3
 
-    0 : PRINTLN(val)
     1: val3 = false
     2 : val2 = ~val1+val2~
     3 : PRINT(val2)
+    4 : List val = [1,2,3,4,5,6]
 }

@@ -20,7 +20,7 @@ struct SronFunction
     std::vector<std::string>::iterator _iterator;
 
     // this stack is used to handle scopes
-    std::stack<std::string> _scopestack;
+    std::stack<std::vector<std::string>::iterator> _scopestack;
 
     // Argument_List containing the values passed to the function
     Argument_List *_arglist;
@@ -43,7 +43,8 @@ struct SronFunction
             }
 
             // reading the whole file and saving the lines into the _codevector
-            while(std::getline(codefile, this->_codeline)){
+            while (std::getline(codefile, this->_codeline))
+            {
                 this->_codevector.push_back(this->_codeline);
             }
 
@@ -51,6 +52,8 @@ struct SronFunction
             this->_codeline = "";
 
             this->_iterator = this->_codevector.begin();
+
+            this->_Vmanager = VariableManager();
 
             this->_arglist = args;
         }
@@ -62,6 +65,7 @@ struct SronFunction
 
     ~SronFunction()
     {
+        //std::cout<<"destroying function"<<this->_function_name;
         this->_function_name.~basic_string();
 
         this->_Vmanager.~VariableManager();
@@ -71,5 +75,6 @@ struct SronFunction
         this->_codevector.~vector();
 
         this->_codeline.~basic_string();
+        //std::cout<<"destruction end function"<<this->_function_name;
     }
 };

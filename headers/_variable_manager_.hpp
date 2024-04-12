@@ -73,8 +73,7 @@ class VariableManager{
         ~VariableManager(){         
             for(auto& i : this->vmap){
                 i.first.~basic_string();
-                i.second->FREE();
-                delete i.second;
+                free(i.second);
             }
             vmap.clear();
         }

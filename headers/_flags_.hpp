@@ -49,8 +49,8 @@
 #define Flag_FunctionArgsScopeEnd "`A}"
 
 #define Flag_Variable "`V"
-#define Flag_Break "`Break"
-#define Flag_Continue "`Continue"
+#define Flag_Break "`Brk"
+#define Flag_Continue "`Cntine"
 
 #define Flag_ScopeStart "`{"
 #define Flag_ScopeEnd "`}"
@@ -61,15 +61,14 @@
 #define Flag_Assign "`="
 
 #define Flag_Return "`R"
-#define Flag_Identifier_Variable "`identifier"
+#define Flag_Identifier_Variable "`idntifier"
 #define Flag_LineEnd "`LE"
-#define Flag_Range "`range"
-#define Flag_Condition "`condition"
+#define Flag_Range "`rng"
+#define Flag_Condition "`cnditin"
 
 
 
 //=================== Flags for control flow statements like for, while, if, elif, else.
-
 
 #define Flag_ForScopeStart "`for{"
 #define Flag_ForScopeEnd "`for}"

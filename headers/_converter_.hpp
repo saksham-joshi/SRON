@@ -71,7 +71,7 @@ inline namespace Converter
         {
             double result = 0;
 
-            // creating the till an invalid character or decimal point '.' doesn't arrive.
+            // creating the number till an invalid character or decimal point '.' doesn't arrive.
             size_t i = (str[0] == '-') ? 1 : 0;
 
             while (i < str.length() && str[i] != '.')

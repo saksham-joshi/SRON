@@ -11,9 +11,9 @@ public:
 
     static std::string filename;
 
-    static unsigned short int GET_LINE_NUMBER();
+    inline static unsigned short int GET_LINE_NUMBER();
 
-    static void INCREMENT_LINE_NUMBER();
+    inline static void INCREMENT_LINE_NUMBER();
 
     static std::ifstream *mainfile;
 
@@ -21,7 +21,7 @@ public:
     static std::string directory_path;
 
     // this function just saves the path to the file in Logs::path
-    static void SET_DIRECTORY_PATH();
+    inline static void SET_DIRECTORY_PATH();
     ~Logs() {}
 };
 
@@ -29,11 +29,11 @@ unsigned short int Logs::line_number = 1;
 
 std::string Logs::filename = "terminal";
 
-unsigned short int Logs::GET_LINE_NUMBER()
+inline unsigned short int Logs::GET_LINE_NUMBER()
 {
     return Logs::line_number;
 }
-void Logs::INCREMENT_LINE_NUMBER()
+inline void Logs::INCREMENT_LINE_NUMBER()
 {
     ++Logs::line_number;
 }
@@ -41,7 +41,7 @@ std::ifstream *Logs::mainfile;
 
 std::string Logs::directory_path = "";
 
-void Logs::SET_DIRECTORY_PATH()
+inline void Logs::SET_DIRECTORY_PATH()
 {
     int i = Logs::filename.length() - 1;
 

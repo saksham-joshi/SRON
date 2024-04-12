@@ -46,10 +46,10 @@ inline namespace ExecutionEngine
     inline static Any *ASSIGN_ARGUMENTS();
 
     // this function handles the code when break keyword arrives
-    inline static Any* BREAK_KEYWORD();
+    inline static Any *BREAK_KEYWORD();
 
     // this function handles the code when continue keyword arrives
-    inline static Any* CONTINUE_KEYWORD();
+    inline static Any *CONTINUE_KEYWORD();
 
     // this function creates a variable
     inline static Any *CREATE_VARIABLE();
@@ -87,13 +87,13 @@ inline namespace ExecutionEngine
     inline static Any *EVALUATE();
 
     // this function handles the if-elif-else statement
-    inline static Any* EXECUTE_CONDITIONAL_STATEMENT();
+    inline static Any *EXECUTE_CONDITIONAL_STATEMENT();
 
     // this function handles the for statement
-    inline static Any* EXECUTE_FOR_STATEMENT();
+    inline static Any *EXECUTE_FOR_STATEMENT();
 
     // this function handles the while statement
-    inline static Any* EXECUTE_WHILE_STATEMENT();
+    inline static Any *EXECUTE_WHILE_STATEMENT();
 
     // this function is called when any flag is found!
     inline static Any *FLAG_TO_FUNCTION_MAP();
@@ -104,12 +104,6 @@ inline namespace ExecutionEngine
     inline static Any *HANDLE_CLOSING_SCOPES();
 
     inline static Any *NOTHING_PERFORMING_FUNCTION();
-
-    // // substitute for ++_FunctionStack_.top()->_iterator
-    // inline static std::vector<std::string>& INCREMENT_TOP_ITERATOR(){
-    //     auto& it = ++_FunctionStack_.top()->_iterator;
-    //     return it;
-    // }
 
     using ExecutionEngineFuncMap = std::unordered_map<std::string, std::function<Any *()>>;
 
@@ -135,7 +129,11 @@ inline namespace ExecutionEngine
         {Flag_Bool, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_String, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_List, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
-        {Flag_Comma, ExecutionEngine::NOTHING_PERFORMING_FUNCTION}};
+        {Flag_Break, ExecutionEngine::BREAK_KEYWORD},
+        {Flag_Continue, ExecutionEngine::CONTINUE_KEYWORD},
+        {Flag_IfScopeStart, ExecutionEngine::EXECUTE_CONDITIONAL_STATEMENT},
+        {Flag_ForScopeStart, ExecutionEngine::EXECUTE_FOR_STATEMENT},
+        {Flag_WhileScopeStart, ExecutionEngine::EXECUTE_WHILE_STATEMENT}};
 
     // this function loads the MAIN.srb file and starts the execution of the code.
     inline static void MAIN(List *arglist)
@@ -150,13 +148,19 @@ inline namespace ExecutionEngine
 
             for (; _main_._iterator < _main_._codevector.end(); ++_main_._iterator)
             {
-                // std::cout<<*_main_._iterator<<'\n' ;
+                if (*_main_._iterator == Flag_Return)
+                {
+                    ++_main_._iterator;
+                    ExecutionEngine::FLAG_TO_FUNCTION_MAP();
+                    break;
+                }
+
                 ExecutionEngine::FLAG_TO_FUNCTION_MAP();
             }
 
-            _main_.~SronFunction();
-
             ExecutionEngine::_FunctionStack_.pop();
+
+            _main_.~SronFunction();
         }
         catch (const std::exception &)
         {
@@ -166,7 +170,7 @@ inline namespace ExecutionEngine
 
     inline static Any *ASSIGN_ARGUMENTS()
     {
-        unsigned int index = 0;
+        unsigned short int index = 0;
 
         auto *it = &(++_FunctionStack_.top()->_iterator);
         while (*it < _FunctionStack_.top()->_codevector.end() && **it != Flag_FunctionArgsScopeEnd)
@@ -187,23 +191,29 @@ inline namespace ExecutionEngine
     {
         std::string variable_name = *(_FunctionStack_.top()->_iterator - 1);
 
-        auto it = &(++_FunctionStack_.top()->_iterator);
+        ++_FunctionStack_.top()->_iterator;
 
-        Any *value;
-
-        value = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
+        auto value = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
 
         _FunctionStack_.top()->_Vmanager.INSERT(variable_name, value);
 
         return value;
     }
 
-    inline static Any* BREAK_KEYWORD(){
-
+    inline static Any *BREAK_KEYWORD()
+    {
+        auto it = &(++ExecutionEngine::_FunctionStack_.top()->_iterator);
+        while (*it < ExecutionEngine::_FunctionStack_.top()->_codevector.end() && !Support::IS_LOOP_ENDING_FLAG(**it))
+        {
+            ++(*it);
+        }
         return nullptr;
     }
 
-    inline static Any* CONTINUE_KEYWORD(){
+    inline static Any *CONTINUE_KEYWORD()
+    {
+        _FunctionStack_.top()->_iterator = _FunctionStack_.top()->_scopestack.top();
+
         return nullptr;
     }
 
@@ -221,11 +231,11 @@ inline namespace ExecutionEngine
     // it is executed otherwise it will call the EXECUTE_FUNCTION() functioN.
     inline static Any *CALL_FUNCTION()
     {
+        // std::cout << "\n>Start call_function()<\n";
         std::string fnc_name = *(++_FunctionStack_.top()->_iterator);
 
-        // std::cout<<"\n>fnc : "<<fnc_name<<'\n';
-
-        // by incrementing the _iterator it will move to Flag_Args_Start and now the arguments can be extracted
+        // by incrementing the _iterator it will move to Flag_Args_Start
+        // and now the arguments can be extracted
         ++_FunctionStack_.top()->_iterator;
 
         // checking if the function is in-built
@@ -233,46 +243,76 @@ inline namespace ExecutionEngine
 
         if (fnc != nullptr)
         {
+            // std::cout << "\n>end call_function()<\n";
             return fnc(ExecutionEngine::EXTRACT_ARGUMENTS());
-        }
+        } 
+        
         return EXECUTE_FUNCTION(fnc_name, ExecutionEngine::EXTRACT_ARGUMENTS());
     }
 
     inline static Argument_List *EXTRACT_ARGUMENTS()
     {
-        // std::cout<<"\n-->Extract_Argument"<<'\n';
-        Argument_List *args = new Argument_List();
-
-        auto *it = &(++_FunctionStack_.top()->_iterator);
-        while (*it < _FunctionStack_.top()->_codevector.end() && **it != Flag_Args_End)
+        try
         {
-            args->PUT(ExecutionEngine::FLAG_TO_FUNCTION_MAP());
-            ++(*it);
+            Argument_List *args = new Argument_List();
+
+            auto it = &(++_FunctionStack_.top()->_iterator);
+
+            while (*it < _FunctionStack_.top()->_codevector.end() && **it != Flag_Args_End)
+            {
+                args->PUT(ExecutionEngine::FLAG_TO_FUNCTION_MAP());
+                ++(*it);
+            }
+
+            return args;
         }
-        // std::cout<<"\n--> Exit Extract_Argument"<<'\n';
-        return args;
+        catch(const std::bad_alloc&){
+            DISPLAY_EXCEPTION("creating arguments to call function.", SystemOutofMemoryException, false);
+        }
+        catch (const std::exception &)
+        {
+            
+        }
+        return nullptr;
     }
 
     // if the function is user-defined then this function is called.
     inline static Any *EXECUTE_FUNCTION(std::string &function_name, Argument_List *args)
     {
-        SronFunction fnc(function_name, args);
-
-        ExecutionEngine::_FunctionStack_.push(&fnc);
-
-        Logs::filename = function_name + ".srb";
-
-        // code here ...
-        for (; fnc._iterator < fnc._codevector.end(); ++fnc._iterator)
+        // std::cout << "\n>Start execute_function()<\n";
+        try
         {
-            ExecutionEngine::FLAG_TO_FUNCTION_MAP();
+            SronFunction fnc(function_name, args);
+
+            ExecutionEngine::_FunctionStack_.push(&fnc);
+
+            Logs::filename = function_name + ".srb";
+
+            Any *val = new Void();
+
+            // code here ...
+            for (; fnc._iterator < fnc._codevector.end(); ++fnc._iterator)
+            {
+                if (*fnc._iterator == Flag_Return)
+                {
+                    ++fnc._iterator;
+                    val = ExecutionEngine::FLAG_TO_FUNCTION_MAP()->COPY();
+                    break;
+                }
+                ExecutionEngine::FLAG_TO_FUNCTION_MAP();
+            }
+
+            ExecutionEngine::_FunctionStack_.pop();
+
+            std::cout<<"\nreturned value = "<< val->TO_STRING()<<"<\n";
+
+            return val;
         }
-
-        fnc.~SronFunction();
-
-        ExecutionEngine::_FunctionStack_.pop();
-
-        return new Void();
+        catch (const std::exception &)
+        {
+            DISPLAY_EXCEPTION("executing the function '" + function_name + "'.", SystemOutofMemoryException, false);
+        }
+        return nullptr;
     }
 
     inline static Any *EXTRACT_INT()
@@ -311,7 +351,7 @@ inline namespace ExecutionEngine
 
     inline static Any *EXTRACT_STRING()
     {
-        auto *it = &(++_FunctionStack_.top()->_iterator);
+        auto it = &(++_FunctionStack_.top()->_iterator);
         String *str = new String();
 
         while (*it < _FunctionStack_.top()->_codevector.end() && **it != Flag_StringScopeEnd)
@@ -341,95 +381,116 @@ inline namespace ExecutionEngine
             }
             return lst;
         }
-        catch (const std::exception &ex)
+        catch (const std::exception &)
         {
-            std::cout << ex.what();
             DISPLAY_EXCEPTION("creating the list.", SystemOutofMemoryException);
         }
         return nullptr;
     }
 
-    inline static Any* EXECUTE_CONDITIONAL_STATEMENT(){
+    inline static Any *EXECUTE_CONDITIONAL_STATEMENT()
+    {
         return nullptr;
     }
 
-    inline static Any* EXECUTE_FOR_STATEMENT(){
+    inline static Any *EXECUTE_FOR_STATEMENT()
+    {
         return nullptr;
     }
 
-    inline static Any* EXECUTE_WHILE_STATEMENT(){
+    inline static Any *EXECUTE_WHILE_STATEMENT()
+    {
         return nullptr;
     }
 
     inline static Any *EVALUATE()
     {
+        // std::cout << "\n>Start EVALUATE()<\n";
         try
         {
-            auto it = &(_FunctionStack_.top()->_iterator);
+            std::vector<std::string>::iterator *it = &(++_FunctionStack_.top()->_iterator);
 
             std::stack<Any *> stk;
 
-            while (*it < _FunctionStack_.top()->_codevector.end() && ((**it) != Flag_EvalEnd))
+            while (*it < _FunctionStack_.top()->_codevector.end() && (**it) != Flag_EvalEnd)
             {
-
                 // if the element is a flag then there must be a value there next to it
                 if (Support::IS_FLAG(**it))
                 {
                     stk.push(ExecutionEngine::FLAG_TO_FUNCTION_MAP());
                 }
+                else if (**it == "!")
+                {
+                    Bool *val = new Bool(!(*stk.top()));
+                    stk.pop();
+                    stk.push(val);
+                }
                 else
                 {
                     // if no flag is there then there must be a operator
-                    Any *val1 = stk.top();
-                    stk.pop();
                     Any *val2 = stk.top();
                     stk.pop();
 
-                    std::string op = **it;
+                    Any *val1 = stk.top();
+                    stk.pop();
+
+                    std::string &op = **it;
+
                     if (op == "+")
                     {
+                        stk.push((*val1) + (*val2));
                     }
                     else if (op == "-")
                     {
+                        stk.push((*val1) - (*val2));
                     }
                     else if (op == "*")
                     {
+                        stk.push((*val1) * (*val2));
                     }
                     else if (op == "/")
                     {
+                        stk.push((*val1) / (*val2));
                     }
                     else if (op == "%")
                     {
+                        stk.push((*val1) % (*val2));
                     }
                     else if (op == "^")
                     {
+                        stk.push((*val1) ^ (*val2));
                     }
                     else if (op == "&&")
                     {
+                        stk.push(new Bool(*val1 && *val2));
                     }
                     else if (op == "||")
                     {
+                        stk.push(new Bool(*val1 || *val2));
                     }
                     else if (op == "==")
                     {
+                        stk.push(new Bool(*val1 == *val2));
                     }
                     else if (op == "!=")
                     {
-                    }
-                    else if (op == "!")
-                    {
+                        stk.push(new Bool(*val1 != *val2));
                     }
                     else if (op == ">")
                     {
+                        stk.push(new Bool(*val1 > *val2));
                     }
                     else if (op == ">=")
                     {
+                        stk.push(new Bool(*val1 >= *val2));
                     }
                     else if (op == "<")
                     {
+                        stk.push(new Bool(*val1 < *val2));
                     }
                     else if (op == "<=")
                     {
+                        stk.push(new Bool(*val1 <= *val2));
                     }
                     else
                     {
@@ -438,8 +499,10 @@ inline namespace ExecutionEngine
                 }
                 ++(*it);
             }
+            return stk.top();
         }
-        catch(const std::exception&){
+        catch (const std::exception &)
+        {
             DISPLAY_EXCEPTION("solving the mathematical expression.", SystemOutofMemoryException);
         }
         return nullptr;
@@ -447,23 +510,29 @@ inline namespace ExecutionEngine
 
     inline static Any *FLAG_TO_FUNCTION_MAP()
     {
+
         auto it = ExecutionEngine::_funcmap_.find(*(_FunctionStack_.top()->_iterator));
-        if (it == _funcmap_.end())
+
+        if (it == ExecutionEngine::_funcmap_.end())
         {
             DISPLAY_EXCEPTION("executing the SRON's bytecode.", InvalidByteCodeException);
         }
-
+        // std::cout<<"\n"+*(_FunctionStack_.top()->_iterator)<<"<\n";
         return (*it).second();
     }
 
     inline static Any *HANDLE_OPENING_SCOPES()
     {
-        _FunctionStack_.top()->_scopestack.push(*(_FunctionStack_.top()->_iterator));
+        // std::cout << "\n>Start Handle opening scopes()<\n";
+        _FunctionStack_.top()->_scopestack.push(_FunctionStack_.top()->_iterator);
+        // std::cout << "\n>end handle opening scopes()<\n";
         return nullptr;
     }
     inline static Any *HANDLE_CLOSING_SCOPES()
     {
+        // std::cout << "\n>Start handle closing scopes()<\n";
         _FunctionStack_.top()->_scopestack.pop();
+        // std::cout << "\n>end handle closing scopes()<\n";
         return nullptr;
     }
 

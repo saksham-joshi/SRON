@@ -23,9 +23,7 @@ inline namespace ByteCodeWriter
     std::string fnc_name;
 
     std::unordered_map<std::string, std::string> token_to_flag_map{
-        {",", Flag_Comma},
         {"=", Flag_Assign},
-        {"\n", Flag_LineEnd},
         {"Any", Flag_Any},
         {"Int", Flag_Int},
         {"Double", Flag_Double},
@@ -80,6 +78,7 @@ inline namespace ByteCodeWriter
         ByteCodeWriter::fnc_name.clear();
 
         ByteCodeWriter::token_to_flag_map.clear();
+
     }
     // this function will add new element to the bytecode and also appends a newline at the end
     inline static void ADD_ELEMENT_TO_BYTECODE(const std::string &str)
@@ -111,6 +110,7 @@ inline namespace ByteCodeWriter
         {
             ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_FunctionCall, *vecit);
             ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Args_Start);
+            // std::cout<<"\npushed:"<<Flag_Args_End;
             scope_stack.push(Flag_Args_End);
             ++vecit;
         }
@@ -175,21 +175,25 @@ inline namespace ByteCodeWriter
                 // first handling scopes
                 if (*vecit == "{")
                 {
+                    // std::cout<<"\npushed:"<<Flag_ScopeEnd;
                     scope_stack.push(Flag_ScopeEnd);
                     ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_ScopeStart);
                 }
                 else if (*vecit == "(")
                 {
+                    // std::cout<<"\npushed:"<<Flag_Args_End;
                     scope_stack.push(Flag_Args_End);
                     ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_Args_Start);
                 }
                 else if (*vecit == "[")
                 {
+                    // std::cout<<"\npushed:"<<Flag_ListEnd;
                     scope_stack.push(Flag_ListEnd);
                     ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_ListStart);
                 }
                 else if (*vecit == "}" || *vecit == ")" || *vecit == "]")
                 {
+                    //std::cout<<"\n>"<<*vecit<<" | "<<scope_stack.size()<<"<\n";
                     ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(scope_stack.top());
                     scope_stack.pop();
 
@@ -198,14 +202,13 @@ inline namespace ByteCodeWriter
                         ByteCodeWriter::FILE_WRITE();
                     }
                 }
+                else if(*vecit == "," || *vecit == ":" || *vecit == "\n"){
+                    continue;
+                }
                 else if (*vecit == "~")
                 {
                     inside_eval_flag = !inside_eval_flag;
                     ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE((inside_eval_flag) ? Flag_EvalStart : Flag_EvalEnd);
-                }
-                else if (*vecit == ":")
-                {
-                    continue;
                 }
                 else if (*vecit == AttributeName)
                 {
@@ -215,6 +218,7 @@ inline namespace ByteCodeWriter
                 else if (*vecit == AttributeArgs)
                 {
                     ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_FunctionArgsScopeStart);
+                    // std::cout<<"\npushed:"<<Flag_FunctionArgsScopeEnd;
                     ByteCodeWriter::scope_stack.push(Flag_FunctionArgsScopeEnd);
                     vecit += 2;
                 }
@@ -292,6 +296,7 @@ inline namespace ByteCodeWriter
                     case TYPE_LIST:
                     {
                         ByteCodeWriter::ADD_ELEMENT_TO_BYTECODE(Flag_List, *vecit);
+                        // std::cout<<"\npushed:"<<Flag_ListEnd;
                         ByteCodeWriter::scope_stack.push(Flag_ListEnd);
                         break;
                     }
@@ -318,6 +323,7 @@ inline namespace ByteCodeWriter
         try
         {
             ByteCodeWriter::fnc_name = Logs::directory_path+ByteCodeWriter::fnc_name+".srb";
+
             std::ofstream outfile(ByteCodeWriter::fnc_name);
 
             if (outfile.is_open())
