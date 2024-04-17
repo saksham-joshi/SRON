@@ -2,10 +2,7 @@
 #include "headers/_exception_.hpp"
 
 int main(int argc, char **argv)
-{
-    // std::ios_base::sync_with_stdio(false);
-    // std::cin.tie(NULL);
-    
+{   
     try
     {
         clock_t start, end;

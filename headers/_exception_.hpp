@@ -68,6 +68,7 @@ struct ThrowException
 #define InvalidAttributeSyntaxException 40
 #define MathematicalBlockSyntaxException 41
 #define InvalidByteCodeException 42
+#define InvalidConditionalStatement 43
 
 inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short int code, bool print_line_number = true)
 {
@@ -199,6 +200,9 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
             break;
         case InvalidByteCodeException:
             filename = "InvalidByteCodeException";
+            break;
+        case InvalidConditionalStatement :
+            filename = "InvalidConditionalStatement";
             break;
         default:
             std::cerr << "Invalid Exception Code !\n Contact SAKSHAM JOSHI via linkedin(/sakshamjoshi27) or twitter(X) to fix this.";

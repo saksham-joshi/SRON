@@ -17,7 +17,8 @@ class VariableManager{
     public :
 
         inline void INSERT(std::string& type, std::string& variable_name){
-           if(type == Flag_Int ){ vmap[variable_name] =  new Int() ; }
+            if(type == Flag_Any){ vmap[variable_name] = new Void(); }
+           else if(type == Flag_Int ){ vmap[variable_name] =  new Int() ; }
            else if(type == Flag_String){ vmap[variable_name] =  new String(); }
            else if(type == Flag_List ){ vmap[variable_name] =  new List() ; }
            else if(type == Flag_Double ){ vmap[variable_name] =  new Double() ; }
@@ -71,10 +72,10 @@ class VariableManager{
             vmap.clear();
         }
         ~VariableManager(){         
-            for(auto& i : this->vmap){
-                i.first.~basic_string();
-                free(i.second);
-            }
+            // for(auto& i : this->vmap){
+            //     i.first.~basic_string();
+            //     free(i.second);
+            // }
             vmap.clear();
         }
 };

@@ -91,7 +91,7 @@ inline namespace Support
     inline static bool IS_KEYWORD(std::string &word)
     {
         return (IS_INBUILT_ATTRIBUTE(word) || IS_DATATYPE(word) || IS_LOGICAL_OPERATOR(word) || word == "MAIN" || word == "PRINT" || word == "PRINTLN" || word == "LEN" ||
-                word == "SIZE_OF" || word == "TYPE" || word == "TO_STRING" || word == "break" || word == "continue");
+                word == "SIZE_OF" || word == "TYPE" || word == "TO_STRING" || word == "break" || word == "continue" || word == "true" || word == "false");
     }
 
     inline static bool IS_CURLY_BRACES(char &ch)

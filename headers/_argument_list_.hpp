@@ -26,11 +26,11 @@ public:
             DISPLAY_EXCEPTION("allocating memory to create argument list.", SystemOutofMemoryException);
         }
     }
-    Argument_List(Any *value) : array(nullptr), size(1)
+    Argument_List(Any *value) : array(nullptr), size(0)
     {
         try
         {
-            array = reinterpret_cast<Any **>(calloc(1, sizeof(Any *)));
+            array = reinterpret_cast<Any **>(calloc(size, sizeof(Any *)));
             if (!array)
             {
                 DISPLAY_EXCEPTION("allocating a memory to call a function.", SystemOutofMemoryException);
@@ -69,7 +69,6 @@ public:
 
     inline void PUT(Any *arg)
     {
-        // std::cout<<"value inserted = "<<arg->TO_STRING()<<"\n";
         try
         {
             ++size;

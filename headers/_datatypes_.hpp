@@ -27,6 +27,7 @@
 #include <cmath>
 #include "_exception_.hpp"
 #include "_flags_.hpp"
+#include "_converter_.hpp"
 
 using std::exception;
 using std::string;
@@ -196,10 +197,7 @@ private:
 public:
     Double() {}
     Double(double val) : value(val) {}
-    Double(long long int val) : value((double)val)
-    {
-        // value = (double)val;
-    }
+    Double(long long int val) : value((double)val){}
 
     /*
      * This constructor can only be used if the developer is totally
@@ -207,7 +205,11 @@ public:
      * there is a certain problem with std::stod that it will convert
      * the value until a invalid character is encountered.
      */
-    Double(std::string &val) : value(std::stod(val)) {}
+    Double(std::string &val) : value(Converter::TO_DOUBLE(val)) {}
+
+    inline Double operator=(double val){
+        return Double(val);
+    }
 
     inline virtual void FREE() const override
     {
@@ -259,7 +261,7 @@ public:
     }
     inline virtual Double *GET_DOUBLE() const override
     {
-        return const_cast<Double *>(this);
+        return const_cast<Double*>(this);
     }
     inline virtual String *GET_STRING() const override
     {
@@ -315,6 +317,10 @@ public:
     Int() {}
     Int(long long int val) : value(val) {}
     Int(std::string &val) : value(std::stoll(val)) {}
+
+    inline Int operator=(long long int& val){
+        return Int(val);
+    }
 
     inline virtual void FREE() const override
     {
@@ -422,6 +428,10 @@ public:
     Char() {}
     Char(char val) : value(val) {}
 
+    inline Char operator=(char& val){
+        return Char(val);
+    }
+
     inline virtual void FREE() const override
     {
         this->~Char();
@@ -522,6 +532,10 @@ public:
     Bool() {}
     Bool(bool val) : value(val) {}
 
+    inline Bool operator=(bool& val){
+        return Bool(val);
+    }
+
     inline virtual void FREE() const override
     {
         this->~Bool();
@@ -543,7 +557,7 @@ public:
 
     inline virtual long long int SIZE_OF() const override
     {
-        return sizeof(this->value);
+        return sizeof(this);
     }
 
     inline virtual string TO_STRING() const override
@@ -646,6 +660,10 @@ public:
         {
             DISPLAY_EXCEPTION("creating a variable of type 'String'.", SystemOutofMemoryException);
         }
+    }
+
+    inline String operator=(std::string& str){
+        return String(str);
     }
 
     inline virtual void FREE() const override
@@ -1018,7 +1036,7 @@ public:
   NOTE: It's implementation is causing troubles with the speed and efficieny so it will be implemented further.
 */
 
-bool operator==(Any &val1, Any &val2)
+inline static bool operator==(Any &val1, Any &val2)
 {
     try
     {
@@ -1131,7 +1149,7 @@ bool operator==(Any &val1, Any &val2)
     return false;
 }
 
-bool operator&&(Any &val1, Any &val2)
+inline static bool operator&&(Any &val1, Any &val2)
 {
     if (val1.TYPE_NUMBER() == TYPE_BOOL && val2.TYPE_NUMBER() == TYPE_BOOL)
     {
@@ -1141,7 +1159,7 @@ bool operator&&(Any &val1, Any &val2)
     return false;
 }
 
-bool operator||(Any &val1, Any &val2)
+inline static bool operator||(Any &val1, Any &val2)
 {
     if (val1.TYPE_NUMBER() == TYPE_BOOL && val2.TYPE_NUMBER() == TYPE_BOOL)
     {
@@ -1151,12 +1169,12 @@ bool operator||(Any &val1, Any &val2)
     return false;
 }
 
-bool operator!=(Any &val1, Any &val2)
+inline static bool operator!=(Any &val1, Any &val2)
 {
     return !(val1 == val2);
 }
 
-bool operator!(Any &val1)
+inline static bool operator!(Any &val1)
 {
     if (val1.TYPE_NUMBER() == TYPE_BOOL)
     {
@@ -1166,7 +1184,7 @@ bool operator!(Any &val1)
     return false;
 }
 
-bool operator<(Any &val1, Any &val2)
+inline static bool operator<(Any &val1, Any &val2)
 {
     try
     {
@@ -1230,7 +1248,7 @@ bool operator<(Any &val1, Any &val2)
     return false;
 }
 
-bool operator<=(Any &val1, Any &val2)
+inline static bool operator<=(Any &val1, Any &val2)
 {
     try
     {
@@ -1296,7 +1314,7 @@ bool operator<=(Any &val1, Any &val2)
     return false;
 }
 
-bool operator>(Any &val1, Any &val2)
+inline static bool operator>(Any &val1, Any &val2)
 {
     try
     {
@@ -1362,7 +1380,7 @@ bool operator>(Any &val1, Any &val2)
     return false;
 }
 
-bool operator>=(Any &val1, Any &val2)
+inline static bool operator>=(Any &val1, Any &val2)
 {
     try
     {
@@ -1427,7 +1445,7 @@ bool operator>=(Any &val1, Any &val2)
     }
     return false;
 }
-Any *operator+(Any &val1, Any &val2)
+inline static Any *operator+(Any &val1, Any &val2)
 {
     try
     {
@@ -1501,7 +1519,7 @@ Any *operator+(Any &val1, Any &val2)
     return new Void();
 }
 
-Any *operator-(Any &val1, Any &val2)
+inline static Any *operator-(Any &val1, Any &val2)
 {
     try
     {
@@ -1543,7 +1561,7 @@ Any *operator-(Any &val1, Any &val2)
     }
     return new Void();
 }
-Any *operator*(Any &val1, Any &val2)
+inline static Any *operator*(Any &val1, Any &val2)
 {
     try
     {
@@ -1587,7 +1605,7 @@ Any *operator*(Any &val1, Any &val2)
 }
 
 // this function takes care of if the second value is a zero or not and returns a long long int value
-long long int __DIVIDE(long long int val1, long long int val2)
+inline static long long int __DIVIDE(long long int val1, long long int val2)
 {
     if (val2 == 0)
     {
@@ -1595,7 +1613,7 @@ long long int __DIVIDE(long long int val1, long long int val2)
     }
     return val1 / val2;
 }
-long long int __MODULUS(long long int val1, long long int val2)
+inline static long long int __MODULUS(long long int val1, long long int val2)
 {
     if (val2 == 0)
     {
@@ -1604,7 +1622,7 @@ long long int __MODULUS(long long int val1, long long int val2)
     return val1 % val2;
 }
 
-Any *operator/(Any &val1, Any &val2)
+inline static Any *operator/(Any &val1, Any &val2)
 {
     try
     {
@@ -1647,7 +1665,7 @@ Any *operator/(Any &val1, Any &val2)
     return new Void();
 }
 
-Any *operator%(Any &val1, Any &val2)
+inline static Any *operator%(Any &val1, Any &val2)
 {
     try
     {
@@ -1694,7 +1712,7 @@ Any *operator%(Any &val1, Any &val2)
     return new Void();
 }
 
-Any *operator^(Any &val1, Any &val2)
+inline static Any *operator^(Any &val1, Any &val2)
 {
     try
     {
@@ -1736,5 +1754,4 @@ Any *operator^(Any &val1, Any &val2)
     }
     return new Void();
 }
-
 #endif

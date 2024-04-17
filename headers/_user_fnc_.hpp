@@ -40,7 +40,7 @@ inline namespace Sron
 
     inline static Any *SIZE_OF(Argument_List *);
 
-    inline static Any* TYPE(Argument_List *);
+    inline static Any* TYPE_OF(Argument_List *);
 
     static UserFunctionMap Fmap{
 
@@ -62,7 +62,7 @@ inline namespace Sron
 
         {"sizeof", Sron::SIZE_OF},
 
-        {"type", Sron::TYPE}
+        {"typeof", Sron::TYPE_OF}
 
         };
 
@@ -220,7 +220,7 @@ inline namespace Sron
         return &void_object; ;
     }
 
-    inline static Any* TYPE(Argument_List *args){
+    inline static Any* TYPE_OF(Argument_List *args){
         return new String(args->GET(0)->TYPE());
     }
 }

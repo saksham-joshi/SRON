@@ -31,7 +31,7 @@ It includes functions :
 inline namespace Converter
 {
 
-    inline static std::string TOUPPERCASE(std::string str)
+    inline static std::string TOUPPERCASE(std::string& str)
     {
         for (size_t i = 0; i < str.length(); ++i)
         {
@@ -65,7 +65,7 @@ inline namespace Converter
         4. long long int  ->    double
     */
 
-    inline static double TO_DOUBLE(std::string str)
+    inline static double TO_DOUBLE(std::string& str)
     {
         try
         {
@@ -120,7 +120,7 @@ inline namespace Converter
         |==========  TO_STRING ==========|
         Conversion to string type ....
         1. long long int  ->    string
-        2. double    ->    string
+        2. double         ->    string
         3. bool           ->    string
         4. char           ->    string
         5. string         ->    string
@@ -134,7 +134,7 @@ inline namespace Converter
     {
         return std::to_string(d);
     }
-    inline static std::string TO_STRING(std::string i)
+    inline static std::string TO_STRING(std::string& i)
     {
         return i;
     }
@@ -157,7 +157,7 @@ inline namespace Converter
         5. string         ->    long long int
     */
 
-    inline static long long int TO_INT(std::string str)
+    inline static long long int TO_INT(std::string& str)
     {
         try
         {
@@ -221,7 +221,7 @@ inline namespace Converter
         4. long long int  ->    bool
     */
 
-    inline static bool TO_BOOL(std::string str)
+    inline static bool TO_BOOL(std::string& str)
     {
         try
         {

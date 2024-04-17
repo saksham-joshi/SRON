@@ -64,7 +64,8 @@
 #define Flag_Identifier_Variable "`idntifier"
 #define Flag_LineEnd "`LE"
 #define Flag_Range "`rng"
-#define Flag_Condition "`cnditin"
+#define Flag_ConditionScopeStart "`cndtn{"
+#define Flag_ConditionScopeEnd "`cndtn}"
 
 
 
@@ -77,7 +78,7 @@
 #define Flag_WhileScopeEnd "`while}"
 
 #define Flag_IfScopeStart "`if{"
-#define Flag_IfScopeSEnd "`if}"
+#define Flag_IfScopeEnd "`if}"
 
 #define Flag_ElifScopeStart "`elif{"
 #define Flag_ElifScopeEnd "`elif}"
