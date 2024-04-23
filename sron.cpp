@@ -13,7 +13,7 @@
 */
 
 #include "headers/_execution_engine_.hpp"
-#include<windows.h>
+#include<ctime>
 
 #ifndef SRON_H
 #define SRON_H
@@ -22,10 +22,13 @@ int main(int argc, char **argv)
 {
     try
     {
-        // std::ios_base::sync_with_stdio(false);
-        // std::cout.tie(0);
-        // std::cin.tie(0);
-        std::cout<<std::fixed<<std::setprecision(8);
+        clock_t start = clock();
+        
+        std::ios_base::sync_with_stdio(false);
+        std::cout.tie(0);
+        std::cin.tie(0);
+
+        std::cout<<std::fixed<<std::setprecision(4);
 
         // create a argument list to provide command line arguments to the user
         List arglist;
@@ -36,8 +39,10 @@ int main(int argc, char **argv)
 
         // starting the execution of the code
         ExecutionEngine::MAIN(&arglist);
+        
+        clock_t end = clock();
 
-        std::cout<<"\nSuccessfully executed!\n";
+        std::cout<<"   --------------------------------\n   | Time taken : "<<double(end-start)/double(CLOCKS_PER_SEC)<<" seconds. |";
 
     }
     catch (const std::exception &)
