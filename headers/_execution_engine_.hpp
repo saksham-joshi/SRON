@@ -664,6 +664,8 @@ inline namespace ExecutionEngine
                 if (**it == Flag_ConditionScopeStart && !SOLVE_CONDITION())
                 {
                     BREAK_LOOP();
+                    break;
+                    
                     return nullptr;
                 }
 
@@ -678,8 +680,12 @@ inline namespace ExecutionEngine
                     ++(*it);
                 }
 
-                ExecutionEngine::CONTINUE_LOOP();
+                // moving the iterator to the position where condition starts
+                *it = (*top)->_scopestack.top();
             }
+
+            (*top)->_scopestack.pop();
+
             return nullptr;
         }
         catch (const std::exception &)
