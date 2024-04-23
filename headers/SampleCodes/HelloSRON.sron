@@ -1,6 +1,0 @@
-{
-    name: MAIN
-    comment : Hello , world
-    type: Void
-    0 : PRINT("Hello, SRON")    
-}
