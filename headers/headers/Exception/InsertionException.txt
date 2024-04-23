@@ -1,5 +1,0 @@
-> Reason 1 : You are inserting an invalid value inside the variable.
-	> Reason 2 : You are inserting a value within itself. For e.g. You are inserting a list inside itself.
-
-	||> Solution 1 : Check the type of the variable using TYPE() function and then insert it.
-	||> Solution 2 : Try to insert another value inside the variable.

@@ -1,5 +1,0 @@
-> Reason 1 : You are trying to call a function within a Mathematical Block.
-    > Reason 2 : You left the Mathematical Block empty like this- 0 : x = ~~
-
-    > Solution 1 : Make sure you are calling a function within a Mathematical Block.
-    > Solution 2 : Make sure to write anything inside the Mathematical Block.

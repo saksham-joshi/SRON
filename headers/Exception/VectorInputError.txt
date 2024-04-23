@@ -1,5 +1,0 @@
-> Reason 1: You inserted another type of data in the passed vector.
-	> Reason 2: System is out of memory.
-
-	||> Solution 1: Insert the valid elements in the vector.
-	||> Solution 2: Remove the background applications running in our system.

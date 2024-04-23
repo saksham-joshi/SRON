@@ -1,3 +1,0 @@
-> Reason : Vector is empty so no operation is possible in it.
-
-	||> Solution : Try to put a conditional statement in your code stating that if the Vector\'s Length is 0, then No operation can be done on it.
