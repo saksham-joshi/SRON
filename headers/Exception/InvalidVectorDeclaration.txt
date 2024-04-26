@@ -1,5 +1,0 @@
-> Reason 1: Elements inserted in the vector can have same type and according to the type of vector.
-	> Reason 2: No proper syntax of vector declaration.
-
-	||> Solution 1: Correct Syntax of declaring variables is : Type[] name_of_vector = [element1 ,element2].
-	||> Solution 2: Make sure to store similar types of values inside the vector.

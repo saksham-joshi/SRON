@@ -1,8 +1,0 @@
-> Reason 1 : You input Invalid Characters as per the type of the expected characters.
-	> Reason 2 : Maybe System\'s memory is dysfunctioning.
-	> Reason 3 : In case of Int & Double inputs, if the values are too big, then this exception is thrown.
-	
-	||> Solution 1 : If taking an 'Int' input then enter only numbers and negate.
-	||> Solution 2 : If taking an 'Double' input then enter only numbers, negate and decimal point.
-	||> Solution 3 : If taking an 'Char' input then enter only a single non-Unicode character.
-	||> Solution 4 : If taking an 'String' input then enter only non-Unicode characters.
