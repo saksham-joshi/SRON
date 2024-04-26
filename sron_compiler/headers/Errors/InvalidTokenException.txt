@@ -1,0 +1,10 @@
+> Reason 1 : An Invalid token found in the file.
+
+	||> Solution 1 : Read the documentation of SRON carefully and write valid tokens.
+	||> Solution 2 : Below is the list of valid tokens :
+				-> {      -> }      -> [
+				-> ]      -> (      -> )
+				-> +      -> -      -> *
+				-> /      -> %      -> ^
+				-> =      -> >      -> <
+				-> ~      -> !      -> ,

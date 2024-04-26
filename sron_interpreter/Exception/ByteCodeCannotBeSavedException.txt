@@ -1,0 +1,8 @@
+> Reason 1 : File Size is too large.
+    > Reason 2 : Operating System is not allowing to access the file.
+    > Reason 3 : Maybe the directory of the source code is reserved by the OS or other application.
+    > Reason 4 : Maybe system is out of memory.
+
+    ||> Solution 1 : Split your code into multiple files.
+    ||> Solution 2 : Move your source code to another directory and then try again.
+    ||> Solution 3 : Clean up your disk and try again.
