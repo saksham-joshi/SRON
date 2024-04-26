@@ -12,7 +12,7 @@
  * @email- social.sakshamjoshi@gmail.com
 */
 
-#include "headers/_execution_engine_.hpp"
+#include "sron_interpreter/_execution_engine_.hpp"
 #include<ctime>
 
 #ifndef SRON_H
@@ -24,13 +24,13 @@ int main(int argc, char **argv)
     {
         clock_t start = clock();
         
-        std::ios_base::sync_with_stdio(false);
-        std::cout.tie(0);
-        std::cin.tie(0);
+        
+        // std::cout.tie(0);
+        // std::cin.tie(0);
 
         std::cout<<std::fixed<<std::setprecision(4);
 
-        // create a argument list to provide command line arguments to the user
+        // create a Listist to provide command line arguments to the user
         List arglist;
         
         for(int i = 1; i< argc; ++i){

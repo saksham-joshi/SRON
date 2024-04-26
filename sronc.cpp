@@ -1,19 +1,21 @@
-#include "headers/_bytecode_generator_.hpp"
-#include "headers/_exception_.hpp"
+#include "sron_compiler/_bytecode_generator_.hpp"
 
 int main(int argc, char **argv)
 {   
     try
     {
-        clock_t start, end;
+        std::string filename;
 
-        start = clock();
+        if(argc > 0){
+            filename = std::string(argv[1]);
+        }
+        else{
+            throw std::exception();
+        }
 
-        std::string filename(argv[1]);
-        
         // checking if the extension of the file is .sron or not!
         if(!(filename.size() > 5 && Support::TO_LOWER(filename.substr(filename.size()-5)) == ".sron") ){
-            std::cout<<"\n =| File Ending with extension .sron can only be compiled |= \n\n";
+            std::cout<<"\n =| Only files with extension '.sron'  can be compiled!! |= \n\n";
             exit(1);
         }
 
@@ -21,11 +23,12 @@ int main(int argc, char **argv)
 
         if (code_file.fail())
         {
+            
             if (argc == 1)
             {
-                DISPLAY_EXCEPTION("getting the file name.", FileNameNotSpecifiedException, false);
+                throw std::exception();
             }
-            throw std::exception();
+            DISPLAY_EXCEPTION("reading the file from the specified path.", FileNotFoundException, false);
         }
 
         Logs::filename = filename;
@@ -38,14 +41,12 @@ int main(int argc, char **argv)
 
         code_file.close();
 
-        end = clock();
-
-        std::cout <<std::setprecision(4)<< "\n\t=---> Time Taken : " << double(end - start) / double(CLOCKS_PER_SEC) << " seconds.\n";
+        std::cout << "\n\t=---> Time Taken : " << double(clock() - Logs::execution_start_time) / double(CLOCKS_PER_SEC) << " seconds.\n";
 
     }
     catch (const std::exception&)
     {
-        DISPLAY_EXCEPTION("reading the file from the specified path.", FileNotFoundException, false);
+        DISPLAY_EXCEPTION("getting the file name.", FileNameNotSpecifiedException, false);
     }
     
     return 0;
