@@ -1,0 +1,18 @@
+
+{
+    name: factorial
+    args : (Int val)
+    variables: Int fac=1,Int i
+    
+    for:{
+        range: (Int i = 2,~val+1~)
+        0 : fac = ~fac*i~
+    }
+    return : fac
+
+}
+{
+    name: MAIN
+    type : Void
+    0 : PRINTLN(factorial(5))
+}
