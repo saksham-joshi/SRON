@@ -8,6 +8,7 @@
  * You can freely redistribute it but cannot modify the source code without the permission from the author.
  *
  * @author: SAKSHAM JOSHI
+ *
  */
 
 /*
@@ -21,12 +22,14 @@
         4. Executes Conditional statements.
         5. Executes looping statements.
 
+
     In overall, it will perform the most vital operations and it will act like a brain of SRON programming
     language.
 
     *| All the comments in this file uses some words which refers to different variables, explaination given below :
        1. iterator : ExecutionEngine::_FunctionStack_.top()._iterator;
        2. flags : it contains the #define Flags_... , defined in headers/_flags_.hpp
+
 */
 
 #include "headers/_user_fnc_.hpp"
@@ -97,7 +100,7 @@ inline namespace ExecutionEngine
 
     inline static Any *RETURN_VALUE();
 
-    // functions which are not mapped by the ExecutionEngine::_funcmap_
+    //================ Functions which are not mapped by the ExecutionEngine::_funcmap_ .....
 
     inline static bool SOLVE_CONDITION();
 
@@ -596,7 +599,7 @@ inline namespace ExecutionEngine
 
         if (*loop_start < *loop_end)
         {
-            for (; *it < end && (*loop_start < *loop_end);)
+            for (; *it < end && ((*loop_start) < (*loop_end));)
             {
 
                 while (*it < end && **it != Flag_ForScopeEnd)
@@ -609,7 +612,8 @@ inline namespace ExecutionEngine
 
                 ((*top)->_Vmanager.INSERT(iteration_variable, (*(*top)->_Vmanager.GET(iteration_variable) + *loop_step)));
 
-                *loop_start = *(*top)->_Vmanager.GET(iteration_variable);
+                loop_start = (*top)->_Vmanager.GET(iteration_variable);
+
             }
         }
         else
@@ -924,6 +928,7 @@ inline namespace ExecutionEngine
         }
 
         auto iteration_variable = (*it) - 1;
+        
         // now the current flag is `=
         *loop_start = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
         ++(*it);
@@ -931,16 +936,11 @@ inline namespace ExecutionEngine
         *loop_end = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
         ++(*it);
 
+
         // if the start is larger than the end, then user is trying a reverse loop
         // so we will set the steps as -1;
-        if (**loop_start > **loop_end)
-        {
-            *loop_step = new Int(-1);
-        }
-        else
-        {
-            *loop_step = new Int(1);
-        }
+        *loop_step = (**loop_start > **loop_end) ? new Int(-1) : new Int(1);
+
 
         if (**it != Flag_RangeScopeEnd)
         {
