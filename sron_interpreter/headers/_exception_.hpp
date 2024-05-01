@@ -220,7 +220,7 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
 
         Logs::SET_DIRECTORY_PATH();
 
-        std::ifstream input(Logs::directory_path + "headers/Exception/" + filename + ".txt");
+        std::ifstream input(Logs::directory_path + "sron_interpreter/headers/Exception/" + filename + ".txt");
 
         if (input.fail())
         {

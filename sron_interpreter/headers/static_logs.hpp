@@ -3,16 +3,18 @@
 
 #include <fstream>
 #include <iostream>
-#include <ctime>
 
 inline namespace Logs
 {
 
+    // contains the SRON's current version...
+    const static double version = 1.0;
+
+    // contains the line number of the current flow of program...
     static unsigned short int line_number = 1;
 
+    // contains the current filename otherwise it will show terminal...
     static std::string filename = "terminal";
-
-    const static clock_t execution_start_time = clock();
 
     inline static unsigned short int GET_LINE_NUMBER();
 

@@ -25,6 +25,7 @@
 #include <vector>
 #include <iomanip>
 #include <cmath>
+#include <algorithm>
 #include "_exception_.hpp"
 #include "_flags_.hpp"
 #include "_converter_.hpp"
@@ -85,7 +86,7 @@ public:
     inline virtual Bool *GET_BOOL() const = 0;
     inline virtual List *GET_LIST() const = 0;
 
-    inline Any &operator=(Any &);
+    // inline Any &operator=(Any &);
 
     virtual ~Any() {}
 };
@@ -95,8 +96,7 @@ public:
  * 1. Private values of primitive datatypes in c++.
  * 2. Constructors.
  * 3. Default Methods like LEN, PRINT, SIZE_OF, TO_STRING, TYPE.
- * 4. Static Methods like MAKE.
- * 5. Destructor.
+ * 4. Destructor.
  */
 
 /*
@@ -174,11 +174,6 @@ public:
     inline virtual List *GET_LIST() const override
     {
         return nullptr;
-    }
-
-    inline static Any *MAKE()
-    {
-        return new Void();
     }
 
     ~Void() {}
@@ -290,16 +285,6 @@ public:
     inline void SET(double &value)
     {
         this->value = value;
-    }
-
-    inline static Double *MAKE()
-    {
-        return new Double();
-    }
-
-    inline static Double *MAKE(double val)
-    {
-        return new Double(val);
     }
 
     ~Double()
@@ -415,16 +400,6 @@ public:
         this->value = value;
     }
 
-    inline static Int *MAKE()
-    {
-        return new Int();
-    }
-
-    inline static Int *MAKE(long long int val)
-    {
-        return new Int(val);
-    }
-
     ~Int()
     {
         this->value = 0;
@@ -531,15 +506,6 @@ public:
         this->value = value;
     }
 
-    inline static Char *MAKE()
-    {
-        return new Char();
-    }
-
-    inline static Char *MAKE(char val)
-    {
-        return new Char(val);
-    }
     ~Char()
     {
         this->value = ' ';
@@ -649,28 +615,6 @@ public:
         this->value = value;
     }
 
-    inline static Bool *MAKE()
-    {
-        return new Bool();
-    }
-
-    inline static Bool *MAKE(bool val)
-    {
-        return new Bool(val);
-    }
-    inline static Bool *MAKE(string str)
-    {
-        if (str == "true")
-        {
-            return new Bool(true);
-        }
-        else if (str == "false")
-        {
-            return new Bool(false);
-        }
-        DISPLAY_EXCEPTION("creating a variable of type 'Bool' from '" + str + "' value.", InvalidValueException);
-        return new Bool();
-    }
     ~Bool()
     {
         this->value = false;
@@ -791,14 +735,67 @@ public:
         return ' ';
     }
 
-    inline void APPENDS(std::string str)
+    inline void APPENDS(const std::string str)
     {
         this->value.append(str);
     }
 
-    inline void POP_BACK()
+    inline void APPENDS(const char &ch)
     {
-        this->value.erase(this->value.end() - 1);
+        this->value.append(&ch);
+    }
+
+    inline void APPENDS(Any *val)
+    {
+
+        if (val != nullptr)
+        {
+            this->value.append(val->TO_STRING());
+        }
+
+        DISPLAY_EXCEPTION("pushing elements into the 'String'. The passed value is actually 'NULL'.", NoException, false);
+    }
+
+    inline void CLEAR()
+    {
+        this->value.clear();
+    }
+
+    inline long long int COUNT(String *val)
+    {
+
+        std::string &sample = val->GET();
+
+        if (sample.empty() || this->value.length() < sample.length())
+        {
+            return 0; // If the sample string is empty, return 0
+        }
+
+        long long int count = 0;
+        size_t pos = 0;
+
+        while ((pos = this->value.find(sample, pos)) != std::string::npos)
+        {
+            ++count;
+            pos += sample.size(); // Move to the next position after the current match
+        }
+
+        return count;
+    }
+
+    inline long long int COUNT(Char *val)
+    {
+        return std::count(this->value.begin(), this->value.end(), val->GET());
+    }
+
+    inline void DELETE_(long long int index)
+    {
+        if (index < 0 || (long long unsigned int)index >= this->value.length())
+        {
+            DISPLAY_EXCEPTION("deleting 'String' type value to type 'String'.", IndexNotWithinRange);
+        }
+
+        this->value.erase(this->value.begin() + index);
     }
 
     inline std::string &GET()
@@ -806,15 +803,125 @@ public:
         return this->value;
     }
 
+    // returns the index number if found, otherwise -1
+    inline long long int INDEX(Char *val)
+    {
+        return this->value.find_first_of(val->GET());
+    }
+
+    inline long long int INDEX(String *val)
+    {
+        return this->value.find_first_of(val->GET());
+    }
+
+    inline void INSERT(long long int index, String *val)
+    {
+        if (index < 0 || (long long unsigned int)index >= this->value.length())
+        {
+            DISPLAY_EXCEPTION("inserting 'String' type value to type 'String'.", IndexNotWithinRange);
+        }
+        this->value.insert(index, val->GET());
+    }
+
+    inline void INSERT(long long int index, Char *val)
+    {
+        if (index < 0 || (long long unsigned int)index >= this->value.length())
+        {
+            DISPLAY_EXCEPTION("inserting 'Char' type value to type 'String'.", IndexNotWithinRange);
+        }
+        this->value.insert(index, &val->GET());
+    }
+
+    inline char POP_BACK()
+    {
+        char ch = *(this->value.end() - 1);
+        this->value.erase(this->value.end() - 1);
+        return ch;
+    }
+
+    inline void REPLACE(Char *_replacer, Any *replacement)
+    {
+
+        char &replacer = _replacer->GET();
+
+        size_t len_of_replacement = replacement->LEN();
+
+        for (size_t i = 0; i < this->value.length(); ++i)
+        {
+            if (this->value[i] == replacer)
+            {
+                this->value.erase(i, 1);
+                this->value.insert(i, replacement->TO_STRING());
+                i += len_of_replacement - 1;
+            }
+        }
+    }
+
+    inline void REVERSE()
+    {
+        std::reverse(this->value.begin(), this->value.end());
+    }
+
+    // returns the index number if found, otherwise -1
+    inline long long int RINDEX(Char *val)
+    {
+        return this->value.find_last_of(val->GET());
+    }
+
+    inline long long int RINDEX(String *val)
+    {
+        return this->value.find_last_of(val->GET());
+    }
+
     inline void SET(std::string &value)
     {
         this->value = value;
     }
 
-    inline void CLEAR()
-    {
-        this->value.clear();
+    inline void SORT(){
+        std::sort(this->value.begin() , this->value.end());
     }
+
+    inline std::string SUBSTRING(long long int first_index, long long int last_index)
+    {
+        if (first_index > last_index)
+        {
+            return "";
+        }
+        return std::string(this->value.begin() + first_index, this->value.end() + last_index);
+    }
+
+    inline std::string TRIM()
+    {
+        // Find the first non-whitespace character from the left
+        auto left = std::find_if_not(this->value.begin(), this->value.end(), [](unsigned char c)
+                                     { return std::isspace(c); });
+
+        // Find the first non-whitespace character from the right
+        auto right = std::find_if_not(this->value.rbegin(), this->value.rend(), [](unsigned char c)
+                                      { return std::isspace(c); })
+                         .base();
+
+        // If all characters are whitespace, return an empty string
+        if (left == this->value.end() || right == this->value.begin())
+            return "";
+
+        return std::string(left, right);
+    }
+
+    inline void UPDATE(long long int index, Char *val)
+    {
+        if (index < 0 || (long long unsigned int)index >= this->value.length())
+        {
+            DISPLAY_EXCEPTION("updating character at index '" + std::to_string(index) + "' with value '" + val->TO_STRING() + "'.", IndexNotWithinRange);
+        }
+
+        this->value.assign(index, val->GET());
+    }
+
+    inline List *TO_CHAR_LIST();
+    inline List *SPLIT(Char*);
+
     ~String()
     {
         this->value.~basic_string();
@@ -1003,18 +1110,55 @@ public:
         return const_cast<List *>(this);
     }
 
+    inline Any *AT(long long int index)
+    {
+        try
+        {
+            if (index < 0 || (long long unsigned int)index >= this->value.size())
+            {
+                throw std::exception();
+            }
+            return this->value[index];
+        }
+        catch (const std::exception &)
+        {
+            DISPLAY_EXCEPTION("extracting elements from type 'List'.", IndexNotWithinRange);
+        }
+        return nullptr;
+    }
+
     inline void CLEAR()
     {
         this->value.clear();
     }
+
+    inline void DELETE_(Int *index)
+    {
+
+        long long int _index = index->GET();
+
+        if (_index < 0 || (long long unsigned int)_index >= this->value.size())
+        {
+            DISPLAY_EXCEPTION("deleting elements from type 'List'.", IndexNotWithinRange, false);
+        }
+
+        this->value.erase(this->value.begin() + _index);
+    }
+
     inline std::vector<Any *> &GET()
     {
         return this->GET();
     }
 
-    inline void SET(std::vector<Any *> value)
+    inline Any *POP()
     {
-        this->value = value;
+        if (this->value.size() != 0)
+        {
+            Any *val = this->value.back();
+            this->value.pop_back();
+            return val;
+        }
+        return new Void();
     }
 
     inline void PUSH(Any *val)
@@ -1034,56 +1178,70 @@ public:
         }
     }
 
-    inline Any *AT(int index)
+    inline void REVERSE()
+    {
+        std::reverse(this->value.begin(), this->value.end());
+    }
+
+    inline void SET(std::vector<Any *> value)
+    {
+        this->value = value;
+    }
+
+    inline List *SUBLIST(long long int index1, long long int index2)
     {
         try
         {
-            return this->value[index];
+            List *lst = new List();
+
+            if (index1 < 0 || (long long unsigned int)index1 >= this->value.size() || (long long unsigned int)index2 > this->value.size())
+            {
+                DISPLAY_EXCEPTION("extracting the sublist. Both index must be more than zero and less than the size of the list which is " + std::to_string(this->value.size()) + ".", NoException);
+            }
+            std::vector<Any *>::iterator start = this->value.begin() + index1;
+            std::vector<Any *>::const_iterator end = this->value.begin() + index2;
+
+            for (; start < end; ++start)
+            {
+                lst->PUSH((*start)->COPY());
+            }
+
+            return lst;
         }
         catch (const std::exception &)
         {
-            DISPLAY_EXCEPTION("extracting elements from type 'List'.", IndexNotWithinRange);
+            DISPLAY_EXCEPTION("creating a sublist.", SystemOutofMemoryException);
         }
         return nullptr;
     }
 
-    inline void UPDATE(size_t index, Any *value)
+    inline void UPDATE(long long int index, Any *value)
     {
         try
         {
-            if (index >= this->value.size())
+            if (index < 0 || (long long unsigned int)index >= this->value.size())
             {
-                DISPLAY_EXCEPTION("updating elements in type 'List'.", IndexNotWithinRange);
+                throw std::exception();
             }
             this->value[index] = value;
         }
         catch (const std::exception &)
         {
-            DISPLAY_EXCEPTION("updating elements in type 'List'.", SystemOutofMemoryException);
+            DISPLAY_EXCEPTION("updating elements in type 'List'.", IndexNotWithinRange);
         }
     }
 
-    inline static List *MAKE()
-    {
-        return new List();
-    }
-
-    inline static List *MAKE(Any *val)
-    {
-        return new List(val);
-    }
-
-    inline static Any *MAKE(List *val)
-    {
-        return val;
-    }
+    // the below method are dependent on operator overloads therefore they will be defined in the end of the file...
+    inline long long int COUNT(Any *);
+    inline long long int INDEX(Any *);
+    inline long long int RINDEX(Any *);
+    inline void SORT();
+    inline void REPLACE(Any *, Any *);
 
     ~List()
     {
         for (auto &i : this->value)
         {
-            // i->FREE();
-            // i = nullptr;
             free(i);
         }
         this->value.~vector();
@@ -1115,7 +1273,7 @@ inline static bool operator==(Any &val1, Any &val2)
             case TYPE_DOUBLE:
                 return val1.GET_INT()->GET() == val2.GET_DOUBLE()->GET();
             default:
-                throw std::exception();
+                return false;
             }
         }
         break;
@@ -1129,7 +1287,7 @@ inline static bool operator==(Any &val1, Any &val2)
             case TYPE_DOUBLE:
                 return val1.GET_DOUBLE()->GET() == val2.GET_DOUBLE()->GET();
             default:
-                throw std::exception();
+                return false;
             }
         }
         break;
@@ -1143,7 +1301,7 @@ inline static bool operator==(Any &val1, Any &val2)
             case TYPE_STRING:
                 return val2.GET_STRING()->LEN() == 1 && (val2.GET_STRING()->AT(0) == val1.GET_CHAR()->GET());
             default:
-                throw std::exception();
+                return false;
             }
         }
         break;
@@ -1156,7 +1314,7 @@ inline static bool operator==(Any &val1, Any &val2)
             case TYPE_BOOL:
                 return val1.GET_BOOL()->GET() == val2.GET_BOOL()->GET();
             default:
-                throw std::exception();
+                return false;
             }
         }
         break;
@@ -1171,7 +1329,7 @@ inline static bool operator==(Any &val1, Any &val2)
             case TYPE_CHAR:
                 return val1.GET_STRING()->LEN() == 1 && (val1.GET_STRING()->AT(0) == val2.GET_CHAR()->GET());
             default:
-                throw std::exception();
+                return false;
             }
         }
         break;
@@ -1197,12 +1355,12 @@ inline static bool operator==(Any &val1, Any &val2)
                 }
                 return true;
             }
-            throw std::exception();
+            return false;
         }
         break;
 
         default:
-            throw std::exception();
+            return false;
         }
     }
     catch (const std::exception &)
@@ -1745,7 +1903,7 @@ inline static Any *operator%(Any &val1, Any &val2)
             case TYPE_DOUBLE:
 
                 return new Double(__MODULUS(val1.GET_INT()->GET(), val2.GET_DOUBLE()->GET()));
-                
+
             default:
                 throw std::exception();
             }
@@ -1822,44 +1980,135 @@ inline static Any *operator^(Any &val1, Any &val2)
     return new Void();
 }
 
-inline Any &Any::operator=(Any &val)
+// inline Any &Any::operator=(Any &val)
+// {
+//     if (this->TYPE_NUMBER() != val.TYPE_NUMBER())
+//     {
+//         this = val;
+//         return val;
+//     }
+
+//     // if the types are same...
+//     switch (this->TYPE_NUMBER())
+//     {
+
+//     case TYPE_INT:
+//         this->GET_INT()->SET(val.GET_INT()->GET());
+//         break;
+
+//     case TYPE_DOUBLE:
+//         this->GET_DOUBLE()->SET(val.GET_DOUBLE()->GET());
+//         break;
+
+//     case TYPE_CHAR:
+//         this->GET_CHAR()->SET(val.GET_CHAR()->GET());
+//         break;
+
+//     case TYPE_STRING:
+//         this->GET_STRING()->SET(val.GET_STRING()->GET());
+//         break;
+
+//     case TYPE_BOOL:
+//         this->GET_BOOL()->SET(val.GET_BOOL()->GET());
+//         break;
+
+//     case TYPE_LIST:
+//         this->GET_LIST()->SET(val.GET_LIST()->GET());
+//         break;
+
+//     default:
+//         DISPLAY_EXCEPTION("assigning value of type '" + val.TYPE() + "' to value of type '" + this->TYPE() + "'.", InterpretationException);
+//     }
+//     return val;
+// }
+
+inline List *String::TO_CHAR_LIST()
 {
-    if (this->TYPE_NUMBER() != val.TYPE_NUMBER())
+    try
     {
-        return val;
+        List *lst = new List();
+
+        for (const auto &i : this->value)
+        {
+            lst->PUSH(new Char(i));
+        }
+
+        return lst;
+    }
+    catch (const std::exception &e)
+    {
+        DISPLAY_EXCEPTION("creating a list of type 'Char'.", SystemOutofMemoryException);
     }
 
-    switch (this->TYPE_NUMBER())
-    {
+    return nullptr;
+}
 
-    case TYPE_INT:
-        this->GET_INT()->SET(val.GET_INT()->GET());
-        break;
+inline List *String::SPLIT(Char* _splitter){
+    char& splitter = _splitter->GET();
 
-    case TYPE_DOUBLE:
-        this->GET_DOUBLE()->SET(val.GET_DOUBLE()->GET());
-        break;
+    List *lst = new List();
 
-    case TYPE_CHAR:
-        this->GET_CHAR()->SET(val.GET_CHAR()->GET());
-        break;
+    std::string temp = "";
 
-    case TYPE_STRING:
-        this->GET_STRING()->SET(val.GET_STRING()->GET());
-        break;
-
-    case TYPE_BOOL:
-        this->GET_BOOL()->SET(val.GET_BOOL()->GET());
-        break;
-
-    case TYPE_LIST:
-        this->GET_LIST()->SET(val.GET_LIST()->GET());
-        break;
-
-    default:
-        DISPLAY_EXCEPTION("assigning value of type '" + val.TYPE() + "' to value of type '" + this->TYPE() + "'.", InterpretationException);
+    for(const auto &i : this->value){
+        if(i == splitter){
+            lst->PUSH(new String(temp));
+            temp = "";
+        }
+        else{
+            temp+=i;
+        }
     }
-    return val;
+
+    lst->PUSH(new String(temp));
+
+    return lst;
+}
+
+inline long long int List::COUNT(Any *val)
+{
+    long long int count = 0;
+    for (auto &i : this->value)
+    {
+        count += (*i == *val) ? 1 : 0;
+    }
+    return count;
+}
+inline long long int List::INDEX(Any *val)
+{
+    for (auto it = this->value.begin(); it < this->value.end(); ++it)
+    {
+        if (*val == **it)
+        {
+            return it - this->value.begin();
+        }
+    }
+    return -1;
+}
+inline long long int List::RINDEX(Any *val)
+{
+    for (auto it = this->value.end() - 1; it >= this->value.begin(); --it)
+    {
+        if (*val == **it)
+        {
+            return it - this->value.begin();
+        }
+    }
+    return -1;
+}
+inline void List::SORT()
+{
+    std::sort(this->value.begin(), this->value.end());
+}
+inline void List::REPLACE(Any *replacer, Any *replacement)
+{
+    for (auto &it : this->value)
+    {
+        if (*it == *replacer)
+        {
+            *it = *replacement;
+        }
+    }
 }
 
 #endif
