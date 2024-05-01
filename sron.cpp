@@ -22,12 +22,6 @@ int main(int argc, char **argv)
 {
     try
     {
-        clock_t start = clock();
-        
-        
-        // std::cout.tie(0);
-        // std::cin.tie(0);
-
         std::cout<<std::fixed<<std::setprecision(4);
 
         // create a Listist to provide command line arguments to the user
@@ -39,10 +33,8 @@ int main(int argc, char **argv)
 
         // starting the execution of the code
         ExecutionEngine::MAIN(&arglist);
-        
-        clock_t end = clock();
 
-        std::cout<<"   --------------------------------\n   | Time taken : "<<double(end-start)/double(CLOCKS_PER_SEC)<<" seconds. |";
+        std::cout<<"\n   --------------------------------\n   | Time taken : "<<double(clock())/double(CLOCKS_PER_SEC)<<" seconds. |";
 
     }
     catch (const std::exception &)
