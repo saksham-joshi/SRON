@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 {
     try
     {
-        std::cout<<std::fixed<<std::setprecision(4);
+        //std::cout<<std::fixed<<std::setprecision(4);
 
         // create a Listist to provide command line arguments to the user
         List arglist;
@@ -34,7 +34,9 @@ int main(int argc, char **argv)
         // starting the execution of the code
         ExecutionEngine::MAIN(&arglist);
 
-        std::cout<<"\n   --------------------------------\n   | Time taken : "<<double(clock())/double(CLOCKS_PER_SEC)<<" seconds. |";
+        std::cout<<"\n   ---------------------------------------\n   | Time taken by SRON : "<<double(clock())/double(CLOCKS_PER_SEC)<<" seconds. |";
+
+        std::cout<<std::flush;
 
     }
     catch (const std::exception &)
