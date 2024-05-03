@@ -145,7 +145,6 @@ inline namespace Sron
         {"len", Sron::LEN},
 
         // common list and string manipulation functions...
-
         {"at", Sron::AT},
         {"count", Sron::COUNT},
         {"delete", Sron::DELETE_},
@@ -270,13 +269,15 @@ inline namespace Sron
         {
             Beep(args->GET(0)->GET_INT()->GET(), args->GET(1)->GET_INT()->GET());
         }
-
-        DISPLAY_EXCEPTION("executing the 'beep' function. Both arguments should be of type 'Int'.", NoException, false);
-
+        else
+        {
+            DISPLAY_EXCEPTION("executing the 'beep' function. Both arguments should be of type 'Int'.", NoException, false);
+        }
         return &void_object;
     }
 
-    inline static Any *BOOST_IO(Argument_List *args){
+    inline static Any *BOOST_IO(Argument_List *args)
+    {
         std::ios::sync_with_stdio(false);
         std::cout.tie(NULL);
         std::cin.tie(NULL);
@@ -349,9 +350,11 @@ inline namespace Sron
 
         case TYPE_STRING:
             args->GET_STRING(0)->DELETE_(args->GET_INT(1)->GET());
+            break;
 
         case TYPE_LIST:
             args->GET_LIST(0)->DELETE_(args->GET_INT(1));
+            break;
 
         default:
             DISPLAY_EXCEPTION("executing the 'delete' function. Expected arguments are of type 'String' or 'List' and 'Int'.", NoException, false);
@@ -440,41 +443,53 @@ inline namespace Sron
 
     inline static Any *INSERT(Argument_List *args)
     {
+        Any* val = args->GET(0);
 
+        switch(val->TYPE_NUMBER()){
+
+            case TYPE_STRING : {
+                long long int index = args->GET_INT(1)->GET();
+
+                Any* value_to_insert = args->GET(2);
+
+                val->GET_STRING()->INSERT(index, *value_to_insert);
+
+            } break;
+            //val->GET_STRING()->INSERT()
+
+            case TYPE_LIST : {
+                long long int index = args->GET_INT(1)->GET();
+
+                Any* value_to_insert = args->GET(2);
+
+                val->GET_LIST()->INSERT(index, value_to_insert);
+            } break;
+
+            default : DISPLAY_EXCEPTION("executing the 'insert' function. Expected arguments are 'List' or 'String' , 'Int' and 'Any'.", NoException, false);
+        }
         return &void_object;
     }
 
     inline static Any *IS_ALPHABET(Argument_List *args)
     {
-
-        Char *val = args->GET_CHAR(0);
-
-        return new Bool(SronChar::IS_ALPHABET(val->GET()));
+        return new Bool(SronChar::IS_ALPHABET(args->GET_CHAR(0)->GET()));
     }
     inline static Any *IS_CONSONANT(Argument_List *args)
     {
-
-        Char *val = args->GET_CHAR(0);
-
-        return new Bool(SronChar::IS_CONSONANT(val->GET()));
+        return new Bool(SronChar::IS_CONSONANT(args->GET_CHAR(0)->GET()));
     }
 
     // function to check if the given character is number or not....
     inline static Any *IS_NUMBER(Argument_List *args)
     {
-
-        Char *val = args->GET_CHAR(0);
-
-        return new Bool(SronChar::IS_NUMBER(val->GET()));
+        return new Bool(SronChar::IS_NUMBER(args->GET_CHAR(0)->GET()));
     }
 
     // function to check if the given character is vowel or what
     inline static Any *IS_VOWEL(Argument_List *args)
     {
 
-        Char *val = args->GET_CHAR(0);
-
-        return new Bool(SronChar::IS_VOWEL(val->GET()));
+        return new Bool(SronChar::IS_VOWEL(args->GET_CHAR(0)->GET()));
     }
 
     // returns the length of the datatype
@@ -523,13 +538,19 @@ inline namespace Sron
     {
         Any *val = args->GET(0);
 
-        switch(val->TYPE_NUMBER()){
+        switch (val->TYPE_NUMBER())
+        {
 
-            case TYPE_STRING : val->GET_STRING()->APPENDS(args->GET(1)); break;
+        case TYPE_STRING:
+            val->GET_STRING()->APPENDS(args->GET(1));
+            break;
 
-            case TYPE_LIST : val->GET_LIST()->PUSH(args->GET(1)); break;
+        case TYPE_LIST:
+            val->GET_LIST()->PUSH(args->GET(1));
+            break;
 
-            default : DISPLAY_EXCEPTION("executing the 'push' function. Only arguments of type 'String' and 'List' are allowed.", NoException, false);
+        default:
+            DISPLAY_EXCEPTION("executing the 'push' function. Only arguments of type 'String' and 'List' are allowed.", NoException, false);
         }
         return &void_object;
     }
@@ -570,30 +591,42 @@ inline namespace Sron
     // function to replace a value ...
     inline static Any *REPLACE(Argument_List *args)
     {
-        Any* val = args->GET(0);
+        Any *val = args->GET(0);
 
-        switch(val->TYPE_NUMBER()){
+        switch (val->TYPE_NUMBER())
+        {
 
-            case TYPE_STRING : val->GET_STRING()->REPLACE(args->GET_CHAR(1), args->GET(2)); break;
+        case TYPE_STRING:
+            val->GET_STRING()->REPLACE(args->GET_CHAR(1), args->GET(2));
+            break;
 
-            case TYPE_LIST : val->GET_LIST()->REPLACE(args->GET(1) , args->GET(2)); break;
+        case TYPE_LIST:
+            val->GET_LIST()->REPLACE(args->GET(1), args->GET(2));
+            break;
 
-            default : DISPLAY_EXCEPTION("executing 'replace' function. Expected argument must be of type 'String' or 'List'.", NoException, false);
+        default:
+            DISPLAY_EXCEPTION("executing 'replace' function. Expected argument must be of type 'String' or 'List'.", NoException, false);
         }
         return &void_object;
     }
 
     inline static Any *REVERSE(Argument_List *args)
     {
-        Any* val = args->GET(0);
+        Any *val = args->GET(0);
 
-        switch(val->TYPE_NUMBER()){
+        switch (val->TYPE_NUMBER())
+        {
 
-            case TYPE_STRING : args->GET_STRING(0)->REVERSE(); break;
+        case TYPE_STRING:
+            args->GET_STRING(0)->REVERSE();
+            break;
 
-            case TYPE_LIST : args->GET_LIST(0)->REVERSE();break;
+        case TYPE_LIST:
+            args->GET_LIST(0)->REVERSE();
+            break;
 
-            default : DISPLAY_EXCEPTION("executing 'reverse' function. Expected arguments must be type of 'String' or 'List'.", NoException, false);
+        default:
+            DISPLAY_EXCEPTION("executing 'reverse' function. Expected arguments must be type of 'String' or 'List'.", NoException, false);
         }
         return &void_object;
     }
@@ -601,36 +634,44 @@ inline namespace Sron
     inline static Any *RINDEX(Argument_List *args)
     {
 
-        Any* val = args->GET(0);
-        Any* index = args->GET(1);
+        Any *val = args->GET(0);
+        Any *index = args->GET(1);
 
-        if(val->TYPE_NUMBER() == TYPE_STRING && index->TYPE_NUMBER() == TYPE_CHAR){
+        if (val->TYPE_NUMBER() == TYPE_STRING && index->TYPE_NUMBER() == TYPE_CHAR)
+        {
             return new Int(val->GET_STRING()->RINDEX(index->GET_CHAR()));
         }
-        else if(val->TYPE_NUMBER() == TYPE_STRING && index->TYPE_NUMBER() == TYPE_STRING){
+        else if (val->TYPE_NUMBER() == TYPE_STRING && index->TYPE_NUMBER() == TYPE_STRING)
+        {
             return new Int(val->GET_STRING()->RINDEX(index->GET_STRING()));
         }
-        else if(val->TYPE_NUMBER() == TYPE_LIST){
+        else if (val->TYPE_NUMBER() == TYPE_LIST)
+        {
             return new Int(val->GET_LIST()->RINDEX(args->GET(1)));
         }
 
         DISPLAY_EXCEPTION("executing 'rindex' function. Expected arguments are of types 'List' or 'String' and 'Char' or 'String'.", NoException, false);
 
         return &void_object;
-
     }
 
     inline static Any *SORT(Argument_List *args)
     {
         Any *val = args->GET(0);
 
-        switch(val->TYPE_NUMBER()){
+        switch (val->TYPE_NUMBER())
+        {
 
-            case TYPE_STRING : val->GET_STRING()->SORT(); break;
+        case TYPE_STRING:
+            val->GET_STRING()->SORT();
+            break;
 
-            case TYPE_LIST : val->GET_LIST()->SORT(); break;
+        case TYPE_LIST:
+            val->GET_LIST()->SORT();
+            break;
 
-            default : DISPLAY_EXCEPTION("executing 'sort' function. Expected arguments are of types 'List' or 'String'.", NoException, false);
+        default:
+            DISPLAY_EXCEPTION("executing 'sort' function. Expected arguments are of types 'List' or 'String'.", NoException, false);
         }
         return &void_object;
     }
@@ -894,9 +935,10 @@ inline namespace Sron
             long long int val = args->GET_INT(0)->GET();
             std::cout << std::setprecision((val < 0 || val > 10) ? 5 : val);
         }
-
-        DISPLAY_EXCEPTION("executing 'setprecision' function. Only one value of type 'int' is allowed.", NoException);
-
+        else
+        {
+            DISPLAY_EXCEPTION("executing 'setprecision' function. Only one value of type 'int' is allowed.", NoException);
+        }
         return &void_object;
     }
 
@@ -909,11 +951,13 @@ inline namespace Sron
     // function to split a string .....
     inline static Any *SPLIT(Argument_List *args)
     {
-        if(args->GET(0)->TYPE_NUMBER() != TYPE_STRING){
+        if (args->GET(0)->TYPE_NUMBER() != TYPE_STRING)
+        {
             return args->GET_STRING(0)->SPLIT(args->GET_CHAR(1));
         }
+
         DISPLAY_EXCEPTION("executing 'split' function. Expected arguments is of type 'String'.", NoException, false);
-        
+
         return &void_object;
     }
 
@@ -1049,14 +1093,15 @@ inline namespace Sron
         switch (val->TYPE_NUMBER())
         {
 
-        case TYPE_STRING:{
+        case TYPE_STRING:
+        {
 
             String *str = new String("");
-            for(auto& i : args->GET_STRING(0)->GET()){
+            for (auto &i : args->GET_STRING(0)->GET())
+            {
                 str->APPENDS(std::tolower(i));
             }
             return str;
-
         }
 
         case TYPE_CHAR:
@@ -1077,14 +1122,15 @@ inline namespace Sron
         switch (val->TYPE_NUMBER())
         {
 
-        case TYPE_STRING:{
+        case TYPE_STRING:
+        {
 
             String *str = new String("");
-            for(auto& i : args->GET_STRING(0)->GET()){
+            for (auto &i : args->GET_STRING(0)->GET())
+            {
                 str->APPENDS(std::toupper(i));
             }
             return str;
-
         }
 
         case TYPE_CHAR:
@@ -1124,15 +1170,21 @@ inline namespace Sron
 
     inline static Any *UPDATE(Argument_List *args)
     {
-        Any* val = args->GET(0);
+        Any *val = args->GET(0);
 
-        switch(val->TYPE_NUMBER()){
+        switch (val->TYPE_NUMBER())
+        {
 
-            case TYPE_STRING : args->GET_STRING(0)->UPDATE(args->GET_INT(1)->GET() , args->GET_CHAR(2)); break;
+        case TYPE_STRING:
+            args->GET_STRING(0)->UPDATE(args->GET_INT(1)->GET(), args->GET_CHAR(2));
+            break;
 
-            case TYPE_LIST : args->GET_LIST(0)->UPDATE(args->GET_INT(1)->GET() , args->GET(2)); break;
+        case TYPE_LIST:
+            args->GET_LIST(0)->UPDATE(args->GET_INT(1)->GET(), args->GET(2));
+            break;
 
-            default : DISPLAY_EXCEPTION("executing 'update' function. Expected arguments are of type 'String' or 'List' and 'Int' and 'Char' or 'Any'.",NoException, false);
+        default:
+            DISPLAY_EXCEPTION("executing 'update' function. Expected arguments are of type 'String' or 'List' and 'Int' and 'Char' or 'Any'.", NoException, false);
         }
         return &void_object;
     }
