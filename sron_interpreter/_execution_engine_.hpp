@@ -114,9 +114,9 @@ inline namespace ExecutionEngine
     // this bool variable is used to check if a loop exiting because of break keyword.
     static bool _BREAK_ = false;
 
-    using ExecutionEngineFuncMap = std::unordered_map<std::string, std::function<Any *()>>;
+    // using ExecutionEngineFuncMap = ;
 
-    static ExecutionEngineFuncMap _funcmap_{
+    static std::unordered_map<std::string, std::function<Any *()>> _funcmap_{
         {Flag_Int_Value, ExecutionEngine::EXTRACT_INT},
         {Flag_Double_Value, ExecutionEngine::EXTRACT_DOUBLE},
         {Flag_Char_Value, ExecutionEngine::EXTRACT_CHAR},
@@ -172,14 +172,12 @@ inline namespace ExecutionEngine
 
             ExecutionEngine::_FunctionStack_.push(&_main_);
 
-            auto end = _main_._codevector.end();
-
-            for (; _main_._iterator < end; ++_main_._iterator)
+            for (; _main_._iterator < _main_._end; ++_main_._iterator)
             {
                 ExecutionEngine::FLAG_TO_FUNCTION_MAP();
             }
 
-            if (!ExecutionEngine::_FunctionStack_.empty())
+            if (!_main_._scopestack.empty())
             {
                 ExecutionEngine::_FunctionStack_.pop();
             }
@@ -196,9 +194,11 @@ inline namespace ExecutionEngine
 
         unsigned short int index = 0;
 
-        auto it = &(++_FunctionStack_.top()->_iterator);
+        const auto &_top_ = _FunctionStack_.top();
 
-        const auto &end = _FunctionStack_.top()->_codevector.end();
+        auto it = &(++_top_->_iterator);
+
+        const auto &end = _top_->_end;
 
         while (*it < end && **it != Flag_FunctionArgsScopeEnd)
         {
@@ -206,7 +206,7 @@ inline namespace ExecutionEngine
             if (**it == Flag_Variable)
             {
                 ++(*it);
-                _FunctionStack_.top()->_Vmanager.INSERT(**it, _FunctionStack_.top()->_arglist->GET(index));
+                _top_->_Vmanager.INSERT(**it, _top_->_arglist.GET(index));
                 ++index;
             }
             ++*it;
@@ -219,16 +219,18 @@ inline namespace ExecutionEngine
     {
         try
         {
-            // extracting the variable name which is going to store the value.
-            std::string &variable_name = *(_FunctionStack_.top()->_iterator - 1);
+            const auto &_top_ = _FunctionStack_.top();
 
-            ++_FunctionStack_.top()->_iterator;
+            // extracting the variable name which is going to store the value.
+            std::string &variable_name = *(_top_->_iterator - 1);
+
+            ++_top_->_iterator;
 
             // extracting the value from the flag
             auto value = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
 
             // inserting the value to the variable manager
-            _FunctionStack_.top()->_Vmanager.INSERT(variable_name, value);
+            _top_->_Vmanager.INSERT(variable_name, value);
 
             // returning the value so that the scenario where code written like this can work : a = b = c.
             return value;
@@ -247,20 +249,21 @@ inline namespace ExecutionEngine
      */
     inline static Any *BREAK_LOOP()
     {
-        auto top = &ExecutionEngine::_FunctionStack_.top();
 
-        auto it = &(++(*top)->_iterator);
+        const auto &_top_ = ExecutionEngine::_FunctionStack_.top();
 
-        const auto &end = (*top)->_codevector.end();
+        auto it = &(++_top_->_iterator);
+
+        const auto &end = _top_->_end;
 
         // iterating until a loop ending flag is not found
-        while (*it < end && !Support::IS_LOOP_ENDING_FLAG(**it))
+        while (*it < end && (!Support::IS_LOOP_ENDING_FLAG(**it)))
         {
             // if there is a case where there is nested loop then it will again call
             // this function in recursive manner.
             if (Support::IS_LOOP_OPENING_FLAG(**it))
             {
-                (*top)->_scopestack.push(*it);
+                _top_->_scopestack.push(*it);
                 BREAK_LOOP();
             }
             ++(*it);
@@ -268,7 +271,7 @@ inline namespace ExecutionEngine
 
         ExecutionEngine::_BREAK_ = true;
 
-        (*top)->_scopestack.pop();
+        //_top_->_scopestack.pop();
 
         return nullptr;
     }
@@ -336,13 +339,10 @@ inline namespace ExecutionEngine
             // moving the iterator to next flag
             auto it = &(++_FunctionStack_.top()->_iterator);
 
-            const auto &end = _FunctionStack_.top()->_codevector.end();
-
             // running the loop until the Flag_Args_End is not found
-            while (*it < end && **it != Flag_Args_End)
+            for (; **it != Flag_Args_End; ++*it)
             {
                 args->PUT(ExecutionEngine::FLAG_TO_FUNCTION_MAP());
-                ++(*it);
             }
 
             return args;
@@ -366,12 +366,11 @@ inline namespace ExecutionEngine
     {
         auto it = &(++ExecutionEngine::_FunctionStack_.top()->_iterator);
 
-        const auto &end = ExecutionEngine::_FunctionStack_.top()->_codevector.end();
+        // const auto &end = ExecutionEngine::_FunctionStack_.top()->_end;
 
-        while (*it < end && **it != Flag_ElseScopeEnd)
+        for (; **it != Flag_ElseScopeEnd; ++*it)
         {
             ExecutionEngine::FLAG_TO_FUNCTION_MAP();
-            ++(*it);
         }
 
         return nullptr;
@@ -388,10 +387,8 @@ inline namespace ExecutionEngine
 
             Logs::filename = function_name + ".srb";
 
-            const auto &end = fnc._codevector.end();
-
             // code here ...
-            for (; fnc._iterator < end; ++fnc._iterator)
+            for (; fnc._iterator < fnc._end; ++fnc._iterator)
             {
                 ExecutionEngine::FLAG_TO_FUNCTION_MAP();
             }
@@ -401,11 +398,7 @@ inline namespace ExecutionEngine
                 ExecutionEngine::_FunctionStack_.pop();
             }
 
-            if (fnc._return_value == nullptr)
-            {
-                return new Void();
-            }
-            return fnc._return_value;
+            return (fnc._return_value == nullptr) ? new Void() : fnc._return_value;
         }
         catch (const std::exception &)
         {
@@ -416,14 +409,12 @@ inline namespace ExecutionEngine
 
     inline static Any *EXTRACT_INT()
     {
-        auto it = &(++_FunctionStack_.top()->_iterator);
-        return new Int(Converter::TO_INT(**it));
+        return new Int(Converter::TO_INT(*(++_FunctionStack_.top()->_iterator)));
     }
 
     inline static Any *EXTRACT_DOUBLE()
     {
-        auto it = &(++_FunctionStack_.top()->_iterator);
-        return new Double(Converter::TO_DOUBLE(**it));
+        return new Double(Converter::TO_DOUBLE(*(++_FunctionStack_.top()->_iterator)));
     }
 
     inline static Any *EXTRACT_CHAR()
@@ -443,9 +434,8 @@ inline namespace ExecutionEngine
 
     inline static Any *EXTRACT_BOOL()
     {
-        auto it = &(++_FunctionStack_.top()->_iterator);
 
-        return new Bool((**it == "true") ? true : false);
+        return new Bool((*(++_FunctionStack_.top()->_iterator) == "true") ? true : false);
     }
 
     inline static Any *EXTRACT_STRING()
@@ -481,7 +471,7 @@ inline namespace ExecutionEngine
 
             auto it = &(++_FunctionStack_.top()->_iterator);
 
-            const auto &end = _FunctionStack_.top()->_codevector.end();
+            const auto &end = _FunctionStack_.top()->_end;
 
             while (*it < end && ((**it) != Flag_ListEnd))
             {
@@ -508,10 +498,13 @@ inline namespace ExecutionEngine
          * So different ending flag is required to execute the code inside the scope of
          * the conditional statement. That's why i saved the ending flag.
          */
-        const char *current_flag = (*_FunctionStack_.top()->_iterator).c_str();
-        const char *end_flag = (*_FunctionStack_.top()->_iterator == Flag_IfScopeStart) ? Flag_IfScopeEnd : Flag_ElifScopeEnd;
 
-        auto it = &(++_FunctionStack_.top()->_iterator);
+        const auto &_top_ = ExecutionEngine::_FunctionStack_.top();
+
+        const char *current_flag = (*_top_->_iterator).c_str();
+        const char *end_flag = (*_top_->_iterator == Flag_IfScopeStart) ? Flag_IfScopeEnd : Flag_ElifScopeEnd;
+
+        auto it = &(++_top_->_iterator);
 
         if (**it == Flag_ConditionScopeStart && !SOLVE_CONDITION())
         {
@@ -559,7 +552,7 @@ inline namespace ExecutionEngine
         ++(*it);
 
         // if the condition is true, then code inside it will run.
-        const auto &end = ExecutionEngine::_FunctionStack_.top()->_codevector.end();
+        const auto &end = _top_->_end;
 
         while (*it < end && **it != end_flag)
         {
@@ -573,18 +566,17 @@ inline namespace ExecutionEngine
         // exiting the conditional area because code within the scope of if-elif statement is executed successfully.
         ExecutionEngine::MOVE_ITERATOR_BEYOND_CONDITIONAL_STATEMENT();
 
-        //--(*it);
         return nullptr;
     }
 
     // This function executes when Flag_ForScopeStart is found.
     inline static Any *EXECUTE_FOR_STATEMENT()
     {
-        auto top = &ExecutionEngine::_FunctionStack_.top();
+        const auto &_top_ = ExecutionEngine::_FunctionStack_.top();
 
-        auto it = &((*top)->_iterator);
+        auto it = &(_top_->_iterator);
 
-        const auto &end = (*top)->_codevector.end();
+        const auto &end = _top_->_end;
 
         Any *loop_start = &void_object;
         Any *loop_end = &void_object;
@@ -595,7 +587,7 @@ inline namespace ExecutionEngine
 
         /* the current flag is Flag_RangeScopeEnd, increment it again and save in the stack.*/
         ++(*it);
-        (*top)->_scopestack.push(*it);
+        _top_->_scopestack.push(*it);
 
         if (*loop_start < *loop_end)
         {
@@ -608,12 +600,11 @@ inline namespace ExecutionEngine
                     ++(*it);
                 }
 
-                *it = (*top)->_scopestack.top();
+                *it = _top_->_scopestack.top();
 
-                ((*top)->_Vmanager.INSERT(iteration_variable, (*(*top)->_Vmanager.GET(iteration_variable) + *loop_step)));
+                (_top_->_Vmanager.INSERT(iteration_variable, (*_top_->_Vmanager.GET(iteration_variable) + *loop_step)));
 
-                loop_start = (*top)->_Vmanager.GET(iteration_variable);
-
+                loop_start = _top_->_Vmanager.GET(iteration_variable);
             }
         }
         else
@@ -627,17 +618,17 @@ inline namespace ExecutionEngine
                     ++(*it);
                 }
 
-                *it = (*top)->_scopestack.top();
+                *it = _top_->_scopestack.top();
 
-                ((*top)->_Vmanager.INSERT(iteration_variable, (*(*top)->_Vmanager.GET(iteration_variable) + *loop_step)));
+                (_top_->_Vmanager.INSERT(iteration_variable, (*_top_->_Vmanager.GET(iteration_variable) + *loop_step)));
 
-                *loop_start = *(*top)->_Vmanager.GET(iteration_variable);
+                *loop_start = *_top_->_Vmanager.GET(iteration_variable);
             }
         }
 
         ExecutionEngine::EXIT_ITERATOR_FROM_SCOPE(Flag_ForScopeEnd, Flag_ForScopeStart);
 
-        (*top)->_scopestack.pop();
+        _top_->_scopestack.pop();
 
         return nullptr;
     }
@@ -648,14 +639,14 @@ inline namespace ExecutionEngine
         try
         {
 
-            auto top = &_FunctionStack_.top();
+            const auto &_top_ = _FunctionStack_.top();
 
-            auto it = &(++(*top)->_iterator);
+            auto it = &(++_top_->_iterator);
 
             // pushing the flag next to the Flag_WhileScopeStart
-            (*top)->_scopestack.push(*it);
+            _top_->_scopestack.push(*it);
 
-            const auto &end = (*top)->_codevector.end();
+            const auto &end = _top_->_end;
 
             while (*it < end)
             {
@@ -683,10 +674,10 @@ inline namespace ExecutionEngine
                 }
 
                 // moving the iterator to the position where condition starts
-                *it = (*top)->_scopestack.top();
+                *it = _top_->_scopestack.top();
             }
 
-            (*top)->_scopestack.pop();
+            _top_->_scopestack.pop();
 
             return nullptr;
         }
@@ -704,7 +695,7 @@ inline namespace ExecutionEngine
         {
             std::vector<std::string>::iterator *it = &(++_FunctionStack_.top()->_iterator);
 
-            const auto &end = _FunctionStack_.top()->_codevector.end();
+            const auto &end = _FunctionStack_.top()->_end;
 
             std::stack<Any *> stk;
 
@@ -848,13 +839,13 @@ inline namespace ExecutionEngine
 
     inline static Any *RETURN_VALUE()
     {
-        auto top = &_FunctionStack_.top();
+        const auto &_top_ = _FunctionStack_.top();
 
-        ++(*top)->_iterator;
+        ++_top_->_iterator;
 
-        (*top)->_return_value = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
+        _top_->_return_value = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
 
-        (*top)->_iterator = (*top)->_codevector.end();
+        _top_->_iterator = _top_->_end;
 
         return nullptr;
     }
@@ -879,7 +870,7 @@ inline namespace ExecutionEngine
     {
         auto it = &(++ExecutionEngine::_FunctionStack_.top()->_iterator);
 
-        const auto &end = ExecutionEngine::_FunctionStack_.top()->_codevector.end();
+        const auto &end = ExecutionEngine::_FunctionStack_.top()->_end;
 
         while (*it < end && **it != target_flag)
         {
@@ -898,7 +889,7 @@ inline namespace ExecutionEngine
 
         auto it = &(ExecutionEngine::_FunctionStack_.top()->_iterator);
 
-        const auto &end = ExecutionEngine::_FunctionStack_.top()->_codevector.end();
+        const auto &end = ExecutionEngine::_FunctionStack_.top()->_end;
 
         while (*it < end)
         {
@@ -920,7 +911,7 @@ inline namespace ExecutionEngine
     {
         auto it = &(++ExecutionEngine::_FunctionStack_.top()->_iterator);
 
-        const auto &end = ExecutionEngine::_FunctionStack_.top()->_codevector.end();
+        const auto &end = ExecutionEngine::_FunctionStack_.top()->_end;
 
         while (*it < end && **it != Flag_Assign)
         {
@@ -928,7 +919,7 @@ inline namespace ExecutionEngine
         }
 
         auto iteration_variable = (*it) - 1;
-        
+
         // now the current flag is `=
         *loop_start = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
         ++(*it);
@@ -936,11 +927,9 @@ inline namespace ExecutionEngine
         *loop_end = ExecutionEngine::FLAG_TO_FUNCTION_MAP();
         ++(*it);
 
-
         // if the start is larger than the end, then user is trying a reverse loop
         // so we will set the steps as -1;
         *loop_step = (**loop_start > **loop_end) ? new Int(-1) : new Int(1);
-
 
         if (**it != Flag_RangeScopeEnd)
         {
