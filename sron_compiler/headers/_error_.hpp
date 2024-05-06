@@ -7,11 +7,13 @@
  *
  * You can freely redistribute it but cannot modify the source code without the permission from the author.
  */
+
+#pragma once
+
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
 #include <exception>
-#include <iostream>
 #include <string>
 #include <windows.h>
 #include "static_logs.hpp"
@@ -154,6 +156,9 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
             break;
         case MathematicalBlockSyntaxException:
             filename = "MathematicalBlockSyntaxException";
+            break;
+        case TypeConversionException :
+            filename = "TypeConversionException";
             break;
         default:
             std::cerr << "Invalid Exception Code !\n Contact SAKSHAM JOSHI via linkedin(/sakshamjoshi27) or twitter(X) to fix this.";

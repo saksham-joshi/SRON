@@ -60,7 +60,7 @@ inline namespace Converter
         |==========  TO_DOUBLE ==========|
         Conversion to double type ....
         1. string         ->    double
-        2. double    ->    double
+        2. double         ->    double
         3. bool           ->    double
         4. long long int  ->    double
     */
@@ -151,7 +151,7 @@ inline namespace Converter
         |==========  TO_INT ==========|
         Conversion to long long int type ....
         1. string         ->    long long int
-        2. double    ->    long long int
+        2. double         ->    long long int
         3. bool           ->    long long int
         4. char           ->    long long int
         5. string         ->    long long int

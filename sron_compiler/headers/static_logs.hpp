@@ -1,3 +1,6 @@
+
+#pragma once
+
 #ifndef LOGS_H
 #define LOGS_H
 
@@ -11,8 +14,6 @@ inline namespace Logs
     static unsigned short int line_number = 1;
 
     static std::string filename = "terminal";
-
-    const static clock_t execution_start_time = clock();
 
     static std::ifstream *mainfile;
 

@@ -492,7 +492,7 @@ namespace ByteCodeGenerator
                     {
                         token_object._type = TYPE_KEYWORD;
                     }
-                    else if (temp_string == "pi")
+                    else if (temp_string == "PI")
                     {
                         temp_string = PI_VALUE;
                         token_object._type = TYPE_DOUBLE;
@@ -720,6 +720,12 @@ namespace ByteCodeGenerator
                 if (vecit->_type == TYPE_NEWLINE)
                 {
                     ++Logs::line_number;
+
+                    //const auto& next_type = (vecit+1)->_type;
+
+                    // if(next_type != TYPE_ATTRIBUTE || next_type != TYPE_FUNCTION_SCOPE_CLOSE || next_type != TYPE_NEWLINE){
+                    //     DISPLAY_EXCEPTION("refining and analyzing the code. Maybe you are writing a code without specifying the attribute.", NoException);
+                    // }
                 }
                 else if (vecit->_type == TYPE_DATATYPE && ((vecit + 1)->_type != TYPE_IDENTIFIER))
                 {
@@ -800,6 +806,9 @@ namespace ByteCodeGenerator
             // reading the whole content of the file.
             ByteCodeGenerator::filecode = std::string(std::istreambuf_iterator<char>(*Logs::mainfile), (std::istreambuf_iterator<char>()));
 
+            Logs::mainfile->close();
+            Logs::mainfile->~ios_base();
+
             // assigning the iterator at the beginning of the file
             ByteCodeGenerator::iterator = filecode.begin();
 
@@ -820,26 +829,8 @@ namespace ByteCodeGenerator
             // removing the comments and unnecessary newlines
             ByteCodeGenerator::TOKEN_VECTOR_REFINER();
 
-            // for(const auto& i : token_vector){
-            //     std::cout<<"\n[ "<<i._token<<" | "<<i._type<<" ]";
-            // }
-
-            // for (auto &i : token_vector)
-            // {
-            //     std::cout << i._token << " | ";
-            // }
-
             // This function will convert the mathematical expression in the token vector to the postfix expression.
             ByteCodeGenerator::POSTFIX();
-
-            // for (auto &i : token_vector)
-            // {
-            //     std::cout << i._token << " | ";
-            // }
-
-            // for(const auto& i : token_vector){
-            //     std::cout<<"\n[ "<<i._token<<" | "<<i._type<<" ]";
-            // }
 
             // creating the bytecode using token_vector.
             ByteCodeWriter::WRITE(token_vector);

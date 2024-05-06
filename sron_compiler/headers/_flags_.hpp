@@ -1,8 +1,10 @@
 
+#pragma once
+
 #ifndef FLAG_H
 #define FLAG_H
 
-#define PI_VALUE "3.14159265"
+#define PI_VALUE "3.141592653"
 
 
 //=================== Attributes Flags
@@ -36,6 +38,7 @@
 #define Flag_Double_Value "`Dv"
 #define Flag_Char_Value "`Cv"
 #define Flag_Bool_Value "`Bv"
+#define Flag_String_Value "`Sv"
 //===================
 
 #define Flag_Assign "`="
