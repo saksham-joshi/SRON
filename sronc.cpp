@@ -39,10 +39,7 @@ int main(int argc, char **argv)
 
         ByteCodeGenerator::GENERATE();
 
-        code_file.close();
-
-        std::cout << "\n\t=---> Time Taken : " << double(clock() - Logs::execution_start_time) / double(CLOCKS_PER_SEC) << " seconds.\n";
-
+        std::cout << "\n\t=---> Time Taken : " << double(clock()) / double(CLOCKS_PER_SEC) << " seconds.\n";
     }
     catch (const std::exception&)
     {

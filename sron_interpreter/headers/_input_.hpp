@@ -6,6 +6,7 @@
  *              3. Int.
  *              4. Char.
  */
+#pragma once
 
 #include "_argument_list_.hpp"
 

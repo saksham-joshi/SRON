@@ -9,23 +9,33 @@
 
 inline namespace Support
 {
-    inline static const char *TYPE_FLAG_TO_STRING(unsigned short int) noexcept;
+    inline static bool CHECK_VALID_IDENTIFIER_NAME(std::string &);
+    
+    inline static const char *GET_ENDING_FLAG_OF_CONDITIONAL_STATEMENT(std::string &str) noexcept;
+
+    inline static unsigned short int IDENTIFY_TYPE_FROM_STRING(std::string &) noexcept;
+
     inline static bool IS_INNER_SCOPE_ATTRIBUTE(std::string &) noexcept;
     inline static bool IS_INBUILT_ATTRIBUTE(std::string &) noexcept;
     inline static bool IS_ATTRIBUTE(std::string &) noexcept;
     inline static bool IS_VALID_ATTRIBUTE_WITH_ROUND_BRACKETS(std::string &) noexcept;
+
     inline static bool IS_DATATYPE(std::string &) noexcept;
     inline static bool IS_KEYWORD(std::string &) noexcept;
     inline static bool IS_LOGICAL_OPERATOR(std::string &) noexcept;
     inline static bool IS_VALID_FUNCTION_NAME(std::string&) noexcept;
-    inline static bool CHECK_VALID_IDENTIFIER_NAME(std::string &);
-    inline static unsigned short int IDENTIFY_TYPE_FROM_STRING(std::string &) noexcept;
+    
+    
     inline static bool IS_UNSIGNED_INTEGER(std::string &) noexcept;
     inline static bool IS_RESERVED_FILENAME(std::string &) noexcept;
+
     inline static bool IS_FLAG(std::string &) noexcept;
     inline static bool IS_LOOP_OPENING_FLAG(std::string &str) noexcept;
     inline static bool IS_LOOP_ENDING_FLAG(std::string &str) noexcept;
-    inline static const char *GET_ENDING_FLAG_OF_CONDITIONAL_STATEMENT(std::string &str) noexcept;
+
+    inline static bool IS_VALID_TYPE_AFTER_ASSIGN(unsigned short int _type_) noexcept;
+
+    inline static const char *TYPE_FLAG_TO_STRING(unsigned short int) noexcept;
 
     // this function will check if the passed value type is valid to be put after assign (=) operator
     inline static bool IS_VALID_TYPE_AFTER_ASSIGN(unsigned short int _type_) noexcept

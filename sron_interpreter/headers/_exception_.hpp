@@ -10,13 +10,15 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
+#pragma once
+
 #include <exception>
 #include <string>
 #include <windows.h>
 #include "static_logs.hpp"
 
-using std::cerr;
-using std::cout;
+#pragma GCC poison printf
+#pragma GCC poison scanf
 
 // struct ThrowException
 // {

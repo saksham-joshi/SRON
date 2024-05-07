@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef LOGS_H
 #define LOGS_H
 
@@ -52,6 +54,5 @@ inline namespace Logs
         }
         Logs::directory_path = Logs::filename.substr(0, i);
     }
-
 }
 #endif

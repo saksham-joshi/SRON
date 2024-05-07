@@ -34,6 +34,7 @@
 #define Flag_Double_Value "`Dv"
 #define Flag_Char_Value "`Cv"
 #define Flag_Bool_Value "`Bv"
+#define Flag_String_Value "`Sv"
 //===================
 
 #define Flag_Comma "`,"

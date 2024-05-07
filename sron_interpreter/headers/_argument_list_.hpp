@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef ARGLIST_H
 #define ARGLIST_H
 

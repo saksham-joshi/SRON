@@ -22,6 +22,8 @@
   8. List.
 */
 
+#pragma once
+
 #include <vector>
 #include <iomanip>
 #include <cmath>
@@ -30,10 +32,9 @@
 #include "_flags_.hpp"
 #include "_converter_.hpp"
 
-using std::exception;
+
 using std::string;
 using std::to_string;
-using std::vector;
 
 #ifndef DATATYPES_H
 #define DATATYPES_H
@@ -66,7 +67,7 @@ public:
     inline virtual void PRINT() const = 0;
 
     // prints the type of the datatype
-    inline virtual string TYPE() const = 0;
+    inline virtual std::string TYPE() const = 0;
 
     // returns the type number
     inline virtual unsigned short int TYPE_NUMBER() const = 0;
@@ -75,7 +76,7 @@ public:
     inline virtual long long int SIZE_OF() const = 0;
 
     // returns the string form of value
-    inline virtual string TO_STRING() const = 0;
+    inline virtual std::string TO_STRING() const = 0;
 
     // methods to return object's pointers
     inline virtual Void *GET_VOID() const = 0;
@@ -133,11 +134,11 @@ public:
     {
         return 0;
     }
-    inline virtual string TO_STRING() const override
+    inline virtual std::string TO_STRING() const override
     {
         return "";
     }
-    inline virtual string TYPE() const override
+    inline virtual std::string TYPE() const override
     {
         return "Void";
     }
@@ -233,12 +234,12 @@ public:
         return sizeof(this->value);
     }
 
-    inline virtual string TO_STRING() const override
+    inline virtual std::string TO_STRING() const override
     {
         return std::to_string(this->value);
     }
 
-    inline virtual string TYPE() const override
+    inline virtual std::string TYPE() const override
     {
         return "Double";
     }
@@ -345,7 +346,7 @@ public:
         return sizeof(this->value);
     }
 
-    inline virtual string TYPE() const override
+    inline virtual std::string TYPE() const override
     {
         return "Int";
     }
@@ -355,7 +356,7 @@ public:
         return TYPE_INT;
     }
 
-    inline virtual string TO_STRING() const override
+    inline virtual std::string TO_STRING() const override
     {
         return std::to_string(this->value);
     }
@@ -454,11 +455,11 @@ public:
     {
         return sizeof(this->value);
     }
-    inline virtual string TO_STRING() const override
+    inline virtual std::string TO_STRING() const override
     {
         return (std::string) "" + this->value;
     }
-    inline virtual string TYPE() const override
+    inline virtual std::string TYPE() const override
     {
         return "Char";
     }
@@ -562,12 +563,12 @@ public:
         return sizeof(this);
     }
 
-    inline virtual string TO_STRING() const override
+    inline virtual std::string TO_STRING() const override
     {
         return (this->value) ? "true" : "false";
     }
 
-    inline virtual string TYPE() const override
+    inline virtual std::string TYPE() const override
     {
         return "Bool";
     }
@@ -682,12 +683,12 @@ public:
         return sizeof(this->value);
     }
 
-    inline virtual string TO_STRING() const override
+    inline virtual std::string TO_STRING() const override
     {
         return this->value;
     }
 
-    inline virtual string TYPE() const override
+    inline virtual std::string TYPE() const override
     {
         return "String";
     }
@@ -814,22 +815,12 @@ public:
         return this->value.find_first_of(val->GET());
     }
 
-    inline void INSERT(long long int index, String *val)
-    {
+    inline void INSERT(long long int index , Any& val){
         if (index < 0 || (long long unsigned int)index >= this->value.length())
         {
             DISPLAY_EXCEPTION("inserting 'String' type value to type 'String'.", IndexNotWithinRange);
         }
-        this->value.insert(index, val->GET());
-    }
-
-    inline void INSERT(long long int index, Char *val)
-    {
-        if (index < 0 || (long long unsigned int)index >= this->value.length())
-        {
-            DISPLAY_EXCEPTION("inserting 'Char' type value to type 'String'.", IndexNotWithinRange);
-        }
-        this->value.insert(index, &val->GET());
+        this->value.insert(index, val.TO_STRING());
     }
 
     inline char POP_BACK()
@@ -1050,7 +1041,7 @@ public:
         return sizeof(this->value);
     }
 
-    inline virtual string TO_STRING() const override
+    inline virtual std::string TO_STRING() const override
     {
         string fin = "";
         try
@@ -1076,7 +1067,7 @@ public:
         return fin;
     }
 
-    inline virtual string TYPE() const override
+    inline virtual std::string TYPE() const override
     {
         return "List";
     }
@@ -1148,6 +1139,15 @@ public:
     inline std::vector<Any *> &GET()
     {
         return this->GET();
+    }
+
+    inline void INSERT(long long int index, Any* val){
+        if (index < 0 || (long long unsigned int)index >= this->value.size())
+        {
+            DISPLAY_EXCEPTION("inserting a value to type 'List'.", IndexNotWithinRange);
+        }
+
+        this->value.insert( this->value.begin()+index , val);
     }
 
     inline Any *POP()
@@ -1248,779 +1248,7 @@ public:
     }
 };
 
-/*
-  |====================== Vector ===============================|
- 'Vector' datatype uses std::vector to store values.
-  > It is dynamic in size but not dynamic in nature because it can store only similar datatypes within itself.
-  > Syntax in SRON : "Vector x = [1,2,3,3,4,6,7,8,9,0]" or "Vector x" or "Vector x =[]"
 
-  NOTE: It's implementation is causing troubles with the speed and efficieny so it will be implemented further.
-*/
-
-inline static bool operator==(Any &val1, Any &val2)
-{
-    try
-    {
-        switch (val1.TYPE_NUMBER())
-        {
-
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return val1.GET_INT()->GET() == val2.GET_INT()->GET();
-            case TYPE_DOUBLE:
-                return val1.GET_INT()->GET() == val2.GET_DOUBLE()->GET();
-            default:
-                return false;
-            }
-        }
-        break;
-
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return val1.GET_DOUBLE()->GET() == val2.GET_INT()->GET();
-            case TYPE_DOUBLE:
-                return val1.GET_DOUBLE()->GET() == val2.GET_DOUBLE()->GET();
-            default:
-                return false;
-            }
-        }
-        break;
-
-        case TYPE_CHAR:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_CHAR:
-                return val1.GET_CHAR()->GET() == val2.GET_CHAR()->GET();
-            case TYPE_STRING:
-                return val2.GET_STRING()->LEN() == 1 && (val2.GET_STRING()->AT(0) == val1.GET_CHAR()->GET());
-            default:
-                return false;
-            }
-        }
-        break;
-
-        case TYPE_BOOL:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-
-            case TYPE_BOOL:
-                return val1.GET_BOOL()->GET() == val2.GET_BOOL()->GET();
-            default:
-                return false;
-            }
-        }
-        break;
-
-        case TYPE_STRING:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-
-            case TYPE_STRING:
-                return val1.GET_STRING()->GET() == val2.GET_STRING()->GET();
-            case TYPE_CHAR:
-                return val1.GET_STRING()->LEN() == 1 && (val1.GET_STRING()->AT(0) == val2.GET_CHAR()->GET());
-            default:
-                return false;
-            }
-        }
-        break;
-
-        case TYPE_LIST:
-        {
-            if (val2.TYPE_NUMBER() == TYPE_LIST)
-            {
-                size_t len = val1.GET_LIST()->LEN();
-                if (len != val2.GET_LIST()->LEN())
-                {
-                    return false;
-                }
-                List *list1 = val1.GET_LIST();
-                List *list2 = val2.GET_LIST();
-
-                for (size_t i = 0; i < len; ++i)
-                {
-                    if (list1->AT(i) != list2->AT(i))
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            return false;
-        }
-        break;
-
-        default:
-            return false;
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("comparing values of type '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return false;
-}
-
-inline static bool operator&&(Any &val1, Any &val2)
-{
-    if (val1.TYPE_NUMBER() == TYPE_BOOL && val2.TYPE_NUMBER() == TYPE_BOOL)
-    {
-        return val1.GET_BOOL()->GET() && val2.GET_BOOL()->GET();
-    }
-    DISPLAY_EXCEPTION("performing 'and' operation on values of type '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    return false;
-}
-
-inline static bool operator||(Any &val1, Any &val2)
-{
-    if (val1.TYPE_NUMBER() == TYPE_BOOL && val2.TYPE_NUMBER() == TYPE_BOOL)
-    {
-        return val1.GET_BOOL()->GET() || val2.GET_BOOL()->GET();
-    }
-    DISPLAY_EXCEPTION("performing 'or' operation on values of type '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    return false;
-}
-
-inline static bool operator!=(Any &val1, Any &val2)
-{
-    return !(val1 == val2);
-}
-
-inline static bool operator!(Any &val1)
-{
-    if (val1.TYPE_NUMBER() == TYPE_BOOL)
-    {
-        return !val1.GET_BOOL()->GET();
-    }
-    DISPLAY_EXCEPTION("performing 'not' operation on value of type '" + val1.TYPE() + "'.", MathEvaluationException);
-    return false;
-}
-
-inline static bool operator<(Any &val1, Any &val2)
-{
-    try
-    {
-        switch (val1.TYPE_NUMBER())
-        {
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return val1.GET_INT()->GET() < val2.GET_INT()->GET();
-            case TYPE_DOUBLE:
-                return val1.GET_INT()->GET() < val2.GET_DOUBLE()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return val1.GET_DOUBLE()->GET() < val2.GET_INT()->GET();
-            case TYPE_DOUBLE:
-                return val1.GET_DOUBLE()->GET() < val2.GET_DOUBLE()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_CHAR:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_CHAR:
-                return val1.GET_CHAR()->GET() < val2.GET_CHAR()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_STRING:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_STRING:
-                return val1.GET_STRING()->GET() < val2.GET_STRING()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        default:
-            throw std::exception();
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("performing '<' operation between type of '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return false;
-}
-
-inline static bool operator<=(Any &val1, Any &val2)
-{
-    try
-    {
-
-        switch (val1.TYPE_NUMBER())
-        {
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return val1.GET_INT()->GET() <= val2.GET_INT()->GET();
-            case TYPE_DOUBLE:
-                return val1.GET_INT()->GET() <= val2.GET_DOUBLE()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return val1.GET_DOUBLE()->GET() <= val2.GET_INT()->GET();
-            case TYPE_DOUBLE:
-                return val1.GET_DOUBLE()->GET() <= val2.GET_DOUBLE()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_CHAR:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_CHAR:
-                return val1.GET_CHAR()->GET() <= val2.GET_CHAR()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_STRING:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_STRING:
-                return val1.GET_STRING()->GET() <= val2.GET_STRING()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        default:
-            throw std::exception();
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("performing '<=' operation between type of '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return false;
-}
-
-inline static bool operator>(Any &val1, Any &val2)
-{
-    try
-    {
-
-        switch (val1.TYPE_NUMBER())
-        {
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return val1.GET_INT()->GET() > val2.GET_INT()->GET();
-            case TYPE_DOUBLE:
-                return val1.GET_INT()->GET() > val2.GET_DOUBLE()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return val1.GET_DOUBLE()->GET() > val2.GET_INT()->GET();
-            case TYPE_DOUBLE:
-                return val1.GET_DOUBLE()->GET() > val2.GET_DOUBLE()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_CHAR:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_CHAR:
-                return val1.GET_CHAR()->GET() > val2.GET_CHAR()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_STRING:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_STRING:
-                return val1.GET_STRING()->GET() > val2.GET_STRING()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        default:
-            throw std::exception();
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("performing '>' operation between type of '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return false;
-}
-
-inline static bool operator>=(Any &val1, Any &val2)
-{
-    try
-    {
-
-        switch (val1.TYPE_NUMBER())
-        {
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return val1.GET_INT()->GET() >= val2.GET_INT()->GET();
-            case TYPE_DOUBLE:
-                return val1.GET_INT()->GET() >= val2.GET_DOUBLE()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return val1.GET_DOUBLE()->GET() >= val2.GET_INT()->GET();
-            case TYPE_DOUBLE:
-                return val1.GET_DOUBLE()->GET() >= val2.GET_DOUBLE()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_CHAR:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_CHAR:
-                return val1.GET_CHAR()->GET() >= val2.GET_CHAR()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_STRING:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_STRING:
-                return val1.GET_STRING()->GET() >= val2.GET_STRING()->GET();
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        default:
-            throw std::exception();
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("performing '>=' operation between type of '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return false;
-}
-inline static Any *operator+(Any &val1, Any &val2)
-{
-    try
-    {
-        switch (val1.TYPE_NUMBER())
-        {
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return new Int(val1.GET_INT()->GET() + val2.GET_INT()->GET());
-            case TYPE_DOUBLE:
-                return new Double(val1.GET_INT()->GET() + val2.GET_DOUBLE()->GET());
-            case TYPE_STRING:
-                return new String(val1.TO_STRING() + val2.TO_STRING());
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return new Double(val1.GET_DOUBLE()->GET() + val2.GET_INT()->GET());
-            case TYPE_DOUBLE:
-                return new Double(val1.GET_DOUBLE()->GET() + val2.GET_DOUBLE()->GET());
-            case TYPE_STRING:
-                return new String(val1.TO_STRING() + val2.TO_STRING());
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_CHAR:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_CHAR:
-            case TYPE_STRING:
-                return new String(val1.TO_STRING() + val2.TO_STRING());
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_STRING:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-            case TYPE_DOUBLE:
-            case TYPE_CHAR:
-            case TYPE_BOOL:
-            case TYPE_STRING:
-                return new String(val1.TO_STRING() + val2.TO_STRING());
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        default:
-            throw std::exception();
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("performing '' operation between type of '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return new Void();
-}
-
-inline static Any *operator-(Any &val1, Any &val2)
-{
-    try
-    {
-        switch (val1.TYPE_NUMBER())
-        {
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return new Int(val1.GET_INT()->GET() - val2.GET_INT()->GET());
-            case TYPE_DOUBLE:
-                return new Double(val1.GET_INT()->GET() - val2.GET_DOUBLE()->GET());
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return new Double(val1.GET_DOUBLE()->GET() - val2.GET_INT()->GET());
-            case TYPE_DOUBLE:
-                return new Double(val1.GET_DOUBLE()->GET() - val2.GET_DOUBLE()->GET());
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        default:
-            throw std::exception();
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("performing subtraction between type of '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return new Void();
-}
-inline static Any *operator*(Any &val1, Any &val2)
-{
-    try
-    {
-        switch (val1.TYPE_NUMBER())
-        {
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return new Int(val1.GET_INT()->GET() * val2.GET_INT()->GET());
-            case TYPE_DOUBLE:
-                return new Double(val1.GET_INT()->GET() * val2.GET_DOUBLE()->GET());
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return new Double(val1.GET_DOUBLE()->GET() * val2.GET_INT()->GET());
-            case TYPE_DOUBLE:
-                return new Double(val1.GET_DOUBLE()->GET() * val2.GET_DOUBLE()->GET());
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        default:
-            throw std::exception();
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("performing multiplication between type of '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return new Void();
-}
-
-// this function takes care of if the second value is a zero or not and returns a long long int value
-inline static long long int __DIVIDE(long long int val1, long long int val2)
-{
-    if (val2 == 0)
-    {
-        DISPLAY_EXCEPTION("performing the division operation.", DivisionByZeroException);
-    }
-    return val1 / val2;
-}
-inline static long long int __MODULUS(long long int val1, long long int val2)
-{
-    if (val2 == 0)
-    {
-        DISPLAY_EXCEPTION("performing the modulus operation.", DivisionByZeroException);
-    }
-    return val1 % val2;
-}
-
-inline static Any *operator/(Any &val1, Any &val2)
-{
-    try
-    {
-        switch (val1.TYPE_NUMBER())
-        {
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return new Int(__DIVIDE(val1.GET_INT()->GET(), val2.GET_INT()->GET()));
-            case TYPE_DOUBLE:
-                return new Double(__DIVIDE(val1.GET_INT()->GET(), val2.GET_DOUBLE()->GET()));
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return new Double(__DIVIDE(val1.GET_DOUBLE()->GET(), val2.GET_INT()->GET()));
-            case TYPE_DOUBLE:
-                return new Double(__DIVIDE(val1.GET_DOUBLE()->GET(), val2.GET_DOUBLE()->GET()));
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        default:
-            throw std::exception();
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("performing division between type of '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return new Void();
-}
-
-inline static Any *operator%(Any &val1, Any &val2)
-{
-    try
-    {
-        switch (val1.TYPE_NUMBER())
-        {
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-
-                return new Int(__MODULUS(val1.GET_INT()->GET(), val2.GET_INT()->GET()));
-
-            case TYPE_DOUBLE:
-
-                return new Double(__MODULUS(val1.GET_INT()->GET(), val2.GET_DOUBLE()->GET()));
-
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-
-                return new Double(__MODULUS(val1.GET_DOUBLE()->GET(), val2.GET_INT()->GET()));
-
-            case TYPE_DOUBLE:
-
-                return new Double(__MODULUS(val1.GET_DOUBLE()->GET(), val2.GET_DOUBLE()->GET()));
-
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        default:
-            throw std::exception();
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("performing modulus between type of '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return new Void();
-}
-
-inline static Any *operator^(Any &val1, Any &val2)
-{
-    try
-    {
-        switch (val1.TYPE_NUMBER())
-        {
-        case TYPE_INT:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return new Int(std::pow(val1.GET_INT()->GET(), val2.GET_INT()->GET()));
-            case TYPE_DOUBLE:
-                return new Double(std::pow(val1.GET_INT()->GET(), val2.GET_DOUBLE()->GET()));
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        case TYPE_DOUBLE:
-        {
-            switch (val2.TYPE_NUMBER())
-            {
-            case TYPE_INT:
-                return new Double(std::pow(val1.GET_DOUBLE()->GET(), val2.GET_INT()->GET()));
-            case TYPE_DOUBLE:
-                return new Double(std::pow(val1.GET_DOUBLE()->GET(), val2.GET_DOUBLE()->GET()));
-            default:
-                throw std::exception();
-            }
-        }
-        break;
-        default:
-            throw std::exception();
-        }
-    }
-    catch (const std::exception &)
-    {
-        DISPLAY_EXCEPTION("finding power of values between type of '" + val1.TYPE() + "' and '" + val2.TYPE() + "'.", MathEvaluationException);
-    }
-    return new Void();
-}
-
-// inline Any &Any::operator=(Any &val)
-// {
-//     if (this->TYPE_NUMBER() != val.TYPE_NUMBER())
-//     {
-//         this = val;
-//         return val;
-//     }
-
-//     // if the types are same...
-//     switch (this->TYPE_NUMBER())
-//     {
-
-//     case TYPE_INT:
-//         this->GET_INT()->SET(val.GET_INT()->GET());
-//         break;
-
-//     case TYPE_DOUBLE:
-//         this->GET_DOUBLE()->SET(val.GET_DOUBLE()->GET());
-//         break;
-
-//     case TYPE_CHAR:
-//         this->GET_CHAR()->SET(val.GET_CHAR()->GET());
-//         break;
-
-//     case TYPE_STRING:
-//         this->GET_STRING()->SET(val.GET_STRING()->GET());
-//         break;
-
-//     case TYPE_BOOL:
-//         this->GET_BOOL()->SET(val.GET_BOOL()->GET());
-//         break;
-
-//     case TYPE_LIST:
-//         this->GET_LIST()->SET(val.GET_LIST()->GET());
-//         break;
-
-//     default:
-//         DISPLAY_EXCEPTION("assigning value of type '" + val.TYPE() + "' to value of type '" + this->TYPE() + "'.", InterpretationException);
-//     }
-//     return val;
-// }
 
 inline List *String::TO_CHAR_LIST()
 {

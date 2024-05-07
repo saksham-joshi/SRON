@@ -18,11 +18,14 @@ struct SronFunction
     // this iterator is used to iterator over the _codevector
     std::vector<std::string>::iterator _iterator;
 
+    // and ending to the end of the the _codevector
+    std::vector<std::string>::iterator _end;
+
     // this stack is used to handle scopes
     std::stack<std::vector<std::string>::iterator> _scopestack;
 
     // Argument_List containing the values passed to the function
-    Argument_List *_arglist;
+    Argument_List _arglist;
 
     SronFunction(std::string function_name, Argument_List *args)
     {
@@ -46,12 +49,44 @@ struct SronFunction
             // reading the whole file and saving the lines into the _codevector
             while (std::getline(codefile, codeline))
             {
+                // if there is a multiline string, then it is converted to single line at loading time...
+                if(codeline == Flag_StringScopeStart){
+                    
+                    std::getline(codefile, codeline);
+
+                    int loop_count = std::stoi(codeline);
+
+                    std::string temp_string;
+
+                    for(; loop_count != 1 ; --loop_count){
+                        std::getline(codefile, codeline);
+                        temp_string.append(codeline+'\n');
+                    }
+
+                    // removing the last added new line
+                    temp_string.pop_back();
+
+                    // pushing a new flag Flag_String_Value with already combined value.
+                    this->_codevector.push_back(Flag_String_Value);
+                    this->_codevector.push_back(temp_string);
+
+                    // reading file again to jump the Flag_StringScopeEnd
+                    std::getline(codefile, codeline);
+                    
+                    continue;
+                }
+                else if(codeline == Flag_String_Value){ 
+                // line written after Flag_String_Value may contain Flag_StringScopeStart which is 
+                // one of the scenario that may occur some errors
+
+                    this->_codevector.push_back(codeline);
+
+                    std::getline(codefile,codeline);
+                }
                 this->_codevector.push_back(codeline);
             }
 
-            // closing the file.
-            codefile.close();
-            codefile.~ios_base();
+            this->_end = this->_codevector.end();
 
             this->_return_value = nullptr;
 
@@ -59,7 +94,7 @@ struct SronFunction
 
             this->_Vmanager = VariableManager();
 
-            this->_arglist = args;
+            this->_arglist = *args;
         }
         catch (const std::exception &)
         {
@@ -69,16 +104,6 @@ struct SronFunction
 
     ~SronFunction()
     {
-        //std::cout<<"destroying function"<<this->_function_name;
-        // this->_function_name.~basic_string();
-
-        // this->_Vmanager.~VariableManager();
-
-        // this->_arglist->~Argument_List();
-
-        // this->_codevector.~vector();
-
-        // this->_codeline.~basic_string();
-        //std::cout<<"destruction end function"<<this->_function_name;
+        
     }
 };

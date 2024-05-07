@@ -23,6 +23,8 @@ It includes functions :
     16. double to bool
 */
 
+#pragma once
+
 #include "_exception_.hpp"
 
 #ifndef CONVERTER_H
@@ -91,21 +93,13 @@ inline namespace Converter
         }
         catch (const std::exception &)
         {
-            DISPLAY_EXCEPTION("conversion of String type to Double.", TypeConversionException);
+            DISPLAY_EXCEPTION("conversion of String type to Double. Converting '"+str+"' to 'Double'.", TypeConversionException);
         }
         return 0;
     }
     inline static double TO_DOUBLE(long long int i)
     {
-        try
-        {
-            return (double)i;
-        }
-        catch (const std::exception &)
-        {
-            DISPLAY_EXCEPTION("conversion of Int type to Double.", TypeConversionException);
-        }
-        return 0;
+        return (double)i;
     }
     inline static double TO_DOUBLE(double d)
     {
@@ -178,7 +172,7 @@ inline namespace Converter
         }
         catch (const std::exception &)
         {
-            DISPLAY_EXCEPTION("conversion of String type to Int.", TypeConversionException);
+            DISPLAY_EXCEPTION("conversion of String type to Int. Converting '"+str+"' to 'Int'.", TypeConversionException);
         }
         return 0;
     }
