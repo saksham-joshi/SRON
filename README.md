@@ -3,7 +3,7 @@
 <code> <img width="50%" src="./Pictures/SRON_transparent.png" alt="logo"> </code>
 
 SRON stands for Saksham Rapid Object Notation.<br/> <br/>
-It is a blazingly fast, insanely optimized, dynamically typed, single threaded, functional and compiled + interpreted programming language.
+It is a blazingly fast, heavily optimized, dynamically typed, single threaded, lightweight, functional and compiled + interpreted programming language.
 It follows the typing style of JSON. In this, every line specifies an attribute which shows what types of instruction is written after colon(:).
 
 The SRON's compiler converts the source code into a bytecode and saves it in a .srb file.
