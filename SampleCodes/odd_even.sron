@@ -1,3 +1,5 @@
+A sample code to find if a given number is odd or even
+
 {
     name: odd_even
     args : (Int val)
@@ -6,6 +8,6 @@
 
 {
     name : MAIN
-    1 : Int val = INPUT_INT("Enter the value :- ")
-     0 : PRINTLN(odd_even(val))
+    1 : Int val = input_int("Enter the value :- ")
+     0 : println(odd_even(val))
 }

@@ -3,7 +3,7 @@
     args: (Int val, Any y)
     variables : Int arm,Int temp,Int len
 
-    comment : "asdfas getting the number of digits in the number.asdfasd"
+    comment : "This function will calculate the armstrong and return the final number"
 
     variables : Int x
     0 : len = len(val)
