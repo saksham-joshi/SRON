@@ -1,6 +1,0 @@
-> Reason 1 : You forgot to create the "MAIN" function.
-    > Reason 2 : 'MAIN.srb' is not found in the current directory.
-    > Reason 3 : If you don't know, 'MAIN.srb' is the execution start point of the code.
-
-    ||> Solution 1 : Main function is written in uppercase like this 'MAIN'.
-    ||> Solution 2 : Make a function named as 'MAIN'.

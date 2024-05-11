@@ -1,9 +1,0 @@
-> Reason 1 : You have trying to evaluate invalid mathematical expression.
-    > Reason 2 : You have passed invalid operators.
-    > Reason 3 : You have passed values of types other than Int and Double.
-    > Reason 4 : You are trying to call a function inside the mathematical block.
-    > Reason 5 : If you are using the assignment operator(=), then this error will rise.
-
-    ||> Solution 1 : To solve an expression, only +, -, *, /, %,^ operators are allowed.
-    ||> Solution 2 : Try not to call a function inside the mathematical block.
-    ||> Solution 3 : Use valid operators for solving the expressions.
