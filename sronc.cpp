@@ -1,21 +1,34 @@
 #include "sron_compiler/_bytecode_generator_.hpp"
 
 int main(int argc, char **argv)
-{   
+{
     try
     {
         std::string filename;
 
-        if(argc > 0){
+        if (argc > 0)
+        {
+
+            // checking if the terminal is passed with --version parameter: sronc --version
+            const char *version_string = "--version";
+
+            if (*argv[1] == *version_string)
+            {
+                Support::DISPLAY_VERSION();
+                return 0;
+            }
+
             filename = std::string(argv[1]);
         }
-        else{
+        else
+        {
             throw std::exception();
         }
 
         // checking if the extension of the file is .sron or not!
-        if(!(filename.size() > 5 && Support::TO_LOWER(filename.substr(filename.size()-5)) == ".sron") ){
-            std::cout<<"\n =| Only files with extension '.sron'  can be compiled!! |= \n\n";
+        if (!(filename.size() > 5 && Support::TO_LOWER(filename.substr(filename.size() - 5)) == ".sron"))
+        {
+            std::cout << "\n =| Only files with extension '.sron'  can be compiled!! |= \n\n";
             exit(1);
         }
 
@@ -23,7 +36,7 @@ int main(int argc, char **argv)
 
         if (code_file.fail())
         {
-            
+
             if (argc == 1)
             {
                 throw std::exception();
@@ -41,10 +54,10 @@ int main(int argc, char **argv)
 
         std::cout << "\n\t=---> Time Taken : " << double(clock()) / double(CLOCKS_PER_SEC) << " seconds.\n";
     }
-    catch (const std::exception&)
+    catch (const std::exception &)
     {
         DISPLAY_EXCEPTION("getting the file name.", FileNameNotSpecifiedException, false);
     }
-    
+
     return 0;
 }
