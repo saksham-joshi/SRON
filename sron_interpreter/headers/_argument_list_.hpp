@@ -70,7 +70,7 @@ public:
     }
 
     inline Int* GET_INT(unsigned short int index){
-        Int* val = this->GET(0)->GET_INT();
+        Int* val = this->GET(index)->GET_INT();
         if(val == nullptr){
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected an 'Int' value.", ArgumentException, false);
         }
@@ -78,7 +78,7 @@ public:
     }
 
     inline Double* GET_DOUBLE(unsigned short int index){
-        Double* val = this->GET(0)->GET_DOUBLE();
+        Double* val = this->GET(index)->GET_DOUBLE();
         if(val == nullptr){
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected a 'Double' value.", ArgumentException, false);
         }
@@ -86,7 +86,7 @@ public:
     }
 
     inline Char* GET_CHAR(unsigned short int index){
-        Char* val = this->GET(0)->GET_CHAR();
+        Char* val = this->GET(index)->GET_CHAR();
         if(val == nullptr){
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected a 'Char' value.", ArgumentException, false);
         }
@@ -94,7 +94,7 @@ public:
     }
 
     inline String* GET_STRING(unsigned short int index){
-        String* val = this->GET(0)->GET_STRING();
+        String* val = this->GET(index)->GET_STRING();
         if(val == nullptr){
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected a 'String' value.", ArgumentException, false);
         }
@@ -102,7 +102,7 @@ public:
     }
 
     inline List* GET_LIST(unsigned short int index){
-        List* val = this->GET(0)->GET_LIST();
+        List* val = this->GET(index)->GET_LIST();
         if(val == nullptr){
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected a 'List' value.", ArgumentException, false);
         }
@@ -110,7 +110,7 @@ public:
     }
 
     inline Bool* GET_BOOL(unsigned short int index){
-        Bool* val = this->GET(0)->GET_BOOL();
+        Bool* val = this->GET(index)->GET_BOOL();
         if(val == nullptr){
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected a 'Bool' value.", ArgumentException, false);
         }
@@ -136,7 +136,7 @@ public:
         std::cout << "\n{";
         for (unsigned short int i = 0; i < this->size; ++i)
         {
-            std::cout << "\n   >";
+            std::cout << "\n   > ";
             this->array[i]->PRINT();
         }
         std::cout << "\n}";
