@@ -1,25 +1,27 @@
 {
     name : Armstrong
     args: (Int val, Any y)
+
     variables : Int arm,Int temp,Int len
-
-    comment : "This function will calculate the armstrong and return the final number"
-
-    variables : Int x
     0 : len = len(val)
+
     while:{
         condition:(~val != 0~)
         0 : temp = ~val%10~ 
         1 : arm = ~arm+temp^len~
-        2 : val = ~val%10~
+        2 : val = ~val/10~
     }
+
     return : arm
 }
 {
     name : MAIN
     variables:Int val, Int arm
+
     0 : val = input_int("\n ==> Enter the value :- ")
+
     1 : arm = Armstrong(val)
+    
     if:{
         condition: (~val == arm ~)
         2 : println("Yes, ",val," is an Armstrong Number.")

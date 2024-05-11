@@ -14,6 +14,6 @@ A sample SRON code to take user input and find factorial of a code.
 }
 {
     name: MAIN
-    0 : Int val = input_input("Enter the value :- ") 
-    1 : println(factorial(val))
+    0 : Int val = input_int("Enter the value :- ") 
+    1 : println("\nFactorial of ", val, " = ", factorial(val))
 }

@@ -1,0 +1,37 @@
+{
+    name : calculator
+    args : ()
+    variables : Double d1, Double d2, Char operator
+    0 : d1 = input_double("Number:- ")
+    while : {
+        condition : (true)
+        0 : operator = input_char("Operator:- ")
+        1 : d2 = input_double("Number:- ")
+        if :{
+            condition : (~operator == '+'~)
+            2 : d1 = ~d1+d2~
+        }
+        elif : {
+            condition : (~operator == '-'~)
+            2 : d1 = ~d1-d2~
+        }
+        elif : {
+            condition : (~operator == '*'~)
+            2 : d1 = ~d1*d2~
+        }
+        elif : {
+            condition : (~operator == '/'~)
+            2 : d1 = ~d1/d2~
+        }
+        else : {
+            2 : println("Invalid Operator Found!")
+            3 : break
+        }
+        3 : println("Answer:- ",d1)
+    }
+}
+
+{
+    name : MAIN
+    1 : calculator()
+}
