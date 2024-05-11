@@ -149,6 +149,7 @@ inline namespace ExecutionEngine
         {Flag_ScopeEnd, ExecutionEngine::HANDLE_CLOSING_SCOPES},
         {Flag_FunctionCall, ExecutionEngine::CALL_FUNCTION},
 
+        {Flag_Any, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_Int, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_Double, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_Char, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
