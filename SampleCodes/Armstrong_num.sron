@@ -1,6 +1,6 @@
 {
     name : Armstrong
-    args: (Int val, Any y)
+    args: (Int val)
 
     variables : Int arm,Int temp,Int len
     0 : len = len(val)
@@ -23,10 +23,12 @@
     1 : arm = Armstrong(val)
     
     if:{
+
         condition: (~val == arm ~)
         2 : println("Yes, ",val," is an Armstrong Number.")
     }
     else:{
+        
         2 : println("No, ",val," is not an Armstrong Number.")
     }
     return : 0

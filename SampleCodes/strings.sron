@@ -5,6 +5,6 @@
 
     1: val3 = false
     2 : val2 = ~val1+val2~
-    3 : PRINT(val2)
+    3 : println(val2)
     4 : List val = [1,2,3,4,5,6]
 }
