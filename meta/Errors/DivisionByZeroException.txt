@@ -1,0 +1,4 @@
+> Reason 1 : You are trying to divide a number a zero.
+    > Reason 2 : You are trying to find the remainder of a number which is divided by zero.
+
+    ||> Solution 1 : Check the number before division, if the number is not zero then only proceed.    

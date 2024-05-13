@@ -18,16 +18,6 @@
 #include <windows.h>
 #include "static_logs.hpp"
 
-using std::cerr;
-using std::cout;
-
-// struct ThrowException
-// {
-//     std::string during;
-//     unsigned short int code;
-//     ThrowException(const std::string &msg, const unsigned short int num) : during(msg), code(num) {}
-// };
-
 // used to display no reason and solution to the occured exception.
 #define NoException 0
 
@@ -173,11 +163,7 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
             exit(1);
         }
 
-        Logs::filename = path;
-
-        Logs::SET_DIRECTORY_PATH();
-
-        Logs::filename = Logs::directory_path + "sron_compiler\\headers\\Errors\\" + filename + ".txt";
+        Logs::filename = Logs::executable_path + "meta\\Errors\\" + filename + ".txt";
         
         std::ifstream input(Logs::filename);
 

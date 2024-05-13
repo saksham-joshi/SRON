@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <ctime>
+#include <windows.h>
 
 inline namespace Logs
 {
@@ -20,12 +21,13 @@ inline namespace Logs
     // this function contains the path to the file.
     static std::string directory_path;
 
-    // this function just saves the path to the file in Logs::path
-    inline void SET_DIRECTORY_PATH()
-    {
-        int i = Logs::filename.length() - 1;
+    static std::string executable_path;
 
-        while (i > 0 && !(Logs::filename[i] == '/' || Logs::filename[i] == '\\'))
+    // extracts the path to a file ...
+    inline static std::string GET_FILE_PATH(std::string filepath){
+        int i = filepath.length() - 1;
+
+        while (i > 0 && !(filepath[i] == '/' || filepath[i] == '\\' || filepath[i] == ':'))
         {
             --i;
         }
@@ -33,7 +35,29 @@ inline namespace Logs
         {
             ++i;
         }
-        Logs::directory_path = Logs::filename.substr(0, i);
+
+        return filepath.substr(0,i);
+    }
+
+    // this function just saves the path to the file in Logs::path
+    inline static void SET_DIRECTORY_PATH()
+    {
+
+        Logs::directory_path = GET_FILE_PATH(Logs::filename);
+    }
+
+    inline static void SET_EXECUTABLE_PATH()
+    {
+        char path[MAX_PATH];
+        DWORD length = GetModuleFileName(NULL, path, MAX_PATH);
+
+        if (length == 0)
+        {
+            std::cerr << "\n =| Failed to get the executable's path |=\n";
+            exit(1);
+        }
+
+        Logs::executable_path = Logs::GET_FILE_PATH(path);
     }
 
 }

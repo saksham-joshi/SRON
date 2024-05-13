@@ -2,6 +2,7 @@
 #define BYTECODE_H
 
 #include <queue>
+#include<set>
 #include "headers/_bytecode_writer_.hpp"
 
 /* This namespace is used to create the bytecode.
@@ -28,12 +29,21 @@ namespace ByteCodeGenerator
     // contains the tokens
     std::vector<SronToken> token_vector;
 
+    // set for containing the declared variables.
+    std::set<std::string> variable_set;
+
+    // set for containing the user-defined and in-built variables.
+    std::set<std::string> _function_set_;
+
     // an iterator to iterate over a vector of SronToken
     std::vector<SronToken>::iterator vecit;
 
     static bool inside_math_expression = false;
 
     inline static void CHECK_IF_OPERATOR_IS_INSIDE_MATH_BLOCK();
+    inline static bool CHECK_IF_IN_BUILT_FUNCTION(std::string &);
+    inline static bool CHECK_IF_FUNCTION_EXISTS(std::string &);
+    inline static bool CHECK_IF_VARIABLE_EXISTS(std::string &);
 
     inline static void EXTRACT_CHAR();
     inline static void EXTRACT_IDENTIFIER();
@@ -68,6 +78,23 @@ namespace ByteCodeGenerator
 
             Logs::mainfile->close();
             Logs::mainfile->~ios_base();
+
+            // loading the _function_set_ with list of in-built functions in function_list file...
+            std::ifstream function_list_file(Logs::executable_path+"\\meta\\function_list");
+            if (function_list_file.fail())
+            {
+                DISPLAY_EXCEPTION("starting the compilation of the code. Cannot find metadata files which are neccesarily required for the compiltaion process.\n Reinstall SRON to fix this or Report the error to Saksham Joshi via LinkedIn(@sakshamjoshi27).", NoException, false);
+            }
+
+            while (std::getline(function_list_file, temp_string))
+            {
+                ByteCodeGenerator::_function_set_.insert(temp_string);
+            }
+
+            function_list_file.close();
+            function_list_file.~ios_base();
+
+            temp_string.clear();
 
             // assigning the iterator at the beginning of the file
             ByteCodeGenerator::iterator = filecode.begin();

@@ -10,10 +10,15 @@
 inline namespace Support
 {
     inline static bool CHECK_VALID_IDENTIFIER_NAME(std::string &);
-    
-    inline static const char *GET_ENDING_FLAG_OF_CONDITIONAL_STATEMENT(std::string &str) noexcept;
 
-    inline static unsigned short int IDENTIFY_TYPE_FROM_STRING(std::string &) noexcept;
+    inline static void DISPLAY_VERSION() noexcept;
+
+    inline static const char *GET_ENDING_FLAG_OF_CONDITIONAL_STATEMENT(std::string &s) noexcept;
+
+    inline static bool IS_CURLY_BRACES(char &) noexcept;
+    inline static bool IS_CURLY_BRACES(std::string &) noexcept;
+
+    inline static bool IS_IDENTIFIER(const std::string &) noexcept;
 
     inline static bool IS_INNER_SCOPE_ATTRIBUTE(std::string &) noexcept;
     inline static bool IS_INBUILT_ATTRIBUTE(std::string &) noexcept;
@@ -23,9 +28,12 @@ inline namespace Support
     inline static bool IS_DATATYPE(std::string &) noexcept;
     inline static bool IS_KEYWORD(std::string &) noexcept;
     inline static bool IS_LOGICAL_OPERATOR(std::string &) noexcept;
-    inline static bool IS_VALID_FUNCTION_NAME(std::string&) noexcept;
-    
-    
+
+    inline static bool IS_SQUARE_BRACKET(char &ch) noexcept;
+
+    inline static char TO_LOWER(char &) noexcept;
+    inline static std::string TO_LOWER(std::string) noexcept;
+
     inline static bool IS_UNSIGNED_INTEGER(std::string &) noexcept;
     inline static bool IS_RESERVED_FILENAME(std::string &) noexcept;
 
@@ -33,24 +41,38 @@ inline namespace Support
     inline static bool IS_LOOP_OPENING_FLAG(std::string &str) noexcept;
     inline static bool IS_LOOP_ENDING_FLAG(std::string &str) noexcept;
 
-    inline static bool IS_VALID_TYPE_AFTER_ASSIGN(unsigned short int _type_) noexcept;
+    inline static bool IS_VALID_ATTRIBUTE_FOR_CONDITION_ATTRIBUTE(std::string &) noexcept;
+    inline static bool IS_VALID_FUNCTION_NAME(std::string &) noexcept;
+
+    inline static bool IS_VALID_TYPE_AFTER_OPERATOR(const unsigned short int type) noexcept;
+    inline static bool IS_VALID_TYPE_BEFORE_OPERATOR(const unsigned short int type) noexcept;
+
+    inline static int PRECEDENCE(std::string &str) noexcept;
 
     inline static const char *TYPE_FLAG_TO_STRING(unsigned short int) noexcept;
+
+    inline static void DISPLAY_VERSION() noexcept
+    {
+        std::cout << "\n"
+                     "+----------------------------+\n"
+                     "|      SRON version 1.3      |\n"
+                     "|  @Author : Saksham Joshi   |\n"
+                     "+----------------------------+\n\n";
+    }
 
     // this function will check if the passed value type is valid to be put after assign (=) operator
     inline static bool IS_VALID_TYPE_AFTER_ASSIGN(unsigned short int _type_) noexcept
     {
-        return ((_type_ == TYPE_INT) || (_type_ == TYPE_DOUBLE) || (_type_ == TYPE_CHAR)
-        || (_type_ == TYPE_STRING) || (_type_ == TYPE_BOOL) || (_type_ == TYPE_LIST_OPEN)
-        || (_type_ == TYPE_FUNCTION_CALL) || (_type_ == TYPE_IDENTIFIER) || (_type_ == TYPE_MATH_BLOCK));
+        return ((_type_ == TYPE_INT) || (_type_ == TYPE_DOUBLE) || (_type_ == TYPE_CHAR) || (_type_ == TYPE_STRING) || (_type_ == TYPE_BOOL) || (_type_ == TYPE_LIST_OPEN) || (_type_ == TYPE_FUNCTION_CALL) || (_type_ == TYPE_IDENTIFIER) || (_type_ == TYPE_MATH_BLOCK));
     }
 
     // returns true if the passed attribute is 'args' , 'condition' or 'range'.
-    inline static bool IS_VALID_ATTRIBUTE_WITH_ROUND_BRACKETS(std::string &attribute)  noexcept {
+    inline static bool IS_VALID_ATTRIBUTE_WITH_ROUND_BRACKETS(std::string &attribute) noexcept
+    {
         return (attribute == AttributeArgs || attribute == AttributeCondition || attribute == AttributeRange);
     }
 
-    inline static const char *TYPE_FLAG_TO_STRING(unsigned short int _type_)  noexcept
+    inline static const char *TYPE_FLAG_TO_STRING(unsigned short int _type_) noexcept
     {
 
         switch (_type_)
@@ -98,24 +120,21 @@ inline namespace Support
             return "Newline(\\n) ";
         case TYPE_ASSIGN:
             return "Assign";
-        case TYPE_DATATYPE :
+        case TYPE_DATATYPE:
             return "DataType";
-        case TYPE_COMMA : 
+        case TYPE_COMMA:
             return "Comma";
         }
 
         return " Cannot identify type flag";
     }
 
-    inline static char TO_LOWER(char &) noexcept;
-    inline static std::string TO_LOWER(std::string) noexcept;
-
-    inline static bool is_number(int ch)  noexcept
+    inline static bool is_number(int ch) noexcept
     {
         return (ch >= 48 && ch <= 57);
     }
 
-    inline static bool IS_NUMBER(std::string &str)  noexcept
+    inline static bool IS_NUMBER(std::string &str) noexcept
     {
         for (const auto &i : str)
         {
@@ -128,7 +147,7 @@ inline namespace Support
     }
 
     // This will return true if the string is number. Even if it is not decimal, it will return true
-    inline static bool IS_DECIMAL_NUMBER(const std::string &str)  noexcept
+    inline static bool IS_DECIMAL_NUMBER(const std::string &str) noexcept
     {
         char ch = str[0];
         if ((ch >= '0' && ch <= '9'))
@@ -142,26 +161,26 @@ inline namespace Support
         return false;
     }
 
-    inline static bool is_alphabet(int ch)  noexcept
+    inline static bool is_alphabet(int ch) noexcept
     {
         return ((ch >= 97 && ch <= 122) || (ch >= 65 && ch <= 90));
     }
-    inline static bool is_alpha_number(int ch)  noexcept
+    inline static bool is_alpha_number(int ch) noexcept
     {
         return (is_number(ch) || is_alphabet(ch));
     }
 
-    inline static bool IS_INNER_SCOPE_ATTRIBUTE(std::string &str)  noexcept
+    inline static bool IS_INNER_SCOPE_ATTRIBUTE(std::string &str) noexcept
     {
         return (str == AttributeIf || str == AttributeElif || str == AttributeElse || str == AttributeFor || str == AttributeWhile);
     }
 
-    inline static bool IS_INBUILT_ATTRIBUTE(std::string &str)  noexcept
+    inline static bool IS_INBUILT_ATTRIBUTE(std::string &str) noexcept
     {
-        return (IS_INNER_SCOPE_ATTRIBUTE(str) || str == AttributeName || str == AttributeType || str == AttributeArgs || str == AttributeComment || str == AttributeCondition || str == AttributeRange || str == AttributeReturn || str == AttributeVariables);
+        return (IS_INNER_SCOPE_ATTRIBUTE(str) || str == AttributeName || str == AttributeArgs || str == AttributeComment || str == AttributeCondition || str == AttributeRange || str == AttributeReturn || str == AttributeVariables);
     }
 
-    inline static bool IS_ATTRIBUTE(std::string &word)  noexcept
+    inline static bool IS_ATTRIBUTE(std::string &word) noexcept
     {
         if (IS_INBUILT_ATTRIBUTE(word))
         {
@@ -170,26 +189,26 @@ inline namespace Support
         return IS_NUMBER(word);
     }
 
-    inline static bool IS_DATATYPE(std::string &word)  noexcept
+    inline static bool IS_DATATYPE(std::string &word) noexcept
     {
         return (word == "Any" || word == "Int" || word == "List" || word == "String" || word == "Double" || word == "Char" || word == "Bool");
     }
 
-    inline static bool IS_KEYWORD(std::string &word)  noexcept
+    inline static bool IS_KEYWORD(std::string &word) noexcept
     {
-        return (IS_INBUILT_ATTRIBUTE(word) || IS_DATATYPE(word) || word == "MAIN" || word == "break" || word == "continue" || word == "true" || word == "false");
+        return (IS_INBUILT_ATTRIBUTE(word) || IS_DATATYPE(word) || word == "MAIN" || word == "break" || word == "continue" || word == "true" || word == "false" || word == "PI");
     }
 
-    inline static bool IS_CURLY_BRACES(char &ch)  noexcept
+    inline static bool IS_CURLY_BRACES(char &ch) noexcept
     {
         return (ch == '{' || ch == '}');
     }
-    inline static bool IS_CURLY_BRACES(std::string &str)  noexcept
+    inline static bool IS_CURLY_BRACES(std::string &str) noexcept
     {
         return (str == "{" || str == "}");
     }
 
-    inline static bool IS_IDENTIFIER(const std::string &str)  noexcept
+    inline static bool IS_IDENTIFIER(const std::string &str) noexcept
     {
         return str.length() > 0 && (str[0] == '_' || is_alphabet(str[0]));
     }
@@ -229,8 +248,9 @@ inline namespace Support
         return (IS_MATH_OPERATOR(str) || IS_LOGICAL_OPERATOR(str) || IS_COMPARISON_OPERATOR(str) || IS_OPERATOR(str[0]));
     }
 
-    inline static bool IS_VALID_FUNCTION_NAME(std::string& fnc_name) noexcept{
-        return fnc_name.length() < 32 && Support::IS_IDENTIFIER(fnc_name) && (!Support::IS_RESERVED_FILENAME(fnc_name)) ;
+    inline static bool IS_VALID_FUNCTION_NAME(std::string &fnc_name) noexcept
+    {
+        return fnc_name.length() < 32 && Support::IS_IDENTIFIER(fnc_name) && (!Support::IS_RESERVED_FILENAME(fnc_name));
     }
 
     inline static int PRECEDENCE(char &ch) noexcept
@@ -253,11 +273,7 @@ inline namespace Support
     }
     inline static int PRECEDENCE(std::string &str) noexcept
     {
-        if (str == "(" || str == ")")
-        {
-            return 9;
-        }
-        else if (str == "!")
+        if (str == "!")
         {
             return 8;
         }
@@ -330,90 +346,6 @@ inline namespace Support
             DISPLAY_EXCEPTION("verifying the identifier.", SystemOutofMemoryException);
         }
         return false;
-    }
-
-    /*
-     * This function will extract the possible type of variable from the given token after tokenizing process.
-     */
-    inline static unsigned short int IDENTIFY_TYPE_FROM_STRING(std::string &str) noexcept
-    {
-        if (str.length() == 1 && str[0] == '[')
-        {
-            return TYPE_LIST;
-        }
-        else if (str.length() > 1 && str[0] == '"')
-        {
-            return TYPE_STRING;
-        }
-        else if (str.length() == 3 && str[0] == '\'')
-        {
-            return TYPE_CHAR;
-        }
-        else if (str == "true" || str == "false")
-        {
-            return TYPE_BOOL;
-        }
-        else if (str.length() > 0 && (is_number(str[0]) || str[0] == '.' || (str[0] == '-' && str.length() > 1 && (is_number(str[1]) || str[1] == '.'))))
-        {
-            auto it = str.begin();
-            if (*it == '-')
-            {
-                ++it;
-            }
-            for (; it < str.end(); ++it)
-            {
-                if (*it == '.')
-                {
-                    return TYPE_DOUBLE;
-                }
-            }
-            return TYPE_INT;
-        }
-        else if (Support::IS_OPERATOR(str))
-        {
-            return TYPE_OPERATOR;
-        }
-        return TYPE_IDENTIFIER;
-    }
-
-    // this function will return true if the passed std::string is a possible endings of a line
-    // it returns true if str is "\n" or "}"
-    inline static bool IS_VALID_END(std::string &str) noexcept
-    {
-        return (str == "\n" || str == "}");
-    }
-    inline static bool IS_VALID_END(char &ch) noexcept
-    {
-        return (ch == '\n' || ch == '}');
-    }
-
-    inline static unsigned short int GET_TYPE_NUMBER(std::string &str) noexcept
-    {
-        if (str == "Int")
-        {
-            return TYPE_INT;
-        }
-        else if (str == "Double")
-        {
-            return TYPE_DOUBLE;
-        }
-        else if (str == "Char")
-        {
-            return TYPE_CHAR;
-        }
-        else if (str == "String")
-        {
-            return TYPE_STRING;
-        }
-        else if (str == "Bool")
-        {
-            return TYPE_BOOL;
-        }
-        else if (str == "List")
-        {
-            return TYPE_LIST;
-        }
-        return TYPE_IDENTIFIER;
     }
 
     // this function returns the lowercase of the character type value
@@ -489,8 +421,9 @@ inline namespace Support
         return (str == Flag_ForScopeEnd || str == Flag_WhileScopeEnd);
     }
 
-    inline static const char* GET_LOOP_ENDING_FLAG(const std::string& flag) noexcept{
-        return (flag == Flag_WhileScopeStart)?Flag_WhileScopeEnd:Flag_ForScopeEnd;
+    inline static const char *GET_LOOP_ENDING_FLAG(const std::string &flag) noexcept
+    {
+        return (flag == Flag_WhileScopeStart) ? Flag_WhileScopeEnd : Flag_ForScopeEnd;
     }
 
     inline static const char *GET_ENDING_FLAG_OF_CONDITIONAL_STATEMENT(std::string &str) noexcept
@@ -505,6 +438,19 @@ inline namespace Support
         }
         return Flag_ElseScopeEnd;
     }
-}
 
+    inline static bool IS_VALID_ATTRIBUTE_FOR_CONDITION_ATTRIBUTE(std::string &str) noexcept
+    {
+        return (str == AttributeIf || str == AttributeWhile || str == AttributeElif);
+    }
+
+    inline static bool IS_VALID_TYPE_AFTER_OPERATOR(const unsigned short int _type_) noexcept
+    {
+        return ((_type_ == TYPE_INT) || (_type_ == TYPE_DOUBLE) || (_type_ == TYPE_CHAR) || (_type_ == TYPE_STRING) || (_type_ == TYPE_BOOL) || (_type_ == TYPE_LIST_OPEN) || (_type_ == TYPE_FUNCTION_CALL) || (_type_ == TYPE_IDENTIFIER) || (_type_ == TYPE_CLOSING_BRACKETS));
+    }
+    inline static bool IS_VALID_TYPE_BEFORE_OPERATOR(const unsigned short int _type_) noexcept
+    {
+        return ((_type_ == TYPE_INT) || (_type_ == TYPE_DOUBLE) || (_type_ == TYPE_CHAR) || (_type_ == TYPE_STRING) || (_type_ == TYPE_BOOL) || (_type_ == TYPE_LIST_CLOSE) || (_type_ == TYPE_IDENTIFIER) || (_type_ == TYPE_CLOSING_BRACKETS) || (_type_ == TYPE_OPENING_BRACKETS));
+    }
+}
 #endif

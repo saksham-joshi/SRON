@@ -22,8 +22,6 @@ int main(int argc, char **argv)
 {
     try
     {
-        //std::cout<<std::fixed<<std::setprecision(4);
-
         // create a Listist to provide command line arguments to the user
         List arglist;
         
