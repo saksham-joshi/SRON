@@ -90,12 +90,6 @@ inline namespace ExecutionEngine
 
     inline static Any *FLAG_TO_FUNCTION_MAP();
 
-    inline static Any *HANDLE_OPENING_SCOPES();
-
-    inline static Any *HANDLE_CLOSING_SCOPES();
-
-    //inline static Any *INCREMENT_ITERATOR();
-
     inline static Any *NOTHING_PERFORMING_FUNCTION();
 
     inline static Any *RETURN_VALUE();
@@ -114,21 +108,21 @@ inline namespace ExecutionEngine
     // this bool variable is used to check if a loop exiting because of break keyword.
     static bool _BREAK_ = false;
 
-    static const std::unordered_map<std::string, std::function<void(std::stack<Any*>&, Any* val1, Any* val2)>> _eval_map_{
-        {"+",  [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push((*val1) + (*val2)); }},
-        {"-",  [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push((*val1) - (*val2)); }},
-        {"*",  [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push((*val1) * (*val2)); }},
-        {"/",  [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push((*val1) / (*val2)); }},
-        {"%",  [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push((*val1) % (*val2)); }},
-        {"^",  [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push((*val1) ^ (*val2)); }},
-        {"&&", [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push(new Bool(*val1 && *val2)); }},
-        {"||", [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push(new Bool(*val1 || *val2)); }},
-        {"==", [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push(new Bool(*val1 == *val2)); }},
-        {"!=", [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push(new Bool(*val1 != *val2)); }},
-        {">",  [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push(new Bool(*val1 > *val2)); }},
-        {">=", [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push(new Bool(*val1 >= *val2)); }},
-        {"<",  [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push(new Bool(*val1 < *val2)); }},
-        {"<=", [](std::stack<Any*>& stk, Any* val1, Any* val2) { stk.push(new Bool(*val1 <= *val2)); }}
+    static const std::unordered_map<std::string, std::function<void(std::stack<Any*>&, Any& val1, Any& val2)>> _eval_map_{
+        {"+",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 + val2); }},
+        {"-",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 - val2); }},
+        {"*",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 * val2); }},
+        {"/",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 / val2); }},
+        {"%",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 % val2); }},
+        {"^",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 ^ val2); }},
+        {"&&", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 && val2)); }},
+        {"||", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 || val2)); }},
+        {"==", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 == val2)); }},
+        {"!=", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 != val2)); }},
+        {">",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 > val2)); }},
+        {">=", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 >= val2)); }},
+        {"<",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 < val2)); }},
+        {"<=", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 <= val2)); }}
     };
 
     static const std::unordered_map<std::string, std::function<Any *()>> _funcmap_{
@@ -145,8 +139,6 @@ inline namespace ExecutionEngine
         {Flag_Variable, ExecutionEngine::CREATE_VARIABLE},
         {Flag_Assign, ExecutionEngine::ASSIGN_VALUE},
         {Flag_FunctionArgsScopeStart, ExecutionEngine::ASSIGN_ARGUMENTS},
-        {Flag_ScopeStart, ExecutionEngine::HANDLE_OPENING_SCOPES},
-        {Flag_ScopeEnd, ExecutionEngine::HANDLE_CLOSING_SCOPES},
         {Flag_FunctionCall, ExecutionEngine::CALL_FUNCTION},
 
         {Flag_Any, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},

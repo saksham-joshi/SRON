@@ -3,23 +3,6 @@
 #define FLAG_H
 
 
-//=================== Attributes Flags
-
-// #define AttributeName "name"
-// #define AttributeType "type"
-// #define AttributeVariables "variables"
-// #define AttributeIf "if"
-// #define AttributeElif "elif"
-// #define AttributeElse "else"
-// #define AttributeFor "for"
-// #define AttributeWhile "while"
-// #define AttributeReturn "return"
-// #define AttributeCondition "condition"
-// #define AttributeComment "comment"
-// #define AttributeArgs "args"
-// #define AttributeRange "range"
-
-
 //=================== Datatypes Flags
 #define Flag_Any "`Any"
 #define Flag_Int "`I"

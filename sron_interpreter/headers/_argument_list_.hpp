@@ -131,17 +131,6 @@ public:
         }
     }
 
-    inline void PRINT()
-    {
-        std::cout << "\n{";
-        for (unsigned short int i = 0; i < this->size; ++i)
-        {
-            std::cout << "\n   > ";
-            this->array[i]->PRINT();
-        }
-        std::cout << "\n}";
-    }
-
     inline void CLEAR()
     {
         array = NULL;

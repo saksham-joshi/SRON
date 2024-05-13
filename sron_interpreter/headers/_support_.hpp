@@ -46,6 +46,8 @@ inline namespace Support
         }
         return Flag_ElseScopeEnd;
     }
+
+    
 }
 
 #endif

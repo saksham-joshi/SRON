@@ -20,12 +20,6 @@
 #pragma GCC poison printf
 #pragma GCC poison scanf
 
-// struct ThrowException
-// {
-//     std::string during;
-//     unsigned short int code;
-//     ThrowException(const std::string &msg, const unsigned short int num) : during(msg), code(num) {}
-// };
 
 // used to display no reason and solution to the occured exception.
 #define NoException 0
