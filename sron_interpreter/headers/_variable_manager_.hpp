@@ -11,82 +11,28 @@
 #define VariableManager_H
 
 #include "_datatypes_.hpp"
-#include<unordered_map>
 
-class VariableManager{
-    private:
-        std::unordered_map<std::string, Any*> vmap;
-        
-    public :
+class VariableManager
+{
+private:
+    std::unordered_map<std::string, Any *> vmap;
 
-        inline void INSERT(std::string& type, std::string& variable_name){
-            if(type == Flag_Any){ vmap[variable_name] = new Void(); }
-           else if(type == Flag_Int ){ vmap[variable_name] =  new Int() ; }
-           else if(type == Flag_String){ vmap[variable_name] =  new String(); }
-           else if(type == Flag_List ){ vmap[variable_name] =  new List() ; }
-           else if(type == Flag_Double ){ vmap[variable_name] =  new Double() ; }
-           else if(type == Flag_Void ){ vmap[variable_name] = new Void();}
-           else if(type == Flag_Char ){ vmap[variable_name] =  new Char(); }
-           else if(type == Flag_Bool ){ vmap[variable_name] =  new Bool(); }
-           else{ DISPLAY_EXCEPTION("declaring and allocating memory space for variables.",InvalidTypeException);}
-        }
-        inline void INSERT(std::string variable_name, Any* value){
-            try{
-                vmap[variable_name] = value;
-            }
-            catch(const std::exception&){
-                DISPLAY_EXCEPTION("allocating memory for variables.",SystemOutofMemoryException);
-            }
-        }
+public:
+    inline void INSERT(std::string &type, std::string &variable_name);
+    
+    inline void INSERT(std::string variable_name, Any *value);
 
-        inline void FREE(std::string& variable_name){
-            try{
-                auto it = vmap.find(variable_name);
-                if(it != vmap.end()){
-                    vmap.erase(it);
-                }
-                throw std::exception();
-            }
-            catch(const std::exception&){
-                DISPLAY_EXCEPTION("freeing up the memory space.",VariableNotFoundException);
-            }
-        }
+    inline void FREE(std::string &variable_name); 
+    
 
-        inline std::string TYPE(std::string variable_name){
-            try{
-                return vmap.at(variable_name)->TYPE();
-            }
-            catch(const std::exception&){
-                DISPLAY_EXCEPTION("checking the type of the variable.",VariableNotFoundException);
-            }
-            return " ";
-        }
+    inline Any *GET(std::string variable_name);
 
-        inline unsigned short int TYPE_NUMBER(std::string& variable_name){
-            try{
-                return vmap.at(variable_name)->TYPE_NUMBER();
-            }
-            catch(const std::exception&){
-                DISPLAY_EXCEPTION("checking the type of the variable.",VariableNotFoundException);
-            }
-            return 0;
-        }
+    inline void CLEAR();
 
-        inline Any* GET(std::string variable_name){
-            try{
-                return vmap.at(variable_name);
-            }
-            catch(const std::exception&){
-                DISPLAY_EXCEPTION("retreving the value of a variable '"+variable_name+"'.",VariableNotFoundException);
-            }
-            return nullptr;
-        }
-        inline void CLEAR(){
-            vmap.clear();
-        }
-        ~VariableManager(){         
-            vmap.clear();
-        }
+    ~VariableManager()
+    {
+        this->CLEAR();
+    }
 };
 
 #endif

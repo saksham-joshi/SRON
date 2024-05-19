@@ -32,7 +32,6 @@
 #include "_flags_.hpp"
 #include "_converter_.hpp"
 
-
 using std::string;
 using std::to_string;
 
@@ -65,6 +64,9 @@ public:
 
     // prints the value of the datatype
     inline virtual void PRINT() const = 0;
+
+    // prints the value in a formatted manner
+    inline virtual void F_PRINT() const = 0;
 
     // prints the type of the datatype
     inline virtual std::string TYPE() const = 0;
@@ -128,8 +130,14 @@ public:
 
     inline virtual void PRINT() const override
     {
-        std::cout << "";
+        std::cout << "<Void>";
     }
+
+    inline virtual void F_PRINT() const override
+    {
+        this->PRINT();
+    }
+
     inline virtual long long int SIZE_OF() const override
     {
         return 0;
@@ -227,6 +235,11 @@ public:
     inline virtual void PRINT() const override
     {
         std::cout << this->value;
+    }
+
+    inline virtual void F_PRINT() const override
+    {
+        this->PRINT();
     }
 
     inline virtual long long int SIZE_OF() const override
@@ -341,6 +354,11 @@ public:
         std::cout << this->value;
     }
 
+    inline virtual void F_PRINT() const override
+    {
+        this->PRINT();
+    }
+
     inline virtual long long int SIZE_OF() const override
     {
         return sizeof(this->value);
@@ -451,6 +469,14 @@ public:
     {
         std::cout << this->value;
     }
+
+    inline virtual void F_PRINT() const override
+    {
+        std::cout << '\'';
+        this->PRINT();
+        std::cout << '\'';
+    }
+
     inline virtual long long int SIZE_OF() const override
     {
         return sizeof(this->value);
@@ -558,9 +584,14 @@ public:
         std::cout << this->TO_STRING();
     }
 
+    inline virtual void F_PRINT() const override
+    {
+        this->PRINT();
+    }
+
     inline virtual long long int SIZE_OF() const override
     {
-        return sizeof(this);
+        return sizeof(this->value);
     }
 
     inline virtual std::string TO_STRING() const override
@@ -678,6 +709,13 @@ public:
         std::cout << this->value;
     }
 
+    inline virtual void F_PRINT() const override
+    {
+        std::cout << '\"';
+        this->PRINT();
+        std::cout << '\"';
+    }
+
     inline virtual long long int SIZE_OF() const override
     {
         return sizeof(this->value);
@@ -726,195 +764,51 @@ public:
         return nullptr;
     }
 
-    inline char AT(int index)
-    {
-        if (index >= 0 && (unsigned)index < this->value.length())
-        {
-            return this->value[index];
-        }
-        DISPLAY_EXCEPTION("extracting the elements from the string.", StringIndexException);
-        return ' ';
-    }
+    inline char AT(int index);
 
-    inline void APPENDS(const std::string str)
-    {
-        this->value.append(str);
-    }
+    inline void APPENDS(const std::string str);
 
-    inline void APPENDS(const char &ch)
-    {
-        this->value+=ch;
-    }
+    inline void APPENDS(const char &ch);
 
-    inline void APPENDS(Any *val)
-    {
+    inline void APPENDS(Any *val);
 
-        if (val == nullptr)
-        {
-            DISPLAY_EXCEPTION("pushing elements into the 'String'. The passed value is actually 'NULL'.", NoException, false);
-        }
+    inline void CLEAR();
 
-        this->value.append(val->TO_STRING());
-    }
+    inline long long int COUNT(String *val);
 
-    inline void CLEAR()
-    {
-        this->value.clear();
-    }
+    inline long long int COUNT(Char *val);
 
-    inline long long int COUNT(String *val)
-    {
+    inline void DELETE_(long long int index);
 
-        std::string &sample = val->GET();
-
-        if (sample.empty() || this->value.length() < sample.length())
-        {
-            return 0; // If the sample string is empty, return 0
-        }
-
-        long long int count = 0;
-        size_t pos = 0;
-
-        while ((pos = this->value.find(sample, pos)) != std::string::npos)
-        {
-            ++count;
-            pos += sample.size(); // Move to the next position after the current match
-        }
-
-        return count;
-    }
-
-    inline long long int COUNT(Char *val)
-    {
-        return std::count(this->value.begin(), this->value.end(), val->GET());
-    }
-
-    inline void DELETE_(long long int index)
-    {
-        if (index < 0 || (long long unsigned int)index >= this->value.length())
-        {
-            DISPLAY_EXCEPTION("deleting 'String' type value to type 'String'.", IndexNotWithinRange);
-        }
-
-        this->value.erase(this->value.begin() + index);
-    }
-
-    inline std::string &GET()
-    {
-        return this->value;
-    }
+    inline std::string &GET();
 
     // returns the index number if found, otherwise -1
-    inline long long int INDEX(Char *val)
-    {
-        return this->value.find_first_of(val->GET());
-    }
+    inline long long int INDEX(Char *val);
 
-    inline long long int INDEX(String *val)
-    {
-        return this->value.find_first_of(val->GET());
-    }
+    inline long long int INDEX(String *val);
 
-    inline void INSERT(long long int index , Any& val){
-        if (index < 0 || (long long unsigned int)index >= this->value.length())
-        {
-            DISPLAY_EXCEPTION("inserting 'String' type value to type 'String'.", IndexNotWithinRange);
-        }
-        this->value.insert(index, val.TO_STRING());
-    }
+    inline void INSERT(long long int index, Any &val);
 
-    inline char POP_BACK()
-    {
-        // if the string is empty...
-        if(this->value.length() == 0) return ' ';
+    inline char POP_BACK();
 
-        char ch = *(this->value.end() - 1);
-        this->value.erase(this->value.end() - 1);
-        return ch;
-    }
+    inline void REPLACE(Char *_replacer, Any *replacement);
 
-    inline void REPLACE(Char *_replacer, Any *replacement)
-    {
-
-        char &replacer = _replacer->GET();
-
-        size_t len_of_replacement = replacement->LEN();
-
-        for (size_t i = 0; i < this->value.length(); ++i)
-        {
-            if (this->value[i] == replacer)
-            {
-                this->value.erase(i, 1);
-                this->value.insert(i, replacement->TO_STRING());
-                i += len_of_replacement - 1;
-            }
-        }
-    }
-
-    inline void REVERSE()
-    {
-        std::reverse(this->value.begin(), this->value.end());
-    }
+    inline void REVERSE();
 
     // returns the index number if found, otherwise -1
-    inline long long int RINDEX(Char *val)
-    {
-        return this->value.find_last_of(val->GET());
-    }
+    inline long long int RINDEX(Char *val);
 
-    inline long long int RINDEX(String *val)
-    {
-        return this->value.find_last_of(val->GET());
-    }
+    inline long long int RINDEX(String *val);
 
-    inline void SET(std::string &value)
-    {
-        this->value = value;
-    }
+    inline void SET(std::string &value);
+    inline void SORT();
 
-    inline void SORT(){
-        std::sort(this->value.begin() , this->value.end());
-    }
+    inline std::string TRIM();
 
-    inline std::string SUBSTRING(long long int first_index, long long int last_index)
-    {
-        if (first_index < 0 || (size_t)last_index > this->value.length() || first_index > last_index)
-        {
-            return "";
-        }
-        return std::string(this->value.begin() + first_index, this->value.begin() + last_index);
-    }
-
-    inline std::string TRIM()
-    {
-        // Find the first non-whitespace character from the left
-        auto left = std::find_if_not(this->value.begin(), this->value.end(), [](unsigned char c)
-                                     { return std::isspace(c); });
-
-        // Find the first non-whitespace character from the right
-        auto right = std::find_if_not(this->value.rbegin(), this->value.rend(), [](unsigned char c)
-                                      { return std::isspace(c); })
-                         .base();
-
-        // If all characters are whitespace, return an empty string
-        if (left == this->value.end() || right == this->value.begin())
-            return "";
-
-        return std::string(left, right);
-    }
-
-    inline void UPDATE(long long int index, Char *val)
-    {
-        if (index < 0 || (long long unsigned int)index >= this->value.length())
-        {
-            DISPLAY_EXCEPTION("updating character at index '" + std::to_string(index) + "' with value '" + val->TO_STRING() + "'.", IndexNotWithinRange);
-        }
-
-        this->value.assign(index, val->GET());
-    }
+    inline void UPDATE(long long int index, Char *val);
 
     inline List *TO_CHAR_LIST();
-    inline List *SPLIT(Char*);
+    inline List *SPLIT(Char *);
 
     ~String()
     {
@@ -952,7 +846,7 @@ public:
     {
         try
         {
-            this->value.push_back(a);
+            this->value.push_back(a->COPY());
         }
         catch (const std::exception &)
         {
@@ -963,21 +857,8 @@ public:
     {
         try
         {
-            this->value.push_back(a);
-            this->value.push_back(b);
-        }
-        catch (const std::exception &)
-        {
-            DISPLAY_EXCEPTION("creating a variable of type 'List'.", SystemOutofMemoryException);
-        }
-    }
-    List(Any *a, Any *b, Any *c)
-    {
-        try
-        {
-            this->value.push_back(a);
-            this->value.push_back(b);
-            this->value.push_back(c);
+            this->value.push_back(a->COPY());
+            this->value.push_back(b->COPY());
         }
         catch (const std::exception &)
         {
@@ -1021,11 +902,11 @@ public:
             std::vector<Any *>::const_iterator it = this->value.begin();
             for (; it != this->value.end() - 1; ++it)
             {
-                (*it)->PRINT();
+                (*it)->F_PRINT();
                 std::cout << ", ";
             }
 
-            (*it)->PRINT();
+            (*it)->F_PRINT();
 
             std::cout << "]";
         }
@@ -1034,6 +915,11 @@ public:
             DISPLAY_EXCEPTION("displaying the list into the console", UnknownException);
         }
     }
+
+    inline virtual void F_PRINT() const override{
+        this->PRINT();
+    }
+
     inline virtual unsigned short int TYPE_NUMBER() const override
     {
         return TYPE_LIST;
@@ -1042,7 +928,8 @@ public:
     inline virtual long long int SIZE_OF() const override
     {
         long long int size = 0;
-        for(const auto& i : this->value){
+        for (const auto &i : this->value)
+        {
             size += i->SIZE_OF();
         }
         return size;
@@ -1108,137 +995,31 @@ public:
         return const_cast<List *>(this);
     }
 
-    inline Any *AT(long long int index)
-    {
-        try
-        {
-            if (index < 0 || (long long unsigned int)index >= this->value.size())
-            {
-                throw std::exception();
-            }
-            return this->value[index];
-        }
-        catch (const std::exception &)
-        {
-            DISPLAY_EXCEPTION("extracting elements from type 'List'.", IndexNotWithinRange);
-        }
-        return nullptr;
-    }
+    inline Any *AT(long long int index);
 
     inline void CLEAR()
     {
         this->value.clear();
     }
 
-    inline void DELETE_(Int *index)
-    {
+    inline void DELETE_(Int *index);
 
-        long long int _index = index->GET();
+    inline std::vector<Any *> &GET();
 
-        if (_index < 0 || (long long unsigned int)_index >= this->value.size())
-        {
-            DISPLAY_EXCEPTION("deleting elements from type 'List'.", IndexNotWithinRange, false);
-        }
+    inline void INSERT(long long int index, Any* val);
 
-        this->value.erase(this->value.begin() + _index);
-    }
+    inline Any *POP();
 
-    inline std::vector<Any *> &GET()
-    {
-        return this->GET();
-    }
+    inline void PUSH(Any *val);
 
-    inline void INSERT(long long int index, Any* val){
-        if (index < 0 || (long long unsigned int)index >= this->value.size())
-        {
-            DISPLAY_EXCEPTION("inserting a value to type 'List'.", IndexNotWithinRange);
-        }
+    inline void REVERSE();
 
-        this->value.insert( this->value.begin()+index , val);
-    }
+    inline void SET(std::vector<Any *> value);
 
-    inline Any *POP()
-    {
-        if (this->value.size() != 0)
-        {
-            Any *val = this->value.back();
-            this->value.pop_back();
-            return val;
-        }
-        return new Void();
-    }
+    inline List *SUBLIST(long long int index1, long long int index2);
 
-    inline void PUSH(Any *val)
-    {
-        try
-        {
-            if (this != val)
-            {
-                this->value.push_back(val);
-                return;
-            }
-            DISPLAY_EXCEPTION("inserting a list inside itself.", InsertionException);
-        }
-        catch (const std::exception &)
-        {
-            DISPLAY_EXCEPTION("appending an element into the type 'List'.", SystemOutofMemoryException);
-        }
-    }
+    inline void UPDATE(long long int index, Any *value);
 
-    inline void REVERSE()
-    {
-        std::reverse(this->value.begin(), this->value.end());
-    }
-
-    inline void SET(std::vector<Any *> value)
-    {
-        this->value = value;
-    }
-
-    inline List *SUBLIST(long long int index1, long long int index2)
-    {
-        try
-        {
-            List *lst = new List();
-
-            if (index1 < 0 || (long long unsigned int)index1 >= this->value.size() || (long long unsigned int)index2 > this->value.size())
-            {
-                DISPLAY_EXCEPTION("extracting the sublist. Both index must be more than zero and less than the size of the list which is " + std::to_string(this->value.size()) + ".", NoException);
-            }
-            std::vector<Any *>::iterator start = this->value.begin() + index1;
-            std::vector<Any *>::const_iterator end = this->value.begin() + index2;
-
-            for (; start < end; ++start)
-            {
-                lst->PUSH((*start)->COPY());
-            }
-
-            return lst;
-        }
-        catch (const std::exception &)
-        {
-            DISPLAY_EXCEPTION("creating a sublist.", SystemOutofMemoryException);
-        }
-        return nullptr;
-    }
-
-    inline void UPDATE(long long int index, Any *value)
-    {
-        try
-        {
-            if (index < 0 || (long long unsigned int)index >= this->value.size())
-            {
-                throw std::exception();
-            }
-            this->value[index] = value;
-        }
-        catch (const std::exception &)
-        {
-            DISPLAY_EXCEPTION("updating elements in type 'List'.", IndexNotWithinRange);
-        }
-    }
-
-    // the below method are dependent on operator overloads therefore they will be defined in the end of the file...
     inline long long int COUNT(Any *);
     inline long long int INDEX(Any *);
     inline long long int RINDEX(Any *);
@@ -1249,101 +1030,10 @@ public:
     {
         for (auto &i : this->value)
         {
-            free(i);
+            delete i;
         }
         this->value.~vector();
     }
 };
-
-
-
-inline List *String::TO_CHAR_LIST()
-{
-    try
-    {
-        List *lst = new List();
-
-        for (const auto &i : this->value)
-        {
-            lst->PUSH(new Char(i));
-        }
-
-        return lst;
-    }
-    catch (const std::exception &e)
-    {
-        DISPLAY_EXCEPTION("creating a list of type 'Char'.", SystemOutofMemoryException);
-    }
-
-    return nullptr;
-}
-
-inline List *String::SPLIT(Char* _splitter){
-    char& splitter = _splitter->GET();
-
-    List *lst = new List();
-
-    std::string temp = "";
-
-    for(const auto &i : this->value){
-        if(i == splitter){
-            lst->PUSH(new String(temp));
-            temp = "";
-        }
-        else{
-            temp+=i;
-        }
-    }
-
-    lst->PUSH(new String(temp));
-
-    return lst;
-}
-
-inline long long int List::COUNT(Any *val)
-{
-    long long int count = 0;
-    for (auto &i : this->value)
-    {
-        count += (*i == *val) ? 1 : 0;
-    }
-    return count;
-}
-inline long long int List::INDEX(Any *val)
-{
-    for (auto it = this->value.begin(); it < this->value.end(); ++it)
-    {
-        if (*val == **it)
-        {
-            return it - this->value.begin();
-        }
-    }
-    return -1;
-}
-inline long long int List::RINDEX(Any *val)
-{
-    for (auto it = this->value.end() - 1; it >= this->value.begin(); --it)
-    {
-        if (*val == **it)
-        {
-            return it - this->value.begin();
-        }
-    }
-    return -1;
-}
-inline void List::SORT()
-{
-    std::sort(this->value.begin(), this->value.end());
-}
-inline void List::REPLACE(Any *replacer, Any *replacement)
-{
-    for (auto &it : this->value)
-    {
-        if (*it == *replacer)
-        {
-            it = replacement;
-        }
-    }
-}
 
 #endif

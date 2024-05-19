@@ -2,7 +2,7 @@
 #define BYTECODE_H
 
 #include <queue>
-#include<set>
+#include <set>
 #include "headers/_bytecode_writer_.hpp"
 
 /* This namespace is used to create the bytecode.
@@ -64,11 +64,6 @@ namespace ByteCodeGenerator
     inline static void TOKENIZER();
     inline static void TOKEN_VECTOR_REFINER();
 
-
-    // This function will generate the bytecode and uses all the function within this ByteCodeGenerator namespace.
-    // To create the bytecode..
-    // Step 1 : Read the file and store its address to 'Logs::mainfile'.
-    // Step 2 : Call ByteCodeGenerator::GENERATE();
     inline static void GENERATE()
     {
         try
@@ -80,7 +75,7 @@ namespace ByteCodeGenerator
             Logs::mainfile->~ios_base();
 
             // loading the _function_set_ with list of in-built functions in function_list file...
-            std::ifstream function_list_file(Logs::executable_path+"\\meta\\function_list");
+            std::ifstream function_list_file(Logs::executable_path + "\\meta\\function_list");
             if (function_list_file.fail())
             {
                 DISPLAY_EXCEPTION("starting the compilation of the code. Cannot find metadata files which are neccesarily required for the compiltaion process.\n Reinstall SRON to fix this or Report the error to Saksham Joshi via LinkedIn(@sakshamjoshi27).", NoException, false);
@@ -132,5 +127,7 @@ namespace ByteCodeGenerator
             DISPLAY_EXCEPTION("creating bytecode and analyzing the source code.", SystemOutofMemoryException);
         }
     }
+
 }
+
 #endif

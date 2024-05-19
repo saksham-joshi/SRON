@@ -9,45 +9,18 @@
 inline namespace Support
 {
     // this function will return if the passed is a flag or not!
-    inline static bool IS_FLAG(std::string &str)
-    {
+    inline static bool IS_FLAG(std::string &str);
 
-        /*
-        Suppose a case when user creates a char value '`' then the
-        interpreter may consider it as flag that's why this condition
-        is mentioned here that if the passed std::string is tilt(`),
-        then it can't be a flag.
-        */
-        if (str.length() == 0 || str == "`" || str[0] != '`')
-        {
-            return false;
-        }
-        return true;
-    }
-
-    inline static bool IS_LOOP_OPENING_FLAG(std::string &str)
-    {
-        return (str == Flag_ForScopeStart || str == Flag_WhileScopeStart);
-    }
-    inline static bool IS_LOOP_ENDING_FLAG(std::string &str)
-    {
-        return (str == Flag_ForScopeEnd || str == Flag_WhileScopeEnd);
-    }
-
-    inline static const char *GET_ENDING_FLAG_OF_CONDITIONAL_STATEMENT(std::string &str)
-    {
-        if (str == Flag_IfScopeStart)
-        {
-            return Flag_IfScopeEnd;
-        }
-        else if (str == Flag_ElifScopeStart)
-        {
-            return Flag_ElifScopeEnd;
-        }
-        return Flag_ElseScopeEnd;
-    }
-
+    inline static bool IS_LOOP_OPENING_FLAG(std::string &str);
+    inline static bool IS_LOOP_ENDING_FLAG(std::string &str);
     
+
+    inline static const char *GET_ENDING_FLAG_OF_CONDITIONAL_STATEMENT(std::string &str);
+
+    /* this function will return a function vector from Logs::_LOADED_FUNCTION_MAP_, if the fnc is already loaded before and
+     * if it is not loaded before then it will create one return it.
+     */
+    inline static void GET_FUNCTION_VECTOR(std::string &function_name, std::vector<std::string>::iterator ar[2] );
 }
 
 #endif

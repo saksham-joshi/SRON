@@ -19,102 +19,105 @@
 #include <functional>
 #include <unordered_map>
 
-using UserFunctionMap = std::unordered_map<std::string, std::function<Any *(Argument_List *)>>;
-
 // this object is returned by all the user-available in-built functions defined in _user_fnc_.hpp::Sron namespace which returns 'Void' type value.
 static Void void_object;
 
 inline namespace Sron
 {
-    inline static Any *ASCII(Argument_List *);
+    inline static Any *ASCII(Argument_List &);
 
-    inline static Any *BEEP(Argument_List *);
+    inline static Any *BEEP(Argument_List &);
 
-    inline static Any *BOOST_IO(Argument_List *);
+    inline static Any *BOOST_IO(Argument_List &);
 
-    inline static Any *CLEAR(Argument_List *);
-    inline static Any *COPY(Argument_List *);
+    inline static Any *CLEAR(Argument_List &);
+    inline static Any *COPY(Argument_List &);
 
-    inline static Any *EXIT(Argument_List *);
+    inline static Any *EXIT(Argument_List &);
 
-    inline static Any *GET_EXEC_TIME(Argument_List *);
+    inline static Any *GET_EXEC_TIME(Argument_List &);
 
     // USER INPUT FUNCTIONS
-    inline static Any *INPUT_INT(Argument_List *);
-    inline static Any *INPUT_DOUBLE(Argument_List *);
-    inline static Any *INPUT_CHAR(Argument_List *);
-    inline static Any *INPUT_STRING(Argument_List *);
+    inline static Any *INPUT_INT(Argument_List &);
+    inline static Any *INPUT_DOUBLE(Argument_List &);
+    inline static Any *INPUT_CHAR(Argument_List &);
+    inline static Any *INPUT_STRING(Argument_List &);
 
     // CHAR MANIPUALTION FUNCTIONS
-    inline static Any *IS_ALPHABET(Argument_List *);
-    inline static Any *IS_CONSONANT(Argument_List *);
-    inline static Any *IS_NUMBER(Argument_List *);
-    inline static Any *IS_VOWEL(Argument_List *);
+    inline static Any *IS_ALPHABET(Argument_List &);
+    inline static Any *IS_CONSONANT(Argument_List &);
+    inline static Any *IS_NUMBER(Argument_List &);
+    inline static Any *IS_VOWEL(Argument_List &);
+    inline static Any *IS_LOWERCASE(Argument_List &);
+    inline static Any *IS_UPPERCASE(Argument_List &);
 
-    inline static Any *LEN(Argument_List *);
+    inline static Any *LEN(Argument_List &);
 
     // COMMON LIST AND STRING MANIPULATION FUNCTIONS
-    inline static Any *AT(Argument_List *);
-    inline static Any *COUNT(Argument_List *);
-    inline static Any *DELETE_(Argument_List *);
-    inline static Any *INDEX(Argument_List *);
-    inline static Any *INSERT(Argument_List *);
-    inline static Any *PUSH(Argument_List *);
-    inline static Any *POP(Argument_List *);
-    inline static Any *REPLACE(Argument_List *);
-    inline static Any *REVERSE(Argument_List *);
-    inline static Any *RINDEX(Argument_List *);
-    inline static Any *SORT(Argument_List *);
-    inline static Any *UPDATE(Argument_List *);
+    inline static Any *AT(Argument_List &);
+    inline static Any *COUNT(Argument_List &);
+    inline static Any *DELETE_(Argument_List &);
+    inline static Any *INDEX(Argument_List &);
+    inline static Any *INSERT(Argument_List &);
+    inline static Any *PUSH(Argument_List &);
+    inline static Any *POP(Argument_List &);
+    inline static Any *REPLACE(Argument_List &);
+    inline static Any *REVERSE(Argument_List &);
+    inline static Any *RINDEX(Argument_List &);
+    inline static Any *SORT(Argument_List &);
+    inline static Any *UPDATE(Argument_List &);
 
-    inline static Any *PRINT(Argument_List *);
-    inline static Any *PRINTLN(Argument_List *);
+    inline static Any *PRINT(Argument_List &);
+    inline static Any *PRINTLN(Argument_List &);
 
     // generating random numbers...
-    inline static Any *RANDINT(Argument_List *);
-    inline static Any *RANDRANGE(Argument_List *);
-    inline static Any *RANDDOUBLE(Argument_List *);
+    inline static Any *RANDINT(Argument_List &);
+    inline static Any *RANDRANGE(Argument_List &);
+    inline static Any *RANDDOUBLE(Argument_List &);
 
-    inline static Any *SIZE_OF(Argument_List *);
-    inline static Any *SUBLIST(Argument_List *);
+    inline static Any *SIZE_OF(Argument_List &);
+    inline static Any *SUBLIST(Argument_List &);
 
     // type conversion function
-    inline static Any *TO_BOOL(Argument_List *);
-    inline static Any *TO_DOUBLE(Argument_List *);
-    inline static Any *TO_INT(Argument_List *);
-    inline static Any *TO_STRING(Argument_List *);
+    inline static Any *TO_BOOL(Argument_List &);
+    inline static Any *TO_DOUBLE(Argument_List &);
+    inline static Any *TO_INT(Argument_List &);
+    inline static Any *TO_STRING(Argument_List &);
 
     // COMMON STRING AND CHAR FUNCTIONS...
-    inline static Any *TO_LOWERCASE(Argument_List *);
-    inline static Any *TO_UPPERCASE(Argument_List *);
+    inline static Any *TO_LOWERCASE(Argument_List &);
+    inline static Any *TO_UPPERCASE(Argument_List &);
 
     // mathematical functions
-    inline static Any *ABS(Argument_List *);
-    inline static Any *CBRT(Argument_List *);
-    inline static Any *CEIL(Argument_List *);
-    inline static Any *COS(Argument_List *);
-    inline static Any *FLOOR(Argument_List *);
-    inline static Any *LOG(Argument_List *);
-    inline static Any *LOG2(Argument_List *);
-    inline static Any *LOG10(Argument_List *);
-    inline static Any *MAX(Argument_List *);
-    inline static Any *MIN(Argument_List *);
-    inline static Any *SQRT(Argument_List *);
-    inline static Any *SIN(Argument_List *);
-    inline static Any *TAN(Argument_List *);
+    inline static Any *ABS(Argument_List &);
+    inline static Any *CBRT(Argument_List &);
+    inline static Any *CEIL(Argument_List &);
+    inline static Any *COS(Argument_List &);
+    inline static Any *FLOOR(Argument_List &);
+    inline static Any *LOG(Argument_List &);
+    inline static Any *LOG2(Argument_List &);
+    inline static Any *LOG10(Argument_List &);
+    inline static Any *MAX(Argument_List &);
+    inline static Any *MIN(Argument_List &);
+    inline static Any *SQRT(Argument_List &);
+    inline static Any *SIN(Argument_List &);
+    inline static Any *TAN(Argument_List &);
 
     // string manipulation functions...
-    inline static Any *TO_CHAR_LIST(Argument_List *);
-    inline static Any *SUBSTRING(Argument_List *);
-    inline static Any *SPLIT(Argument_List *);
-    inline static Any *TRIM(Argument_List *);
+    inline static Any *TO_CHAR_LIST(Argument_List &);
+    inline static Any *SUBSTRING(Argument_List &);
+    inline static Any *SPLIT(Argument_List &);
+    inline static Any *TRIM(Argument_List &);
 
-    inline static Any *SET_PRECISION(Argument_List *);
+    inline static Any *SET_PRECISION(Argument_List &);
+    inline static Any *SYS_CMD(Argument_List &);
 
-    inline static Any *TYPE_OF(Argument_List *);
+    inline static Any *TYPE_OF(Argument_List &);
 
     // returns the version of the function ...
-    inline static Any *VERSION(Argument_List *);
+    inline static Any *VERSION(Argument_List &);
+
+    using UserFunctionMap = std::unordered_map<std::string, std::function<Any *(Argument_List &)>>;
 
     static UserFunctionMap Fmap{
 
@@ -141,6 +144,8 @@ inline namespace Sron
         {"isconsonant", Sron::IS_CONSONANT},
         {"isdigit", Sron::IS_NUMBER},
         {"isvowel", Sron::IS_VOWEL},
+        {"islower", Sron::IS_LOWERCASE},
+        {"isupper", Sron::IS_UPPERCASE},
 
         {"len", Sron::LEN},
 
@@ -202,6 +207,8 @@ inline namespace Sron
         {"ceil", Sron::CEIL},
         {"floor", Sron::FLOOR},
 
+        {"syscmd", Sron::SYS_CMD},
+
         {"typeof", Sron::TYPE_OF},
 
         {"version", Sron::VERSION}};
@@ -214,7 +221,7 @@ inline namespace Sron
     /* this function takes the std::string as an argument then finds that in the
     Sron::UserFunctionMap. If the function is found then return that function
     otherwise returns nullptr.*/
-    inline static std::function<Any *(Argument_List *)> GET_SRON_FUNCTION(std::string &fnc_name)
+    inline static std::function<Any *(Argument_List &)> GET_SRON_FUNCTION(std::string &fnc_name)
     {
         auto temp = Fmap.find(fnc_name);
         if (temp != Fmap.end())

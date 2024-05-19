@@ -7,111 +7,87 @@
 
 class Argument_List
 {
-
 private:
-    Any **array;
-    unsigned short int size;
+    std::vector<Any *> array;
 
 public:
-    Argument_List() : array(nullptr), size(0)
+    Argument_List() {}
+    Argument_List(Any *value)
     {
         try
         {
-            array = reinterpret_cast<Any **>(calloc(1, sizeof(Any *)));
-            if (!array)
-            {
-                DISPLAY_EXCEPTION("allocating a memory to call a function.", SystemOutofMemoryException);
-            }
+            array.push_back(value);
         }
         catch (const std::bad_alloc &)
         {
             DISPLAY_EXCEPTION("allocating memory to create argument list.", SystemOutofMemoryException);
-        }
-    }
-    Argument_List(Any *value) : array(nullptr), size(0)
-    {
-        try
-        {
-            array = reinterpret_cast<Any **>(calloc(size, sizeof(Any *)));
-            if (!array)
-            {
-                DISPLAY_EXCEPTION("allocating a memory to call a function.", SystemOutofMemoryException);
-            }
-            this->PUT(value);
-        }
-        catch (const std::bad_alloc &)
-        {
-            DISPLAY_EXCEPTION("allocating memory to create argument list.", SystemOutofMemoryException);
-        }
-    }
-
-    ~Argument_List()
-    {
-        free(array);
-        this->size = 0;
-    }
-
-    inline Any *operator[](unsigned short int index)
-    {
-        if (index < size)
-        {
-            return array[index];
-        }
-        else
-        {
-            DISPLAY_EXCEPTION("extracting the passed arguments.", IndexNotWithinRange);
-            return nullptr;
         }
     }
 
     inline Any *GET(unsigned short int index)
     {
-        return this->operator[](index);
+        if (array.size() <= index)
+        {
+            DISPLAY_EXCEPTION("", NoException);
+        }
+        return array[index];
     }
 
-    inline Int* GET_INT(unsigned short int index){
-        Int* val = this->GET(index)->GET_INT();
-        if(val == nullptr){
+    inline Int *GET_INT(unsigned short int index)
+    {
+        Int *val = this->GET(index)->GET_INT();
+        if (val == nullptr)
+        {
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected an 'Int' value.", ArgumentException, false);
         }
         return val;
     }
 
-    inline Double* GET_DOUBLE(unsigned short int index){
-        Double* val = this->GET(index)->GET_DOUBLE();
-        if(val == nullptr){
+    inline Double *GET_DOUBLE(unsigned short int index)
+    {
+        Double *val = this->GET(index)->GET_DOUBLE();
+        if (val == nullptr)
+        {
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected a 'Double' value.", ArgumentException, false);
         }
         return val;
     }
 
-    inline Char* GET_CHAR(unsigned short int index){
-        Char* val = this->GET(index)->GET_CHAR();
-        if(val == nullptr){
+    inline Char *GET_CHAR(unsigned short int index)
+    {
+        Char *val = this->GET(index)->GET_CHAR();
+        if (val == nullptr)
+        {
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected a 'Char' value.", ArgumentException, false);
         }
         return val;
     }
 
-    inline String* GET_STRING(unsigned short int index){
-        String* val = this->GET(index)->GET_STRING();
-        if(val == nullptr){
+    inline String *GET_STRING(unsigned short int index)
+    {
+        String *val = this->GET(index)->GET_STRING();
+        if (val == nullptr)
+        {
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected a 'String' value.", ArgumentException, false);
         }
         return val;
     }
 
-    inline List* GET_LIST(unsigned short int index){
-        List* val = this->GET(index)->GET_LIST();
-        if(val == nullptr){
+    inline List *GET_LIST(unsigned short int index)
+    {
+        List *val = this->GET(index)->GET_LIST();
+        if (val == nullptr)
+        {
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected a 'List' value.", ArgumentException, false);
         }
         return val;
     }
 
-    inline Bool* GET_BOOL(unsigned short int index){
-        Bool* val = this->GET(index)->GET_BOOL();
-        if(val == nullptr){
+    inline Bool *GET_BOOL(unsigned short int index)
+    {
+        Bool *val = this->GET(index)->GET_BOOL();
+        if (val == nullptr)
+        {
             DISPLAY_EXCEPTION("extracting the passed arguments. Expected a 'Bool' value.", ArgumentException, false);
         }
         return val;
@@ -121,9 +97,7 @@ public:
     {
         try
         {
-            ++size;
-            array = reinterpret_cast<Any **>(realloc(array, size * sizeof(Any *)));
-            array[size - 1] = arg;
+            array.push_back(arg);
         }
         catch (const std::bad_alloc &)
         {
@@ -133,13 +107,12 @@ public:
 
     inline void CLEAR()
     {
-        array = NULL;
-        size = 0;
+        array.clear();
     }
 
     inline unsigned short int LEN()
     {
-        return size;
+        return array.size();
     }
 };
 

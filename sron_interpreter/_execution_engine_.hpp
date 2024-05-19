@@ -46,86 +46,103 @@ inline namespace ExecutionEngine
      * In-built functions defined in  _user_fnc_.hpp::Sron namespace are automatically handled by the
      * machine.
      */
-    std::stack<SronFunction *> _FunctionStack_;
+    //std::unordered_map<std::string, std::vector<std::string>> _LOADED_FUNCTION_MAP_;
 
-    inline static Any *ASSIGN_VALUE();
+    inline static Any *ASSIGN_VALUE(SronFunction *);
 
-    inline static Any *ASSIGN_ARGUMENTS();
+    inline static Any *ASSIGN_ARGUMENTS(SronFunction *);
 
-    inline static Any *BREAK_LOOP();
+    inline static Any *BREAK_LOOP(SronFunction *);
 
-    inline static Any *CONTINUE_LOOP();
+    inline static Any *CONTINUE_LOOP(SronFunction *);
 
-    inline static Any *CREATE_VARIABLE();
+    inline static Any *CREATE_VARIABLE(SronFunction *);
 
-    inline static Any *CALL_FUNCTION();
+    inline static Any *CALL_FUNCTION(SronFunction *);
 
-    inline static Any *EXECUTE_FUNCTION(std::string &function_name, Argument_List *args);
+    inline static Any *EXECUTE_FUNCTION(SronFunction *);
 
-    inline static Argument_List *EXTRACT_ARGUMENTS();
+    inline static Any *EXECUTE_FUNCTION(std::string &function_name, Argument_List &args);
 
-    inline static Any *EXTRACT_STRING();
+    inline static void EXTRACT_ARGUMENTS(SronFunction *, Argument_List &args);
 
-    inline static Any *EXTRACT_CHAR();
+    inline static Any *EXTRACT_STRING(SronFunction *);
 
-    inline static Any *EXTRACT_DOUBLE();
+    inline static Any *EXTRACT_CHAR(SronFunction *);
 
-    inline static Any *EXTRACT_INT();
+    inline static Any *EXTRACT_DOUBLE(SronFunction *);
 
-    inline static Any *EXTRACT_LIST();
+    inline static Any *EXTRACT_INT(SronFunction *);
 
-    inline static Any *EXTRACT_BOOL();
+    inline static Any *EXTRACT_LIST(SronFunction *);
 
-    inline static Any *EXTRACT_IDENTIFIER();
+    inline static Any *EXTRACT_BOOL(SronFunction *);
 
-    inline static Any *EVALUATE();
+    inline static Any *EXTRACT_IDENTIFIER(SronFunction *);
 
-    inline static Any *EXECUTE_CONDITIONAL_STATEMENT();
+    inline static Any *EVALUATE(SronFunction *);
 
-    inline static Any *EXECUTE_ELSE_STATEMENT();
+    inline static Any *EXECUTE_CONDITIONAL_STATEMENT(SronFunction *);
 
-    inline static Any *EXECUTE_FOR_STATEMENT();
+    inline static Any *EXECUTE_ELSE_STATEMENT(SronFunction *);
 
-    inline static Any *EXECUTE_WHILE_STATEMENT();
+    inline static Any *EXECUTE_FOR_STATEMENT(SronFunction *);
 
-    inline static Any *FLAG_TO_FUNCTION_MAP();
+    inline static Any *EXECUTE_WHILE_STATEMENT(SronFunction *);
 
-    inline static Any *NOTHING_PERFORMING_FUNCTION();
+    inline static Any *FLAG_TO_FUNCTION_MAP(SronFunction *);
 
-    inline static Any *RETURN_VALUE();
+    inline static Any *FREE_FROM_VMANAGER(SronFunction *);
+
+    inline static Any *NOTHING_PERFORMING_FUNCTION(SronFunction *);
+
+    inline static Any *RETURN_VALUE(SronFunction *);
 
     //================ Functions which are not mapped by the ExecutionEngine::_funcmap_ .....
 
-    inline static bool SOLVE_CONDITION(std::vector<std::string>::iterator *it);
+    inline static bool SOLVE_CONDITION(SronFunction *);
 
-    inline static std::string &GET_RANGE_VARIABLES(Any **, Any **, Any **);
+    inline static std::string &GET_RANGE_VARIABLES(SronFunction *, Any **, Any **, Any **);
 
-    inline static void MOVE_ITERATOR_BEYOND_CONDITIONAL_STATEMENT();
+    inline static void MOVE_ITERATOR_BEYOND_CONDITIONAL_STATEMENT(SronFunction *);
 
     /* This function takes two Flags as parameter and move the iterator to out of the scope.*/
-    //inline static void EXIT_ITERATOR_FROM_SCOPE(const char *, const char *);
+    // inline static void EXIT_ITERATOR_FROM_SCOPE(const char *, const char *);
 
     // this bool variable is used to check if a loop exiting because of break keyword.
     static bool _BREAK_ = false;
 
-    static const std::unordered_map<std::string, std::function<void(std::stack<Any*>&, Any& val1, Any& val2)>> _eval_map_{
-        {"+",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 + val2); }},
-        {"-",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 - val2); }},
-        {"*",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 * val2); }},
-        {"/",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 / val2); }},
-        {"%",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 % val2); }},
-        {"^",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push( val1 ^ val2); }},
-        {"&&", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 && val2)); }},
-        {"||", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 || val2)); }},
-        {"==", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 == val2)); }},
-        {"!=", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 != val2)); }},
-        {">",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 > val2)); }},
-        {">=", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 >= val2)); }},
-        {"<",  [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 < val2)); }},
-        {"<=", [](std::stack<Any*>& stk, Any& val1, Any& val2) { stk.push(new Bool( val1 <= val2)); }}
-    };
+    static const std::unordered_map<std::string, std::function<void(std::stack<Any *> &, Any &val1, Any &val2)>> _eval_map_{
+        {"+", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(val1 + val2); }},
+        {"-", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(val1 - val2); }},
+        {"*", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(val1 * val2); }},
+        {"/", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(val1 / val2); }},
+        {"%", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(val1 % val2); }},
+        {"^", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(val1 ^ val2); }},
+        {"&&", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(new Bool(val1 && val2)); }},
+        {"||", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(new Bool(val1 || val2)); }},
+        {"==", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(new Bool(val1 == val2)); }},
+        {"!=", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(new Bool(val1 != val2)); }},
+        {">", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(new Bool(val1 > val2)); }},
+        {">=", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(new Bool(val1 >= val2)); }},
+        {"<", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(new Bool(val1 < val2)); }},
+        {"<=", [](std::stack<Any *> &stk, Any &val1, Any &val2)
+         { stk.push(new Bool(val1 <= val2)); }}};
 
-    static const std::unordered_map<std::string, std::function<Any *()>> _funcmap_{
+    static const std::unordered_map<std::string, std::function<Any *(SronFunction *)>> _funcmap_{
         {Flag_Int_Value, ExecutionEngine::EXTRACT_INT},
         {Flag_Double_Value, ExecutionEngine::EXTRACT_DOUBLE},
         {Flag_Char_Value, ExecutionEngine::EXTRACT_CHAR},
@@ -142,6 +159,7 @@ inline namespace ExecutionEngine
         {Flag_FunctionCall, ExecutionEngine::CALL_FUNCTION},
 
         {Flag_Any, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
+        {Flag_Void, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_Int, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_Double, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
         {Flag_Char, ExecutionEngine::NOTHING_PERFORMING_FUNCTION},
@@ -152,6 +170,7 @@ inline namespace ExecutionEngine
         {Flag_Break, ExecutionEngine::BREAK_LOOP},
         {Flag_Continue, ExecutionEngine::CONTINUE_LOOP},
         {Flag_Return, ExecutionEngine::RETURN_VALUE},
+        {Flag_Free, ExecutionEngine::FREE_FROM_VMANAGER},
 
         {Flag_IfScopeStart, ExecutionEngine::EXECUTE_CONDITIONAL_STATEMENT},
         {Flag_ElifScopeStart, ExecutionEngine::EXECUTE_CONDITIONAL_STATEMENT},
@@ -162,32 +181,18 @@ inline namespace ExecutionEngine
 
     };
 
-    // This function calculates the current line number of the code and set it to Logs::line_number.
-    inline static void SET_LINE_NUMBER_TO_STATIC_LOG()
-    {
-        Logs::line_number += ExecutionEngine::_FunctionStack_.top()->_iterator - ExecutionEngine::_FunctionStack_.top()->_codevector.begin();
-    }
-
     // this function loads the MAIN.srb file and starts the execution of the code.
     inline static void MAIN(List *arglist)
     {
         try
         {
-            SronFunction _main_("MAIN", new Argument_List(arglist));
+            Argument_List args(arglist);
 
-            Logs::filename = "MAIN.srb";
+            SronFunction _main_("MAIN", args);
 
-            ExecutionEngine::_FunctionStack_.push(&_main_);
+            Logs::filename = "MAIN.srb" ;
 
-            for (; _main_._iterator < _main_._end; ++_main_._iterator)
-            {
-                ExecutionEngine::FLAG_TO_FUNCTION_MAP();
-            }
-
-            if (!_main_._scopestack.empty())
-            {
-                ExecutionEngine::_FunctionStack_.pop();
-            }
+            ExecutionEngine::EXECUTE_FUNCTION(&_main_);
         }
         catch (const std::exception &)
         {

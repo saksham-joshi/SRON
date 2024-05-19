@@ -5,12 +5,14 @@
 
 #include <fstream>
 #include <iostream>
+#include<unordered_map>
 
 inline namespace Logs
 {
+    std::unordered_map<std::string, std::vector<std::string>> _LOADED_FUNCTION_MAP_;
 
     // contains the SRON's current version...
-    const static double version = 1.0;
+    const static double version = 1.4;
 
     // contains the line number of the current flow of program...
     static unsigned short int line_number = 1;
@@ -44,7 +46,7 @@ inline namespace Logs
     {
         int i = Logs::filename.length() - 1;
 
-        while (i > 0 && !(Logs::filename[i] == '/' || Logs::filename[i] == '\\'))
+        while (i > 0 && !(Logs::filename[i] == '/' || Logs::filename[i] == '\\' || Logs::filename[i] == ':'))
         {
             --i;
         }

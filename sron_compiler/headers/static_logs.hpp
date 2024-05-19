@@ -11,7 +11,8 @@
 
 inline namespace Logs
 {
-
+    static const std::string version_string = "--version";
+    
     static unsigned short int line_number = 1;
 
     static std::string filename = "terminal";

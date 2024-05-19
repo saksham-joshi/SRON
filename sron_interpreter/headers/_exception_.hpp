@@ -69,13 +69,13 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
 {
     try
     {
-        std::cout << "\nIn File '" << Logs::filename<<'\'';
+        std::cout << "\nIn '" << Logs::filename<<'\'';
 
         if (print_line_number)
         {
             std::cout << ":\nAt Line " << Logs::GET_LINE_NUMBER() << ':';
         }
-        std::cout << "\nException Caught :\n||>> While " << during << "\n";
+        std::cout << "\nException Caught :\n||>> While " << during << "\n\n";
         std::string filename = "";
 
         switch (code)
@@ -204,6 +204,8 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
             break;
         }
 
+
+        // extracting the address of exectuable 'sron.exe'..
         char path[MAX_PATH];
         DWORD length = GetModuleFileName(NULL, path, MAX_PATH);
 
@@ -212,11 +214,14 @@ inline static void DISPLAY_EXCEPTION(const char *during, const unsigned short in
             exit(1);
         }
 
+        // assigning the filename with the address of executable...
         Logs::filename = path;
 
+        // this function will extract the directory path of executable
         Logs::SET_DIRECTORY_PATH();
 
-        std::ifstream input(Logs::directory_path + "sron_interpreter/headers/Exception/" + filename + ".txt");
+        // now adding the directory path with with the path to exception....
+        std::ifstream input(Logs::directory_path + "meta\\Exceptions\\" + filename + ".txt");
 
         if (input.fail())
         {

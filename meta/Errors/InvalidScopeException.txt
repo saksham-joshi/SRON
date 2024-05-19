@@ -4,4 +4,5 @@
 	> Reason 4 : Maybe you forgot to close a String type using quotes("). 
 
 	||> Solution 1 : Keep track of Curly braces by using an Advanced IDE.
-	||> Solution 2 : Learn the syntax of SRON Programming language from the official documentations.
+	||> Solution 2 : Type command 'sron-docs' on your terminal to learn the syntax of SRON
+                     from the official documentations.

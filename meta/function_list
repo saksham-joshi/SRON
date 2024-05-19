@@ -47,6 +47,7 @@ split
 sqrt
 sublist
 substring
+syscmd
 tan
 to_bool
 to_double

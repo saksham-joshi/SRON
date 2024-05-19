@@ -1,6 +1,6 @@
 > Reason 1 : An Invalid token found in the file.
 
-	||> Solution 1 : Read the documentation of SRON carefully and write valid tokens.
+	||> Solution 1 : Type the command 'sron-docs' on terminal to read the documentation of SRON.
 	||> Solution 2 : Below is the list of valid tokens :
 				-> {      -> }      -> [
 				-> ]      -> (      -> )

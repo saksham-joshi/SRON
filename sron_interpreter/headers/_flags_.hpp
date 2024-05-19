@@ -20,8 +20,8 @@
 #define Flag_String_Value "`Sv"
 //===================
 
-#define Flag_Comma "`,"
 #define Flag_Assign "`="
+#define Flag_Free "`fr"
 
 #define Flag_StringScopeStart "`S{"
 #define Flag_StringScopeEnd "`S\"}"

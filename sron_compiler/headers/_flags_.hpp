@@ -10,7 +10,6 @@
 //=================== Attributes Flags
 
 #define AttributeName "name"
-#define AttributeType "type"
 #define AttributeVariables "variables"
 #define AttributeIf "if"
 #define AttributeElif "elif"
@@ -22,6 +21,7 @@
 #define AttributeComment "comment"
 #define AttributeArgs "args"
 #define AttributeRange "range"
+#define AttributeFree "free"
 
 
 //=================== Datatypes Flags
@@ -42,6 +42,7 @@
 //===================
 
 #define Flag_Assign "`="
+#define Flag_Free "`fr"
 
 #define Flag_StringScopeStart "`S{"
 #define Flag_StringScopeEnd "`S\"}"
@@ -61,7 +62,6 @@
 #define Flag_Args_End "`)"
 #define Flag_ListStart "`["
 #define Flag_ListEnd "`]"
-//#define Flag_Assign "`="
 
 #define Flag_Return "`R"
 #define Flag_Identifier_Variable "`idntfr"

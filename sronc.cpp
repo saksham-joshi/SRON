@@ -6,13 +6,13 @@ int main(int argc, char **argv)
     {
         std::string filename;
 
-        if (argc > 0)
+        Logs::SET_EXECUTABLE_PATH();
+
+        if (argc > 1)
         {
 
             // checking if the terminal is passed with --version parameter: sronc --version
-            const char *version_string = "--version";
-
-            if (*argv[1] == *version_string)
+            if (argv[1] == Logs::version_string)
             {
                 Support::DISPLAY_VERSION();
                 return 0;
