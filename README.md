@@ -4,7 +4,7 @@
 ### Visit Official Website from [here](https://saksham-joshi.github.io/SRON-Website/).
 ### **Current Version:** 1.4.0 
 
-<code> <img width="30%" src="./Pictures/SRON_rect.png" alt="logo"> </code>
+<code> <img width="30%" src="./meta/SRON_rect.png" alt="logo"> </code>
 
 SRON stands for Saksham Rapid Object Notation.<br/> <br/>
 It is a blazingly fast, heavily optimized, dynamically typed, single threaded, lightweight, functional and compiled + interpreted programming language.
