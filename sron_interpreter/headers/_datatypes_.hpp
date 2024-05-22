@@ -844,14 +844,7 @@ public:
 
     List(Any *a)
     {
-        try
-        {
-            this->value.push_back(a->COPY());
-        }
-        catch (const std::exception &)
-        {
-            DISPLAY_EXCEPTION("creating a variable of type 'List'.", SystemOutofMemoryException);
-        }
+        this->value.push_back(a->COPY());
     }
     List(Any *a, Any *b)
     {

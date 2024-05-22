@@ -56,7 +56,7 @@ inline namespace Support
     {
         std::cout << "\n"
                      "+----------------------------+\n"
-                     "|      SRON version 1.4      |\n"
+                     "|      SRON version 1.5      |\n"
                      "|  @Author : Saksham Joshi   |\n"
                      "+----------------------------+\n\n";
     }

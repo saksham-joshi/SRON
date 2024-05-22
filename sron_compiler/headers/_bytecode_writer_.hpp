@@ -39,6 +39,7 @@ inline namespace ByteCodeWriter
         {"Bool", Flag_Bool},
         {"String", Flag_String},
         {"List", Flag_List},
+        {"Void", Flag_Void},
         {"return", Flag_Return},
         {"break", Flag_Break},
         {"continue", Flag_Continue}};

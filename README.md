@@ -2,7 +2,7 @@
 
 ### Read Documentation from [here](https://sron.gitbook.io/docs).
 ### Visit Official Website from [here](https://saksham-joshi.github.io/SRON-Website/).
-### **Current Version:** 1.4.0 
+### **Current Version:** 1.5.0 
 
 <code> <img width="30%" src="./meta/SRON_rect.png" alt="logo"> </code>
 
