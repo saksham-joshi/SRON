@@ -1,0 +1,13 @@
+> Reason 1: Maybe you have not provided the identifier which will be incremented/decremented after every iteration.
+    > Reason 2: You are following the correct syntax, visit the documentation by typing 'sron-docs' on the terminal.
+
+    ||> Solution 1: Follow the correct syntax (note that the step-value is optional through all below syntaxes and 
+                    by default sets to 1)
+
+                1.   range : (datatype variable = value, end-value, step-value)
+                                                           
+                2.   range : (datatype variable, end-value)
+                                            
+                3.   range : (variable = value, end-value)
+
+                4.   range : (variable, end-value)

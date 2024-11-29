@@ -1,0 +1,5 @@
+> Reason 1: If you are passing invalid arguments to a function, then this error rises.
+    > Reason 2: Maybe you are passing arguments without separating them using comma.
+    > Reason 3: Maybe you are not enclosing the arguments within round-brackets.
+
+    ||> Solution 1: While passing the arguments make sure to separate them using comma(,).

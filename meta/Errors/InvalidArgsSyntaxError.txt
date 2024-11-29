@@ -1,0 +1,11 @@
+> Reason 1 : You have not declared arguments of the function in a proper syntax.
+    > Reason 2 : Maybe you have assigned values to the arguments.
+    > Reason 3 : Maybe you have specified an non-existing invalid datatype.
+    > Reason 4 : Maybe you have declared an invalid identifier.
+    > Reason 5 : You may have left the 'args' attribute empty like this : args : ()
+
+    ||> Solution 1 : Don't assign values to the arguments.
+    ||> Solution 2 : You can only declare these datatypes: Int, Double, Char, Bool, String and List.
+    ||> Solution 3 : The name of the argument must be valid(starting with a alphabet or underscore, 
+                     without any special character and length of less than 32).
+    ||> Solution 4: If you have no arguments to pass, then you can remove 'args' attribute.
