@@ -1,0 +1,3 @@
+> Reason : Specified Variable already exist !
+
+	||> Solution : Enter a different & valid variable name.

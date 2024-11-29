@@ -1,0 +1,3 @@
+> Reason 1: You are trying to access a memory which is owned by you.
+    > Reason 2: If you created a List, stored its element in a variable, 
+                cleared the list, access that variable, then this problem arises.

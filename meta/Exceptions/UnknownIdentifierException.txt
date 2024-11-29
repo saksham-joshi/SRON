@@ -1,0 +1,3 @@
+> Reason 1: Invalid values or variables are declared.
+
+	||> Solution: Check the code again and remove all the unknown identifiers.
