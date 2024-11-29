@@ -1,4 +1,0 @@
-> Reason 1 : You are trying to mention a invalid value type inside the Mathematical block.
-    > Reason 2 : You left the Mathematical Block empty like this- 0 : x = ~~
-
-    > Solution 1 : Make sure to write valid values inside the Mathematical Block.

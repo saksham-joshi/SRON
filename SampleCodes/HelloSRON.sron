@@ -1,4 +1,0 @@
-{
-    name: MAIN
-    0 : println("Hello, SRON")    
-}

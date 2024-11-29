@@ -1,6 +1,0 @@
-> Reason 1 : Maybe you made some changes in the bytecode.
-    > Reason 2 : Maybe this is a bug of SRON.
-
-    ||> Solution 1 : Compile the source code again!
-    ||> Solution 2 : Type 'sron-docs' command in your terminal to access the documentation.
-    ||> Solution 2 : Report this to Saksham Joshi via Linkedin(@sakshamjoshi27) with source code and output.
