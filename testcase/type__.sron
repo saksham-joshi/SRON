@@ -1,0 +1,13 @@
+{
+    name : MAIN
+
+    String x = "0123456789"
+
+    println(typeof(x))
+
+    List a = x
+
+    println(typeof(x), " : " , x)
+
+    println(typeof(a), " : " , a)
+}

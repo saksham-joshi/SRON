@@ -1,0 +1,19 @@
+
+
+{
+
+    name : get_square
+    args : (Int val)
+    return : ~{ val^2 }~
+
+}
+{
+
+    name : MAIN 
+    Int i
+    while : {
+        condition : ~{ i < 10000 }~
+        console : (~{ i^2 }~, '\n')
+        i += 1
+    }
+}

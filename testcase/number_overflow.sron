@@ -1,0 +1,10 @@
+{
+
+    name : MAIN
+
+    Int x = 1029292929239999
+
+    Double y = 12384498.564
+
+    println(x , '\t', y)
+}

@@ -1,0 +1,8 @@
+A simple code to use command line arguments in SRON.
+
+{
+    name : MAIN
+    args : (List arglist)
+    println("Passed arguments : " , arglist)
+
+}

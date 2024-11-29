@@ -1,0 +1,8 @@
+{
+    name : MAIN
+    for : {
+       range : (Int i, 10)
+
+       println(i)
+    }
+}

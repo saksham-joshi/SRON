@@ -1,0 +1,69 @@
+{
+    @ This function returns the number of digits in an 'Int' type value
+
+    name : numlen
+    args : (Int val)
+
+    @ if the value is 0, then log10() function will return infinity
+    if : {
+
+        condition : ~{ val == 0 }~
+
+        return : 1
+    }
+    elif : {
+
+        condition : ~{ val < 0 }~
+
+        val = ~{ -val }~
+    }
+
+    return : floor(~{ log10(val) + 1 }~)
+}
+
+
+{
+    name : Armstrong
+    args: (Int val)
+
+    Int arm,Int temp,Int len
+
+    len = numlen(copy(val))
+
+    while:{
+
+        condition: ~{ val != 0 }~
+
+        temp = ~{ val%10 }~ 
+
+        arm += ~{ temp^len }~
+
+        val /= 10
+    }
+
+    return : arm
+}
+
+{
+    name : MAIN
+
+    Int val, Int arm
+
+    val = input_int("\n ==> Enter the value :- ")
+
+    arm = Armstrong(copy(val))
+    
+    if:{
+
+        condition: ~{ val == arm }~
+
+        println("Yes, ", val ," is an Armstrong Number.")
+
+    }
+
+    else:{
+        
+        println("No, ", val, " is not an Armstrong Number.")
+
+    }
+}

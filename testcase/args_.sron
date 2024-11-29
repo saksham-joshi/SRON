@@ -1,0 +1,25 @@
+
+
+
+{
+    name : MAIN
+
+    args : (Int val)
+
+    return : ~{ val }~
+}
+
+{
+    name : xz
+
+    Int i = 0
+
+    for : {
+
+        range : (i , 15 , 2)
+
+        println(i)
+    }
+
+    return : PI
+}
