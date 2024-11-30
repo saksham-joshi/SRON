@@ -53,6 +53,8 @@ namespace ByteCodeWriter
 
     inline static void MATH_BLOCK_WRITER();
 
+    inline static void REMOVE_DEAD_CODE();
+
     inline static void RESET() noexcept;
 
     inline static void SAVE_CONST_CHAR_TO_FILE(const char*,unsigned short int);
