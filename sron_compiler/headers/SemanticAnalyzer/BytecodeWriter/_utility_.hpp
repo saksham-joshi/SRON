@@ -25,3 +25,7 @@ inline static void ByteCodeWriter::WRITE_CLOSING_INDEX()
     ByteCodeWriter::seek_tracker.pop_back();
 
 }
+
+inline static void ByteCodeWriter::REMOVE_DEAD_CODE(){
+    // This code is not open sourced for security reasons
+}
