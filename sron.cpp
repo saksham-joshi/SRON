@@ -12,9 +12,6 @@
  * @email- social.sakshamjoshi@gmail.com
  */
 
-#ifndef SRON_H
-#define SRON_H
-
 #include "sron_interpreter/_execution_engine_.hpp"
 
 
@@ -38,10 +35,8 @@ int main(int argc, char **argv)
             arglist->PUSH_WITHOUT_COPY(new String(argv[i]));
         }
 
-        AnyBind arglistBind(arglist, 0);
-
         // starting the execution of the code
-        ExecutionEngine::MAIN(&arglistBind);
+        ExecutionEngine::MAIN(GarbageCollector::REGISTER_MEMORY(arglist));
 
         std::cout << "\n   _________________________________________\n   | Time taken by SRON : " << std::fixed << double(clock()) / double(CLOCKS_PER_SEC) << " seconds. |";
        
@@ -84,5 +79,3 @@ int main(int argc, char **argv)
 
     return 0;
 }
-
-#endif
