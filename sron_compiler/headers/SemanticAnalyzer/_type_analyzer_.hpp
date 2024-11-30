@@ -121,6 +121,17 @@ inline static void SemanticAnalyzer::FOUND_TYPE_KEYWORD()
    // This code is not open sourced for security reasons
 }
 
+/*
+ @Authors
+    1. Neeraj Koshiyari
+          Mail: neerajkoshyari1@gmail.com
+          LinkedIn: https://www.linkedin.com/in/neeraj-koshyari-491136286/
+    2. Mayank Joshi
+          Mail: mayankjoshi5252@gmail.com
+          LinkedIn: https://www.linkedin.com/in/mayank-joshi5252/
+
+This function FOUND_TYPE_MATH_BLOCK() checks for errors in the mathematical block.
+*/
 inline static void SemanticAnalyzer::FOUND_TYPE_MATH_BLOCK()
 {
 
