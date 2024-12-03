@@ -70,3 +70,8 @@ inline static void ByteCodeWriter::MATH_BLOCK_WRITER()
     // This code is not open sourced for security reasons
 
 }
+
+inline static void ByteCodeWriter::KEYWORD_WRITER()
+{
+    // This code is not open sourced for security reasons
+}

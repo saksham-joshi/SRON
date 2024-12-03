@@ -49,6 +49,8 @@ namespace ByteCodeWriter
 
     inline static void IDENTIFIER_WRITER();
 
+    inline static void KEYWORD_WRITER();
+
     inline static void LIST_WRITER();
 
     inline static void MATH_BLOCK_WRITER();
