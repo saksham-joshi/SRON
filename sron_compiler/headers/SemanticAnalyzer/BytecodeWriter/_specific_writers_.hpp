@@ -24,7 +24,7 @@
 */
 inline static void ByteCodeWriter::DATATYPE_WRITER()
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 /*
@@ -38,7 +38,7 @@ inline static void ByteCodeWriter::DATATYPE_WRITER()
 */
 inline static void ByteCodeWriter::FUNCTION_CALL_WRITER()
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 
@@ -57,21 +57,21 @@ inline static void ByteCodeWriter::FUNCTION_CALL_WRITER()
 */
 inline static void ByteCodeWriter::IDENTIFIER_WRITER()
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 inline static void ByteCodeWriter::LIST_WRITER()
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 inline static void ByteCodeWriter::MATH_BLOCK_WRITER()
 {
-    // This code is not open sourced for security reasons
+    
 
 }
 
 inline static void ByteCodeWriter::KEYWORD_WRITER()
 {
-    // This code is not open sourced for security reasons
+    
 }

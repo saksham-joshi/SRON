@@ -12,6 +12,6 @@
   > Syntax in SRON : "List x = [1,123.678, true, false, "Heelo", 'Q' ]" or "List x" or "List x = []"
 */
 
-// This code is not open sourced for security reasons
+
 
 #endif

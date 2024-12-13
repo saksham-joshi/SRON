@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2025 SAKSHAM JOSHI
+ * All rights reserved.
+ *
+ * You can freely redistribute it but cannot modify the source code without the permission from the author.
+ * @author- SAKSHAM JOSHI
+ * @Linkedin- @sakshamjoshi27
+ * @Twitter- @sakshamjoshi27
+ * @email- social.sakshamjoshi@gmail.com
+ */
+
 #include "sron_compiler/_bytecode_generator_.hpp"
 
 int main(int argc, char **argv)

@@ -4,12 +4,12 @@
 
 inline static void ByteCodeWriter::ATTRIBUTE_ARGS_WRITER()
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 inline static void ByteCodeWriter::ATTRIBUTE_MAPPER()
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 /*
@@ -29,7 +29,7 @@ inline static void ByteCodeWriter::ATTRIBUTE_MAPPER()
 inline static void ByteCodeWriter::ATTRIBUTE_CONSOLE_WRITER()
 {
 
-    // This code is not open sourced for security reasons
+    
 }
 
 /*
@@ -46,7 +46,7 @@ inline static void ByteCodeWriter::ATTRIBUTE_CONSOLE_WRITER()
 */
 inline static void ByteCodeWriter::ATTRIBUTE_RETURN_WRITER()
 {
-    // This code is not open sourced for security reasons
+    
 
 }
 
@@ -64,7 +64,7 @@ inline static void ByteCodeWriter::ATTRIBUTE_RETURN_WRITER()
 inline static void ByteCodeWriter::ATTRIBUTE_ROTATE_WRITER()
 {
 
-    // This code is not open sourced for security reasons
+    
 }
 
 /*
@@ -81,7 +81,7 @@ inline static void ByteCodeWriter::ATTRIBUTE_ROTATE_WRITER()
 inline static void ByteCodeWriter::ATTRIBUTE_FOR_WRITER()
 {
 
-   // This code is not open sourced for security reasons
+   
 }
 
 /*
@@ -98,7 +98,7 @@ inline static void ByteCodeWriter::ATTRIBUTE_FOR_WRITER()
 inline static void ByteCodeWriter::ATTRIBUTE_IF_ELIF_ELSE_WRITER()
 {
 
-    // This code is not open sourced for security reasons
+    
 }
 
 /*
@@ -118,10 +118,10 @@ inline static void ByteCodeWriter::ATTRIBUTE_IF_ELIF_ELSE_WRITER()
 */
 inline static void ByteCodeWriter::ATTRIBUTE_WHILE_WRITER()
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 inline static void ByteCodeWriter::ATTRIBUTE_FOREACH_WRITER()
 {
-    // This code is not open sourced for security reasons
+    
 }

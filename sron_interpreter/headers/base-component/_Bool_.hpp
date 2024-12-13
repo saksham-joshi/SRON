@@ -14,6 +14,6 @@
 */
 
 
-// This code is not open sourced for security reasons
+
 
 #endif

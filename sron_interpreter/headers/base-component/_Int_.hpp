@@ -12,6 +12,6 @@
  > Syntax in SRON : "Int x = 10" or "Int x"
 */
 
-// This code is not open sourced for security reasons
+
 
 #endif

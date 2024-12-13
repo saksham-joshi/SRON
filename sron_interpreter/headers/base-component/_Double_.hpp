@@ -12,5 +12,5 @@
   > Syntax in SRON : Double x = 1235.123124
 */
 
-// This code is not open sourced for security reasons
+
 #endif

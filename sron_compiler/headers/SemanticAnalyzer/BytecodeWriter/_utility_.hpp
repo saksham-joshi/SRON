@@ -27,5 +27,4 @@ inline static void ByteCodeWriter::WRITE_CLOSING_INDEX()
 }
 
 inline static void ByteCodeWriter::REMOVE_DEAD_CODE(){
-    // This code is not open sourced for security reasons
 }

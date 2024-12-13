@@ -40,7 +40,6 @@ namespace ByteCodeGenerator
 
             while (it <= iterator)
             {
-                //if(*it == '\n') break;
                 std::cerr << *it;
                 ++it;
             }
@@ -49,7 +48,6 @@ namespace ByteCodeGenerator
         // Now printing the characters after the current character position
         while (--__tokenCount && (++iterator < LexicalAnalyzer::fileEnd))
         {
-            //if(*iterator == '\n') break;
             std::cerr << *iterator;
 
             ++iterator;

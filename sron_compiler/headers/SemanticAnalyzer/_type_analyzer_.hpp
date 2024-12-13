@@ -88,12 +88,12 @@ inline static void SemanticAnalyzer::FOUND_TYPE_ATTRIBUTE()
 }
 inline static void SemanticAnalyzer::FOUND_TYPE_ASSIGN()
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 inline static void SemanticAnalyzer::FOUND_TYPE_IDENTIFIER()
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 /*
@@ -103,7 +103,7 @@ inline static void SemanticAnalyzer::FOUND_TYPE_IDENTIFIER()
  */
 inline static void SemanticAnalyzer::FOUND_TYPE_DATATYPE()
 {
-    // This code is not open sourced for security reasons
+    
 
 }
 
@@ -112,13 +112,13 @@ inline static void SemanticAnalyzer::FOUND_TYPE_DATATYPE()
  */
 inline static void SemanticAnalyzer::FOUND_TYPE_FUNCTION_CALL()
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 inline static void SemanticAnalyzer::FOUND_TYPE_KEYWORD()
 {
 
-   // This code is not open sourced for security reasons
+   
 }
 
 /*
@@ -210,5 +210,5 @@ inline static void SemanticAnalyzer::FOUND_TYPE_MATH_BLOCK()
 // this method checks if only the valid values exists inside the list ...
 inline static void SemanticAnalyzer::FOUND_TYPE_LIST_OPEN()
 {
-    // This code is not open sourced for security reasons
+    
 }

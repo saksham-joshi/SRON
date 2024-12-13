@@ -1,9 +1,6 @@
 /*
- * Copyright (c) 2024 SAKSHAM JOSHI
+ * Copyright (c) 2025 SAKSHAM JOSHI
  * All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
  *
  * You can freely redistribute it but cannot modify the source code without the permission from the author.
  * @author- SAKSHAM JOSHI

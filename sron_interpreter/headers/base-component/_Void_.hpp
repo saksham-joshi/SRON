@@ -11,6 +11,6 @@
   > Syntax in SRON : "Void x"
 */
 
-// This code is not open sourced for security reasons
+
 
 #endif

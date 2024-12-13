@@ -30,13 +30,13 @@ inline void ExecutionEngine::EXECUTE_FUNCTION(SronFncPtr __top)
 
 inline static AnyBindPtr ExecutionEngine::CALL_IN_BUILT_FUNCTION(SronFncPtr __top)
 {
-    // This code is not open sourced for security reasons
+    
 }
 
 inline static AnyBindPtr ExecutionEngine::CALL_USER_DEFINED_FUNCTION(SronFncPtr __top)
 {
 
-    // This code is not open sourced for security reasons
+    
 }
 
 inline static AnyBindPtr ExecutionEngine::FLAG_TO_FUNCTION_MAP(const flag_t __flag, SronFncPtr __top)

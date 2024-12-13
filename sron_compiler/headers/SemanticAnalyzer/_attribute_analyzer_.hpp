@@ -3,26 +3,26 @@
 
 inline static void SemanticAnalyzer::FOUND_ARGS_ATTRIBUTE()
 {
-    // This code is not open sourced for security purpose
+    
 }
 
 // checks if the args attribute for main function is (List arglist) or not!
 inline static void SemanticAnalyzer::FOUND_MAIN_ARGS_ATTRIBUTE()
 {
-    // This code is not open sourced for security purpose
+    
 }
 
 // 
 inline static void SemanticAnalyzer::FOUND_NAME_ATTRIBUTE()
 {
 
-    // This code is not open sourced for security purpose
+    
 }
 
 inline static void SemanticAnalyzer::FOUND_ROTATE_ATTRIBUTE()
 {
 
-    // This code is not open sourced for security purpose
+    
 }
 
 /*
@@ -80,12 +80,12 @@ inline static void SemanticAnalyzer::FOUND_CONDITION_ATTRIBUTE()
 }
 inline static void SemanticAnalyzer::FOUND_RANGE_ATTRIBUTE()
 {
-    // This code is not open sourced for security purpose
+    
 }
 inline static void SemanticAnalyzer::FOUND_CONSOLE_ATTRIBUTE()
 {
 
-    // This code is not open sourced for security purpose
+    
 }
 
 
@@ -100,13 +100,13 @@ inline static void SemanticAnalyzer::FOUND_RETURN_ATTRIBUTE()
 
 inline static void SemanticAnalyzer::FOUND_LOOP_ATTRIBUTE()
 {
-    // This code is not open sourced for security purpose
+    
 }
 
 inline static void SemanticAnalyzer::FOUND_IF_ELIF_ELSE_ATTRIBUTE()
 {
 
-    // This code is not open sourced for security purpose
+    
 }
 
 inline static void SemanticAnalyzer::FOUND_ATTRIBUTE_TYPE(){
@@ -124,6 +124,6 @@ inline static void SemanticAnalyzer::FOUND_ATTRIBUTE_TYPE(){
 
 inline static void SemanticAnalyzer::FOUND_FOREACH_ON_ATTRIBUTE()
 {
-    // This code is not open sourced for security purpose
+    
     
 }

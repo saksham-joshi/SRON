@@ -11,7 +11,7 @@
   > Syntax in SRON : Char x = 'S'
 */
 
-// This code is not open sourced for security reasons
+
 
 
 #endif

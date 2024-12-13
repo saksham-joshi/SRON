@@ -227,14 +227,6 @@ public:
     {
         inline std::size_t operator()(const SronTokenString &__s) const noexcept
         {
-            // std::size_t hash = 0;
-            // const char *s = __s.str;
-            // for (size_t i = 0; i < __s.len; ++i)
-            // {
-            //     hash = hash * 31 + s[i];
-            // }
-            // return hash;
-
             return std::hash<std::string>()(__s.str);
         }
     };

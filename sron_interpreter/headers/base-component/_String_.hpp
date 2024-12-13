@@ -12,5 +12,5 @@
   > Syntax in SRON : 'String x = "SRON is the Best" ' or "String x"
 */
 
-// This code is not open sourced for security reasons
+
 #endif
