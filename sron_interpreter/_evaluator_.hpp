@@ -52,25 +52,49 @@ inline static AnyBindPtr ExecutionEngine::EVALUATE(SronFncPtr __top)
 
 inline static AnyBindPtr ExecutionEngine::ADD_AND_ASSIGN(SronFncPtr __top)
 {
-    
+    auto it = __top->_Vmanager.GET_ITERATOR(__top->_codefile.READ_UNSIGNED_INT64());
+
+    it->second->ptr_->__ADD_AND_ASSIGN__(**ExecutionEngine::FLAG_TO_FUNCTION_MAP(__top->_codefile.READ_FLAG(), __top));
+
+    return it->second;
 }
 inline static AnyBindPtr ExecutionEngine::MIN_AND_ASSIGN(SronFncPtr __top)
 {
-    
+    auto it = __top->_Vmanager.GET_ITERATOR(__top->_codefile.READ_UNSIGNED_INT64());
+
+    it->second->ptr_->__MIN_AND_ASSIGN__(**ExecutionEngine::FLAG_TO_FUNCTION_MAP(__top->_codefile.READ_FLAG(), __top));
+
+    return it->second;
 }
 inline static AnyBindPtr ExecutionEngine::MULT_AND_ASSIGN(SronFncPtr __top)
 {
-    
+    auto it = __top->_Vmanager.GET_ITERATOR(__top->_codefile.READ_UNSIGNED_INT64());
+
+    it->second->ptr_->__MULT_AND_ASSIGN__(**ExecutionEngine::FLAG_TO_FUNCTION_MAP(__top->_codefile.READ_FLAG(), __top));
+
+    return it->second;
 }
 inline static AnyBindPtr ExecutionEngine::DIV_AND_ASSIGN(SronFncPtr __top)
 {
-    
+    auto it = __top->_Vmanager.GET_ITERATOR(__top->_codefile.READ_UNSIGNED_INT64());
+
+    it->second->ptr_->__DIV_AND_ASSIGN__(**ExecutionEngine::FLAG_TO_FUNCTION_MAP(__top->_codefile.READ_FLAG(), __top));
+
+    return it->second;
 }
 inline static AnyBindPtr ExecutionEngine::MOD_AND_ASSIGN(SronFncPtr __top)
 {
-    
+    auto it = __top->_Vmanager.GET_ITERATOR(__top->_codefile.READ_UNSIGNED_INT64());
+
+    it->second->ptr_->__MOD_AND_ASSIGN__(**ExecutionEngine::FLAG_TO_FUNCTION_MAP(__top->_codefile.READ_FLAG(), __top));
+
+    return it->second;
 }
 inline static AnyBindPtr ExecutionEngine::POW_AND_ASSIGN(SronFncPtr __top)
 {
-    
+    auto it = __top->_Vmanager.GET_ITERATOR(__top->_codefile.READ_UNSIGNED_INT64());
+
+    it->second->ptr_->__POW_AND_ASSIGN__(**ExecutionEngine::FLAG_TO_FUNCTION_MAP(__top->_codefile.READ_FLAG(), __top));
+
+    return it->second;
 }
