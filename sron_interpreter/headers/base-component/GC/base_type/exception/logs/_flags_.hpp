@@ -7,7 +7,7 @@
 // #define SRON_DEVELOPMENT_PHASE
 // #define SRON_DEBUG_MODE
 
-#include "D:\\MY PROJECTS\\SRON_PRIVATE\\sron_headers\\_bytecode_flags_.hpp"
+#include "../../../../../../sron_headers/_bytecode_flags_.hpp"
 
 //=================== Flags for Datatypes and Operatos !
 constexpr const unsigned short int TYPE_VOID = 0;
