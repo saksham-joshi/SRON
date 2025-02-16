@@ -22,7 +22,8 @@ struct SronToken
     
     inline SronToken(SronToken&& __another) : _type(__another._type), _token(std::move(__another._token)), _flag(__another._flag), _file_index(__another._file_index){ }
 
-    inline SronToken& operator=(const SronToken& __another){ 
+    inline SronToken& operator=(const SronToken& __another)
+    { 
         _type = __another._type; 
         _token = __another._token; 
         _flag = __another._flag;

@@ -80,8 +80,7 @@ namespace Converter
                 ++it;
             }
 
-            if (*it == '\0')
-                return value;
+            if (*it == '\0') return value;
 
             ++it;
 

@@ -45,15 +45,10 @@ inline namespace Logs
     inline static std::string GET_FILE_PATH(const std::string& filepath){
         int i = filepath.length() - 1;
 
-        while (i > 0 && !(filepath[i] == '/' || filepath[i] == '\\' || filepath[i] == ':'))
-        {
-            --i;
-        }
-        if (i > 0)
-        {
-            ++i;
-        }
-
+        while (i > 0 && !(filepath[i] == '/' || filepath[i] == '\\' || filepath[i] == ':')) --i;
+        
+        if (i > 0) ++i;
+        
         return filepath.substr(0,i);
     }
 
@@ -78,6 +73,7 @@ inline namespace Logs
             }
 
             Logs::executable_path = Logs::GET_FILE_PATH(path);
+            
         #elif __linux__
             #error "Can't compile it for linux os"
         #elif __APPLE__ || TARGET_OS_MAC
