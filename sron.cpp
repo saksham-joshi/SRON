@@ -16,7 +16,6 @@ int main(int argc, char **argv)
 {
     try
     {
-
         GarbageCollector::INITIALIZE();
         
         std::ios_base::sync_with_stdio(false);
@@ -27,11 +26,8 @@ int main(int argc, char **argv)
         // create a List to provide command line arguments to the user
         ListPtr arglist = new List(0Ul);
 
-        for (int i = 1; i < argc; ++i)
-        {
-            arglist->PUSH_WITHOUT_COPY(new String(argv[i]));
-        }
-
+        for (int i = 1; i < argc; ++i) arglist->PUSH_WITHOUT_COPY(new String(argv[i]));
+        
         // starting the execution of the code
         ExecutionEngine::MAIN(GarbageCollector::REGISTER_MEMORY(arglist));
 
@@ -56,9 +52,9 @@ int main(int argc, char **argv)
 
                        return 1;
     }
-    catch(const ExceptionThrowByUser& __excep)
+    catch(const ExceptionThrowByUser& excep)
     {
-        __excep.DISPLAY_EXCEPTION();
+        excep.DISPLAY_EXCEPTION();
     }
     catch (const std::exception &excep)
     {
