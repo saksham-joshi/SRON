@@ -234,7 +234,6 @@ public:
     inline ~SronTokenString()
     {
         this->_DELETE_();
-        //
     }
 
     friend inline std::ostream &operator<<(std::ostream &, const SronTokenString &);
