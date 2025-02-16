@@ -3,7 +3,7 @@
 #ifndef LOGS_H
 #define LOGS_H
 
-#include "D:\MY PROJECTS\SRON_PRIVATE\sron_headers\_sron_token_string_.hpp"
+#include "../../../../../../sron_headers/_sron_token_string_.hpp"
 #include "__import__.hpp"
 
 
@@ -36,7 +36,7 @@ namespace Logs
         #elif __APPLE__ || TARGET_OS_MAC
             #error "Can't compile this codebase for apple system"
         #else
-            #error "Can't detect O.S"
+            #error "Can't detect Operating system"
         #endif
 
         int i = temp.length() - 1;
