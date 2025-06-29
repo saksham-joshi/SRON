@@ -1,5 +1,0 @@
-{
-    name : MAIN
-
-    println("Hello, World!")
-}

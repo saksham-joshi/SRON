@@ -1,8 +1,0 @@
-{
-
-    name : MAIN
-
-    List lst = "Saksham Joshi"
-
-    console : (lst)
-}

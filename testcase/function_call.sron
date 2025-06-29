@@ -1,8 +1,0 @@
-
-
-{
-
-    name : MAIN
-
-    Any val = test.fnc(val)
-}

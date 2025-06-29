@@ -1,7 +1,0 @@
-> Reason 1 : Maybe file is empty.
-    > Reason 2 : No valid code is written in the file.
-    > Reason 3 : Maybe curly braces are not used.
-
-    ||> Solution 1 : Function is always started with the open curly braces '{'.
-    ||> Solution 2 : Write the valid code and use advanced modern IDE to detect errors.
-    ||> Solution 3 : Write some code and then execute.

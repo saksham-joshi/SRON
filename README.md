@@ -1,5 +1,5 @@
 # SRON 
-### **Current Stable Version:** 2.1
+### **Current Stable Version:** 2.2
 > **[Documentations](https://sron.gitbook.io/docs) | [Website](https://sronlang.github.io/)**
 
 
@@ -25,7 +25,7 @@ The compiler converts source code into SRON's bytecode, which is then saved to a
 
 ## How SRON is developed?
 
-SRON is developed using the C++ programming language (GCC compiler). Both the compiler and interpreter feature a highly sophisticated architecture. The source code is available for free to review. Note that some parts of code is still hidden for security purposes.
+SRON version 2.1 and before were developed in C++11 using GCC compiler and the next version 2.2 is developed in C++23 using Clang compiler. Both the compiler and interpreter feature a highly sophisticated architecture. The source code is available for free to review. Note that some parts of code is still hidden for security purposes.
 
 The design and implementation of SRON took Saksham over a year to finalize, ensuring optimal performance and reliability. Detailed development logs documenting the entire journey of SRON's creation are available on [LinkedIn](https://www.linkedin.com/pulse/part-1-how-i-developed-sron-saksham-joshi-wqoac/), authored by Saksham Joshi.
 

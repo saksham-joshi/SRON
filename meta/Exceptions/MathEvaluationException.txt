@@ -1,8 +1,0 @@
-> Reason 1 : You are trying to evaluate invalid mathematical expression.
-    > Reason 2 : You have passed invalid operators between values.
-    > Reason 3 : If you are using the assignment operator(=) inside the mathematical block,
-                 then this error will rise.
-
-    ||> Solution 1 : To solve an expression, only +, -, *, /, %,^, ||, &&, !, >, <, <=, >=  
-                     operators are allowed.
-    ||> Solution 2 : Use valid operators for solving the expressions.

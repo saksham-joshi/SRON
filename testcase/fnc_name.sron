@@ -1,6 +1,0 @@
-{
-    name : con
-    
-    args : (Any val1, Bool val2)
-  
-}
