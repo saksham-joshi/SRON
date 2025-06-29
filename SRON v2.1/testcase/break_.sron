@@ -1,0 +1,26 @@
+
+
+
+{
+    name : MAIN
+  
+    for : {
+        range : (Int i = 0 , 5, 1)
+        Int j
+        while : {
+            condition : ~{ j < 100 }~
+            if : {
+                condition : ~{ j != 5 }~
+
+                println(j)
+                
+                j = ~{ j+1 }~
+            }
+            else : {
+                break
+            }
+            
+        }
+    }
+    println("^^^")
+}

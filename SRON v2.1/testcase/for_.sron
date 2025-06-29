@@ -1,0 +1,18 @@
+{
+    name : get
+
+    foreach : {
+
+        on : (Any val, [1,2,3,4,true, false, "Saksham Joshi"])
+        if : {
+            condition : is_bool(val)
+            return : val
+        }
+        println(val)
+    }
+}
+
+{
+    name : MAIN
+    println(get())
+}

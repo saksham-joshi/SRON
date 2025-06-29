@@ -1,0 +1,11 @@
+{
+    name : MAIN
+
+    Int a = -344.1365
+
+    println(a)
+
+    Any __x = ~{ -a+5-100 }~
+
+    return : print(~{ -__x }~)
+}

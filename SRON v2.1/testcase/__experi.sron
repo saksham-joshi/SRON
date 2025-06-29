@@ -1,0 +1,14 @@
+
+
+{
+    name : Main
+    Int val1 = 2706
+    String val2 = 2003
+    Bool val3 = true
+
+    println("\n Before Rotate: A = ", val1, "    B = ", val2, "    C = ", val3)
+
+    rotate : (val1 , val2, val3)
+
+    println("\n After Rotate: A = ", val1, "    B = ", val2, "    C = ", val3)
+}

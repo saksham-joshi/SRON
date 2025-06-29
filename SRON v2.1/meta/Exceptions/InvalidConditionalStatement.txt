@@ -1,0 +1,4 @@
+> Reason : You put some invalid value in 'condition' attribute.
+
+    ||> Solution : 'condition' attribute expectes only bool type values.
+    ||> Solution : Values like Int and Double are implicitly typecasted to 'Bool' type values.

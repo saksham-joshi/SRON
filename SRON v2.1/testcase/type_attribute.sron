@@ -1,0 +1,13 @@
+{
+    name : get_int
+
+    type : String
+
+    return : ["999.7262"]
+}
+
+{
+    name : MAIN
+
+    println([get_int()])
+}

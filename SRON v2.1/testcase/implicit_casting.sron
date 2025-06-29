@@ -1,0 +1,114 @@
+{
+    name : to_str
+
+    args : (String str)
+
+    println(str)
+}
+
+{
+    name : to_ch
+
+    args : (Char ch)
+
+    println(ch)
+}
+
+{
+    name : to_lst
+
+    args : (List lst)
+
+    println(lst)
+}
+
+{
+    name : to_it
+
+    args : (Int i)
+
+    println(i)
+
+}
+
+{
+    name : to_db
+
+    args : (Double d)
+
+    println(d)
+}
+
+{
+    name : to_bl
+
+    args : (Bool b)
+
+    println(b)
+}
+
+
+{
+    name : MAIN
+
+    @to_str(12)
+    @to_str(false)
+    @to_str(123.12341)
+    @to_str("Saksham")  @running
+    @to_str([1,2,3])
+    @to_str(Void)
+    @to_str('S')        @running
+
+
+
+    @to_bl(12)        @ running
+    @to_bl(false)     @ running
+    @to_bl(123.12341) @ running
+    @to_bl("Saksham")
+    @to_bl([1,2,3])
+    @to_bl(Void)
+    @to_bl('S')
+
+
+
+    @to_it(12)           @ running
+    @to_it(false)        @ running
+    @to_it(123.12341)    @ running
+    @to_it("Saksham")
+    @to_it([1,2,3])
+    @to_it(Void)
+    @to_it('S')          @ running
+
+
+
+
+    @to_ch(12)           @ running
+    @to_ch(false)
+    @to_ch(123.12341)
+    @to_ch("Saksham")
+    @to_ch([1,2,3])
+    @to_ch(Void)
+    @to_ch('S')          @ running
+
+
+
+    @to_db(12)           @ running
+    @to_db(false)
+    @to_db(123.12341)    @ running
+    @to_db("Saksham")
+    @to_db([1,2,3])
+    @to_db(Void)
+    @to_db('S')
+
+
+
+
+    @to_lst(12)
+    @to_lst(false)
+    @to_lst(123.12341)  
+    @to_lst("Saksham")        @ running
+    @to_lst([1,2,3])          @ running
+    @to_lst(Void)
+    @to_lst('S')
+    
+}
