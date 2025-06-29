@@ -1,0 +1,16 @@
+
+{
+    name : Fnc
+
+    console : ( "\n In Fnc\n" )
+
+    folder.Code()
+
+}
+
+
+{
+    name : Main 
+
+    Fnc()
+}

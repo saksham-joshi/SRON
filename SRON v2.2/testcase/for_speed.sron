@@ -1,0 +1,8 @@
+{
+    name : Main
+
+    for : { 
+        range : (Int i = 0 , 10000)
+        println(i)
+    }
+}

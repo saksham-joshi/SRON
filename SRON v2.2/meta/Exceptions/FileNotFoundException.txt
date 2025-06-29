@@ -1,0 +1,15 @@
+> Reason 1 : Specified file not found due to some logical or spelling mistake.
+    > Reason 2 : Your Operating System is not allowing SRON to access the specified file.
+    > Reason 3 : Maybe File is too big that this system has not enough memory to load it.
+    > Reason 4 : Maybe the file you specified is in the reserved section of the Operating System
+                 due to which it is not allowing SRON to access that file.
+    > Reason 5 : If a single file is loaded several times, then OS automatically restricts you to
+                 load that file again for security purposes and this exception raised.
+
+    ||> Solution 1 : Enter the correct file name.
+    ||> Solution 2 : If you are accessing file via command line ,then remove spaces from file name.
+    ||> Solution 3 : If there are spaces in file path, then put the path to the file within quotes(") 
+                     like this - sron "path/filename.sron"
+    ||> Solution 4 : Remove some background applications to free up ram.
+    ||> Solution 5 : Run the terminal(or command prompt) as Administrator and then proceed.
+    ||> Solution 6 : Change the directory of the file.

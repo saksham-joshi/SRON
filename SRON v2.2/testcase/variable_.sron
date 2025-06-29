@@ -1,0 +1,20 @@
+
+{
+
+    name : Main
+
+    Int _print = 2776
+
+    print( "", print() )
+
+    if : {
+        condition : true
+        Int val
+        print(val)
+    }
+    
+    print(val)
+
+    Int val
+
+}

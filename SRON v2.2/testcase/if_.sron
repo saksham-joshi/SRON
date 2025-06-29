@@ -1,0 +1,32 @@
+{
+
+    name : Main
+
+    Int val = input_int("Enter the number :- ")
+
+    if : {
+
+        condition : ~{ val % 2 == 0 }~
+
+        if : { 
+
+            condition : ~{ val % 3 == 0 }~
+
+            println("Number is divisible by 2 and 3 both")
+        }
+        else : { 
+
+            println("Even only")
+        }        
+    }
+    elif : {
+        condition : ~{ val % 5 == 0 }~
+
+        println("Divisible by 5 also")
+    }
+    else  : {
+
+        println("Not divisble by anyone")
+    }
+    println("Hahu")
+}

@@ -1,0 +1,8 @@
+{
+
+    name : Main
+
+    List lst = "Saksham Joshi"
+
+    console : (lst)
+}

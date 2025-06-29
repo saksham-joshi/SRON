@@ -1,0 +1,5 @@
+{
+    name : Main
+    
+    syscmd("sron-docs")
+}

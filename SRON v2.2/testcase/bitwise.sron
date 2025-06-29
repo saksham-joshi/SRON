@@ -1,0 +1,18 @@
+{
+    name : Main
+
+    Int a = 10
+
+    @ this line must give compilation error
+    println( ~{ a ! 10 }~)
+
+    println( ~{ a lsft 10 }~)
+
+    println( ~{ a rsft 10 }~)
+
+    println( ~{ a and 10 }~)
+
+    println( ~{ a or 10 }~)
+
+    println( ~{ a not 10 }~)
+}

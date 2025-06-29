@@ -1,0 +1,22 @@
+
+
+{
+
+    name : get_square
+    args : (Int val)
+    return : ~{ val^2 }~
+
+}
+{
+
+    name : Main
+    for : {
+        range : ( Int i = 0 , 10000 )
+        OBUFFER += get_square(i)
+        OBUFFER += '\n'
+    }
+
+    console : ( OBUFFER )
+
+    println("\n Execution Time= ", get_exec_time())
+}

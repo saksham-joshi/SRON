@@ -1,0 +1,5 @@
+> Reason 1: Index is more than or equal to the length of String.
+    > Reason 2: Index is less than 0.
+
+    ||> Solution : Store elements in string and insert index more than 0 and
+                   less than the length of the String .
