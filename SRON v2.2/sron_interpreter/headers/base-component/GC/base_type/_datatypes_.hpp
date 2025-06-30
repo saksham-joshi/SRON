@@ -1006,6 +1006,15 @@ public:
   BoolPtr boolCast ( AnyPtr __ptr ) { return (reinterpret_cast<BoolPtr>         ( __ptr )); }
   StringPtr stringCast( AnyPtr __ptr ) { return (reinterpret_cast<StringPtr>    ( __ptr )); }
   ListPtr listCast( AnyPtr __ptr ) { return (reinterpret_cast<ListPtr>          ( __ptr )); }
+#else
+  #define colCast(    __ptr )   (reinterpret_cast<ColPtr>    ( __ptr ))
+  #define voidCast(   __ptr )   (reinterpret_cast<VoidPtr>   ( __ptr ))
+  #define intCast(    __ptr )   (reinterpret_cast<IntPtr>    ( __ptr ))
+  #define doubleCast( __ptr )   (reinterpret_cast<DoublePtr> ( __ptr ))
+  #define charCast(   __ptr )   (reinterpret_cast<CharPtr>   ( __ptr ))
+  #define boolCast(   __ptr )   (reinterpret_cast<BoolPtr>   ( __ptr ))
+  #define stringCast( __ptr )   (reinterpret_cast<StringPtr> ( __ptr ))
+  #define listCast(   __ptr )   (reinterpret_cast<ListPtr>   ( __ptr ))
 #endif
 
 
