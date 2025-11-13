@@ -1,0 +1,7 @@
+> Reason : Characters in the specified parent type is not possible to converted into another type.
+
+	||> Solution 1 : Int type can only contain digits.
+	||> Solution 2 : Double type can only contain digits and decimal point(.).
+	||> Solution 3 : Char type is declared using single quote (\') and contains a single ASCII character.
+	||> Solution 4 : String type can contain multiple ASCII Characters.
+	||> Solution 5 : Bool type contain only two values(true and false).

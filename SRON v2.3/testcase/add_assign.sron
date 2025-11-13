@@ -1,0 +1,21 @@
+{
+
+    name : Main
+
+    List lst = [1,2,3]
+
+    console : (lst, '\n')
+
+    lst += Void
+
+    lst += "Saksham Rapid Object Notation"
+
+    lst += 'S'
+
+    console : (lst, '\n')
+
+    String str = ~{ "Saksham Joshi" + ' ' }~
+
+    console : (str, '\n')
+
+}

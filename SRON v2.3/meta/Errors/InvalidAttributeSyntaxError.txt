@@ -1,0 +1,4 @@
+> Reason 1 : You are not declaring the attribute in the correct format.
+    > Reason 2 : Maybe you forgot to use colon(:) after the attribute.
+    > Reason 3 : If you are using an inner scope attribute like if, elif, else, for and while,
+                 then you have to put the '{' just after colon(:).

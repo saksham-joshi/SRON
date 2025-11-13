@@ -1,0 +1,9 @@
+{
+    name : Main
+    Int val = 14
+     println(~{ true && !(val == 15) }~)
+
+     println(~{ "Time taken = "+ (get_exec_time()) + '|' }~)
+
+     println(~{ [1,2,3]+[2,3,4] }~)
+}

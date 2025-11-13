@@ -1,0 +1,8 @@
+> Reason 1 : No. of Opening brackets is not equals to the No. of Closing brackets.
+    > Reason 2 : You started a new function without closing a function before.
+    > Reason 3 : If you are trying to create a function within a function, this may rise.
+    > Reason 4 : Maybe you forgot to close a String type using quotes("). 
+
+    ||> Solution 1 : Keep track of Curly braces by using an Advanced IDE.
+    ||> Solution 2 : Type command 'sron-docs' on your terminal to learn the syntax of SRON
+                     from the official documentations.

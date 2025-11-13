@@ -1,0 +1,13 @@
+{
+    name : Main
+
+    Bool is_obuffer_empty = sron_cmd( SRON_CMD_IS_OBUFFER_EMPTY )
+
+    println( is_obuffer_empty )
+
+    OBUFFER += 27062003
+
+    is_obuffer_empty = sron_cmd( SRON_CMD_IS_OBUFFER_EMPTY )
+
+    println( is_obuffer_empty )
+}

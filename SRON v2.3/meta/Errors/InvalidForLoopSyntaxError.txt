@@ -1,0 +1,7 @@
+> Reason 1: You are not following the correct syntax of for loop.
+    > Reason 2: Maybe the first attribute inside the scope of for loop must be 'range'.
+
+    ||> Solution 1: Follow the correct syntax--
+                    for : {
+                        range : (Int i = 0 , 10)
+                    }

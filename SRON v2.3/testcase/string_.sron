@@ -1,0 +1,15 @@
+{
+
+    name : Main
+
+    String str = "Hello\n
+    
+    World"
+
+    println('>', str, " wassup!" )
+
+    String str1
+
+    println(~{ str == str1 }~)
+
+}

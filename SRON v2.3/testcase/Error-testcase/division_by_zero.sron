@@ -1,0 +1,14 @@
+
+{
+    name : Fnc
+
+    Int val
+
+    return : ~{ 4 / val }~
+}
+
+{
+    name : Main
+    
+    Fnc()
+}

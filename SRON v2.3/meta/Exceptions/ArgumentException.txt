@@ -1,0 +1,6 @@
+> Reason 1: You passed less arguments than required.
+	> Reason 2: You passed more arguments than required.
+	> Reason 3: You passed wrong type arguments.
+
+	||> Solution 1: Make sure to pass the correct number of arguments required in that function.
+	||> Solution 2: Make sure to pass the correct type of arguments i.e you cannot pass Int as String argument.

@@ -1,0 +1,5 @@
+> Reason 1 : Source Code is changed.
+    > Reason 2 : Maybe it's a bug of SRON.
+    
+    ||> Solution 1 : Download SRON from official site and reinstall it.
+    ||> Solution 2 : Report this situation on "sron.language@gmail.com".

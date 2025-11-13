@@ -1,0 +1,10 @@
+{
+    name : Main
+
+    for : {
+
+        range : ( Int i = 0 , 10000 )
+        
+        console : ( i , '\t' , "SRON\n")
+    }
+}

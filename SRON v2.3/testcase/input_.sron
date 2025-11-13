@@ -1,0 +1,16 @@
+
+{
+
+    name : Main
+
+    println(input_char("Enter the char :- "))
+    
+    println(input_string("Enter the string :- "))
+
+    println(input_int("Enter the integer :-"))
+
+    setprecision(5)
+
+    println(input_double("Enter the double :- "))
+
+}

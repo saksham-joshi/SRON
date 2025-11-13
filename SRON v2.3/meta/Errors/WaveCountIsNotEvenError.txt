@@ -1,0 +1,5 @@
+> Reason : You forgot to close the mathematical block.
+
+    ||> Solution : Whenever you are starting a math block, then instantly type two waves
+                and then start writing your mathematical expression between them. This will 
+                help you keeping track of it.

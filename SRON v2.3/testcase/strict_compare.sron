@@ -1,0 +1,14 @@
+{
+
+    name : Main
+
+    Int a = 123
+
+    Double x = 123
+
+    println(~{ a === x }~ , ~{ a == x }~)
+
+    a = 123.0
+
+    println(~{ a === x }~)
+}
