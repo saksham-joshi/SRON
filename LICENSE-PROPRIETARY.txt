@@ -1,0 +1,47 @@
+SRON PROPRIETARY LICENSE
+========================
+
+Copyright (c) 2025 Saksham Joshi. All Rights Reserved.
+
+PROPRIETARY COMPONENTS
+----------------------
+
+Certain components of SRON are proprietary and not open source:
+
+- Compiler: Bytecode Writer
+- Interpreter: Execution Engine
+
+These components are provided in binary form and code declaration only.
+
+PERMISSIONS
+-----------
+
+✓ You MAY use SRON (including proprietary components) for any purpose
+✓ You MAY distribute programs created with SRON
+✓ You MAY use SRON commercially
+
+RESTRICTIONS
+------------
+
+✗ You may NOT reverse engineer the proprietary components
+✗ You may NOT extract or redistribute proprietary components separately
+✗ You may NOT create derivative works of proprietary components
+✗ You may NOT remove copyright notices
+
+DISCLAIMER
+----------
+
+THE PROPRIETARY COMPONENTS ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND.
+THE AUTHOR IS NOT LIABLE FOR ANY DAMAGES ARISING FROM USE OF THESE COMPONENTS.
+
+COMMERCIAL LICENSING
+--------------------
+
+For source code access or custom licensing:
+Email: sron.language@gmail.com
+GitHub: https://github.com/saksham-joshi/SRON
+
+---
+
+This license applies only to proprietary components.
+Open-source components are licensed under MPL-2.0 (see LICENSE-MPL2.txt).
