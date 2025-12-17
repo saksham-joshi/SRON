@@ -6,6 +6,7 @@
     <img src="./Pictures/SRON_rect_corner-rounded.png" alt="SRON Logo" height="240" style="border-radius:18px; margin-top:10px;">
 </div>
 
+### Dual Licensed:[![License: MPL-2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0) [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE-PROPRIETARY.txt)
 ---
 
 ## 🧩 What is SRON?
