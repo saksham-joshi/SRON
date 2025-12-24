@@ -11,7 +11,7 @@
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE-PROPRIETARY.txt)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey?style=flat-square)]()
 
-[📘 Documentation](https://sron.gitbook.io/docs) • [🌐 Official Website](https://sronlang.github.io/) • [🚀 Get Started](#-installation) • [📖 Learn More](#-what-is-sron)
+[📘 Documentation](https://sron.gitbook.io/docs) • [🌐 Official Website](https://sronlang.github.io/) • [📖 Learn More](#-what-is-sron)
 
 <img src="./Pictures/SRON_rect_corner-rounded.png" alt="SRON Logo" width="400" style="border-radius:18px; margin: 20px 0;">
 
