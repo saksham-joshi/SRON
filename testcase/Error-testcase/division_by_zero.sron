@@ -1,0 +1,14 @@
+
+{
+    name : Fnc
+
+    Int val = 0
+
+    return : ${ 4 / val }
+}
+
+{
+    name : Main
+    
+    console : (Fnc())
+}

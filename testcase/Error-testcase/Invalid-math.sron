@@ -1,0 +1,9 @@
+{
+    name : Main
+
+    Any a=0, Any b = 20
+
+    @ println(${ a - b}, " \t ", ${ b - a -})
+
+    println(${ a ~ })
+}

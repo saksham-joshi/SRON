@@ -1,0 +1,13 @@
+{
+    name : Main 
+
+    windows : {
+        Int a
+    }
+    linux : {
+        Int b
+    }
+
+    println(a)
+    println(b)
+}

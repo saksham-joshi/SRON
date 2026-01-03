@@ -1,0 +1,19 @@
+{
+    name : Main
+
+    windows  {
+        sysCmd("cls")
+    }
+
+    linux  {
+        sysCmd("clear")
+    }
+}
+
+{
+    name : Main 
+
+    windows : print()
+
+    linux : print()
+}

@@ -1,0 +1,9 @@
+{
+    name : Main
+
+    Any value = Void
+    foreach : {
+        on : (Any x , value)
+        println(x)
+    }
+}

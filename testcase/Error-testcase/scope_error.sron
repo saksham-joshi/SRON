@@ -1,0 +1,10 @@
+{
+
+    @ this testcase is made for the purpose of throwing error
+
+    name :  Main
+
+    Int a = ${ }
+
+    ({)}
+}

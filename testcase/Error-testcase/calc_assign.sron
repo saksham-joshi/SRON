@@ -1,0 +1,13 @@
+{
+
+    name : Main
+
+    @ error must be given here
+    Int a += 13
+
+    println(a)
+
+    a += 2
+
+    println(a)
+}

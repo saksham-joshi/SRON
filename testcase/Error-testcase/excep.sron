@@ -1,0 +1,21 @@
+{
+    name : Fnc
+
+    args : ( Int_s i)
+
+    if : {
+        condition : ${ i < 1 }
+        throwException(IndexNotWithinRangeException)
+    }
+
+    println(i)
+
+    Fnc( ${ i - 1 } )
+}
+
+{
+    name : Main
+    
+
+    Fnc(5)
+}

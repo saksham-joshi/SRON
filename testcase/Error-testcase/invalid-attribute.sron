@@ -1,0 +1,14 @@
+{
+    name : Main
+    
+    String Hello = "Hello, World!"
+
+    String x = Hello
+
+    println("1. ", Hello)
+
+    free : x
+    
+    println(x)
+
+}
