@@ -1,7 +1,0 @@
-{
-    name : Main
-
-    @ this testcase must show compile time error
-
-    xxy123123()
-}

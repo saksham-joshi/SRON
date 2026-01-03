@@ -1,3 +1,0 @@
-> Reason : This is a bug of SRON. 
-   
-    ||> Solution : Please mail this source code at sron.language@gmail.com along with SRON's version.

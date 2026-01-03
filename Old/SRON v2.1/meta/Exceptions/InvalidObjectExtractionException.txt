@@ -1,6 +1,0 @@
-> Reason 1: Maybe your are passing invalid value to the function.
-    > Reason 2: When a value of some certain types are expected but value of another type is not found.
-
-    ||> Solution 1: Read the official documentation. Type 'sron-docs' on your terminal to access documentations.
-    ||> Solution 2: Always make sure to pass correct values to the function. If you want your function to
-                    accept all types of values, then use 'Any' keyword.

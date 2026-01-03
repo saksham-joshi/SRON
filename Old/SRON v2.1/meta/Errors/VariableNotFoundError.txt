@@ -1,6 +1,0 @@
-> Reason 1 : Specified Variable not found !
-    > Reason 2 : Specified variable is freed up before.
-    > Reason 3 : Maybe you used the variable before declaring.
-    > Reason 4 : Maybe you are trying to declaring and using the variable in the same line.
-
-    ||> Solution: Input a valid variable that already exists.

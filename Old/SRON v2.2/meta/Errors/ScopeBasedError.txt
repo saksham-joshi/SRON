@@ -1,5 +1,0 @@
-> Reason 1 : This problem arises if you made improper scope handling.
-    > Reason 2 : This problem can also arise due to compiler bugs.
-
-    ||> Solution : If you are completely sure that you made no mistakes in scope,
-                   then please report this error at "sron.language@gmail.com".

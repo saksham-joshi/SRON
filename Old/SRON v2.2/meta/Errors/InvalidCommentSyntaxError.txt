@@ -1,6 +1,0 @@
-> Reason 1 : You commented in a wrong syntax.
-> Reason 2 : Maybe you forget to put colon(:) after comment attribute.
-
-    ||> Solution 1 : If you are trying to write a multi-line comment then keep the comment within the comments.
-    ||> Solution 2 : For single line comment, syntax is- 
-                                        comment : this is a comment.

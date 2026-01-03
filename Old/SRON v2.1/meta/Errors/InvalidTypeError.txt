@@ -1,4 +1,0 @@
-> Reason : Invalid type of variable found.
-
-	||> Solution 1 : Make sure to specify the type of variable in Capitalised form. e.g. Int, Double, Char,String, Bool and List.
-	||> Solution 2 : Only the above specified types are available as datatype till this version of SRON.

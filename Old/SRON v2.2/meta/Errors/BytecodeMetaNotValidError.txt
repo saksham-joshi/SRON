@@ -1,8 +1,0 @@
-> Reason 1 : If you are calling the function not following it's casing.
-             For instance-- if bytecode file is 'FNC' and you are calling it
-                            like this 'fnc', then this problem arises.
-    
-    > Reason 2 : If the bytecode file is compiled by other version of SRON's compiler,
-                 then also this problem arises.
-
-    > Reason 3 : If the bytecode file is renamed, then also this problem arises.

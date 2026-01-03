@@ -1,8 +1,0 @@
-> Reason 1 : Maybe you have inserted wrong value in wrong type.
-> Reason 2 : Maybe you are trying to create variables other than Int, Double, Char, Bool, String and List.
-
-	||> Solution 1 : Int type can only contain numbers not even decimal values.
-	||> Solution 2 : Double type can only contain digits and decimal point(.).
-	||> Solution 3 : Char type is declared using single quote (\') and contains a single ASCII character.
-	||> Solution 4 : String type is declared using double quotes(\").
-	||> Solution 5 : Bool type contain only two values(true and false).

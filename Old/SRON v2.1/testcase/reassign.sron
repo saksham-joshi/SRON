@@ -1,8 +1,0 @@
-{
-    name : MAIN
-    Int val = 10
-    
-    println(val)
-    val = "LoL"
-    println(val)
-}
