@@ -91,7 +91,7 @@ tar -xzf ${SRON_TAR_FILE_NAME}
 
 echo -e "${GREEN} Verifying files ...${NC}"
 
-for f in sron sronc sron-docs sron-FncList Installer/uninstall_sron.sh; do
+for f in sron sronc sron-docs sron-FncList Installer/linux/uninstall_sron.sh; do
     if [ ! -f "$f" ]; then
         echo -e "${RED}❌ Error: cannot locate '$f' in the extracted tarball. Please report this issue on GitHub at 'https://github.com/saksham-joshi/SRON/issues'${NC}"
         rm -rf "$TEMP_DIR"
@@ -118,7 +118,7 @@ mv sron "$INSTALL_DIR/sron"
 mv sron-docs "$INSTALL_DIR/sron-docs"
 mv sron-FncList "$INSTALL_DIR/sron-FncList"
 mv meta "$INSTALL_DIR"
-mv Installer/uninstall_sron.sh "$INSTALL_DIR/uninstall_sron.sh"
+mv Installer/linux/uninstall_sron.sh "$INSTALL_DIR/uninstall_sron.sh"
 
 #====== Set executable permissions
 chmod +x "$INSTALL_DIR/sronc"
@@ -173,7 +173,8 @@ echo "  │   └── Exceptions/"
 echo "  ├── sronc"
 echo "  ├── sron"
 echo "  ├── sron-docs"
-echo "  └── sron-FncList"
+echo "  ├── sron-FncList"
+echo "  └── uninstall_sron.sh"
 echo ""
 echo -e "${GREEN}=========================================${NC}"
 echo -e "${GREEN}✅ SRON installed successfully!${NC}"
