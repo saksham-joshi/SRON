@@ -76,7 +76,7 @@ SRON brings together:
 | 1.5 | ✅ Released | May 22, 2024 | Performance enhancements |
 | 2.1 | ✅ Released | December 3, 2024 | Major architecture update |
 | 2.2 | ✅ Released | July 2, 2025 | C++23 migration |
-| 2.3 | ✅ **Current Stable** | December 27, 2024 | Linux support, file I/O |
+| 2.3 | ✅ **Current Stable** | January 3, 2026 | Linux support, file I/O |
 
 ---
 
@@ -188,7 +188,7 @@ See [LICENSE](LICENSE) files for details.
 
 #### 🩵 Made with passion by [Saksham Joshi](https://github.com/saksham-joshi)
 
-#### **© 2024-2025 Saksham Joshi • Creator of SRON Programming Language**
+#### **© 2024-2026 Saksham Joshi • Creator of SRON Programming Language**
 
 [sronlang.github.io](https://sronlang.github.io)
 
