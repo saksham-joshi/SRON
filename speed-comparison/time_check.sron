@@ -1,0 +1,10 @@
+{
+    name : Main
+    for : {
+        range : (Int i = 0, 100000)
+        OBUFFER += i 
+        OBUFFER += '\n'
+    }
+
+    console : (OBUFFER , "Time Taken = " , getExecTime(), " ms")
+}
