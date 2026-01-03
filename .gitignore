@@ -1,15 +1,30 @@
 # Executables
-.exe
-.lib
-.so
-.pdb
+*.exe
+*.lib
+*.so
+*.pdb
+*.exp
+*.srb
 
-# SRON bytecode file
-.srb
+# Linux excutables with no extension
+sronc
+sron
+sron-docs
+sron-FncList
+sron-test
+build
+experi
+
+# windows installer files
+/Installer/SRON-v2-cache
 
 # IDE files
 .vscode
 
 # experimental files
-experi.cpp
+experi.*
 test.sron
+
+# meta files
+
+/meta/__function_lib
