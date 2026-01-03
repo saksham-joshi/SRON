@@ -9,6 +9,8 @@ int main()
 
     auto fnlist_exec = SronSupport::getExecutablePath() + SRON_FUNCTION_LIB_FILE_PATH;
 
+    printf("\n =| Creating function file: '%s'", fnlist_exec.c_str());
+
     SronSupport::safeOpenFile(&file , fnlist_exec.c_str(), "wb" );
 
     if ( file )
@@ -29,7 +31,7 @@ int main()
 
     else {
 
-        std::printf("\n=| Failed to generate file |= \n");
+        std::perror("\n=| Failed to generate file |= \n");
 
         return 1;
     }
