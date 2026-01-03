@@ -1,0 +1,4 @@
+> Reason 1: Specified Variable not found !
+    > Reason 2: Specified variable is freed up before.
+
+    ||> Solution: Input a valid variable that already exists.

@@ -1,0 +1,15 @@
+> Reason : You are trying to convert a value to another type which is not possible.
+
+	||> Solution 1 : If you are trying to convert a String to Int, then
+                     make sure the string should contain only digits and
+                     first character can be negative sign (-).
+
+    ||> Solution 2 : If you are trying to convert a String to Double, then
+                     make sure the string should contain only digits, only
+                     one decimal point (.) and first character can be a 
+                     negative sign (-).
+
+    ||> Solution 3 : If you are trying to convert a value of type List to String
+                     or List to Int which are not actually possible, then you 
+                     have to check the type of the value before converting it.
+                     You can use isBool, isInt, isDouble, isList etc. to check types.

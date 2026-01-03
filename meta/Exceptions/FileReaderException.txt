@@ -1,0 +1,6 @@
+> Reason 1 : Maybe file is not on the memory and you try to read it.
+    > Reason 2 : Maybe you have closed the file and still tries to read it.
+    > Reason 3 : Maybe the file's seek has reached at the end and you still trying to read it.
+
+    ||> Solution 1: Use functions like fcur_pos(), fis_end(), len() to safely iterate over file content.
+    ||> Solution 2: Use function fisopen() which returns true if file is opened otherwise false.

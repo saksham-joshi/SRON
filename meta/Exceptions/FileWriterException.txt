@@ -1,0 +1,4 @@
+> Reason 1 : Maybe you are trying to read the content of the file.
+    > Reason 2 : If you are trying to read the file, so for your kind information,
+                 the file is opened in 'write' mode, you can just perform write
+                 operations only.

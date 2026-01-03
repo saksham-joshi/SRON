@@ -1,0 +1,9 @@
+> Reason: You are not using the OS's attributes (windows, linux) syntax correctly.
+
+    ||> Solution: Make sure to open a scope after colon(:) like this:
+               windows : {
+                   system("cls")
+               }
+               linux : {
+                   system("clear")
+               }

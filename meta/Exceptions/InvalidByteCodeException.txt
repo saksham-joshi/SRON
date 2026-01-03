@@ -1,0 +1,13 @@
+> Reason 1 : Maybe you made some changes in the bytecode.
+    > Reason 2 : Maybe the version of the SRON's compiler is not as same as the compiler 
+                 by which the bytecode is generated.
+    > Reason 3 : Maybe this is a bug of SRON.
+    > Reason 4 : This problem also arise when the version of the bytecode doesn't
+                 matches with the version of interpreter.
+    > Reason 5 : If you renamed the bytecode file, then also this problem arises.
+    > Reason 6 : You are trying to call a function whose bytecode is invalid.
+
+    ||> Solution 1 : Compile the source code again!
+    ||> Solution 2 : Type 'sron-docs' command in your terminal to read the documentations.
+    ||> Solution 2 : Report this issue on "https://github.com/saksham-joshi/SRON/issues" with source code 
+                     and output.

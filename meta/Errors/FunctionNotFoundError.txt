@@ -1,0 +1,12 @@
+> Reason 1 : Specified function not found or may be unaccessible.
+    > Reason 2 : The Function Bytecode file is not in the same directory as the file.
+    
+    ||> Solution 1 : Make sure the function you are calling has same letter casing(uppercase, lowercase etc.) 
+                     as the original function.
+    ||> Solution 2 : Maybe you are mis-spelling the function name.
+    ||> Solution 3 : Maybe the specified function is not actually a function but a variable. If this is the case,
+                     then remove the brackets just after the function name.
+    ||> Solution 4: Maybe you are trying to call a function without specifying round brackets after that. 
+                    
+                    Syntax of calling function- 
+                         println("Hello, World!", 123);

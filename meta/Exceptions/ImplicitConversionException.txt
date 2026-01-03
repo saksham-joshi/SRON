@@ -1,0 +1,14 @@
+> Reason : You are trying to convert a value to another type which is not possible.
+
+	||> Solution : Remember the below given allowed conversions:
+                    Int --> Double
+                    Int --> Bool
+                    Int --> Char
+                    Char --> Int
+                    Double --> Int
+                    Bool --> Int
+                    String --> String
+                    List --> List
+                    FileReader --> FileReader
+                    FileWriter --> FileWriter
+                    LiteralString --> String

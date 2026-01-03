@@ -1,0 +1,15 @@
+> Reason 1 : Specified Variable not found !
+    > Reason 2 : Specified variable is freed up before.
+    > Reason 3 : Maybe you used the variable before declaring.
+    > Reason 4 : Maybe you are trying to declare and use the variable in the same line.
+    > Reason 5 : If the specified variable is declared within the scope of 'if', 'elif', 
+                 'else', 'for', 'while', 'windows' and 'linux' attribute and you are using
+                 them outside their scope.
+
+    ||> Solution 1: Input a valid variable that already exists.
+    ||> Solution 2: If you want to use the variable everywhere within the function, then
+                    declare it like this:
+                    {
+                        name : Main
+                        Int var     @ this variable is now function scoped
+                    }
