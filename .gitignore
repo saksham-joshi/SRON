@@ -16,7 +16,7 @@ build
 experi
 
 # windows installer files
-/Installer/SRON-v2-cache
+/Installer/windows/SRON-v2-cache
 
 # IDE files
 .vscode
