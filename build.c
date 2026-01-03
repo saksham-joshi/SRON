@@ -17,13 +17,14 @@
     #define EXEC_EXTENSION   ".exe"
     #define PRE_COMMAND      ".\\"
     #define LINKER_STACK_CMD " -Xlinker /STACK:16777216,16777216"
+    #define PACK_GENERATE    "tar -cvf Installer/windows/SRON-v2.3-win-x64.tar.gz Installer/windows/SRON-v2.3-win-x64.msi"
 #elif defined(__linux__)
     #define LINKER_NAME      "ld"
     #define CLEAN_CMD        "rm *.srb experi sron sronc sron-docs sron-FncList testcase/*.srb"
     #define EXEC_EXTENSION   ""
     #define PRE_COMMAND      "./"
     #define LINKER_STACK_CMD " -Wl,-z,stack-size=16777216"
-    #define PACK_GENERATE    "tar -czf Installer/SRON-v2.3-linux-x64.tar.gz meta/Errors meta/Exceptions sronc sron sron-docs sron-FncList Installer/uninstall_sron.sh"
+    #define PACK_GENERATE    "tar -czf Installer/linux/SRON-v2.3-linux-x64.tar.gz meta/Errors meta/Exceptions sronc sron sron-docs sron-FncList Installer/linux/uninstall_sron.sh meta/__function_lib"
 #else
     #error "SRON's codebase is only maintained for Windows x64 and Linux x64"
 #endif
@@ -112,6 +113,8 @@ int main(int argc, char **argv)
 
         #ifdef __linux__
             else if (strcmp(argv[1], "pack") == 0)    build(  "Sron Linux Pack"  , PACK_GENERATE    );
+        #elif defined(_WIN64)
+            else if (strcmp(argv[1], "pack") == 0)    build(   "Sron Win Pack"   , PACK_GENERATE    );
         #endif
 
         else if (strcmp(argv[1], "test") == 0)        build( "Sron-Test"         , SRON_TESTCASE    );
