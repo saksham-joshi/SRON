@@ -1,0 +1,9 @@
+{
+    name : Main
+
+    Int max = MAX_INT
+    Int min = MIN_INT
+
+    println("\n Max= ", max)
+    println(" Min= ", min)
+}

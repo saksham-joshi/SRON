@@ -1,0 +1,18 @@
+{
+    name : Main 
+
+    FileWriter file = fwriter("file.txt", true)
+
+    if : {
+        condition : fisOpen(file)
+
+        println("File Loaded")
+
+        fwriteString(file, "\nHello Saksham")
+
+        fclose(file)        @ it isn't neccessary to close file as GC automatically done this task
+    }
+    else : {
+        println("File isn't Loaded")
+    }
+}

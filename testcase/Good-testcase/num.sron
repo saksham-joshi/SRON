@@ -1,0 +1,11 @@
+{
+    name : Main
+
+    setPrecision(7)
+
+    println(-28202.34235)
+
+    Int i = -1
+
+    println("Value of i = ", i)
+}

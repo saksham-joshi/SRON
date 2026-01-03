@@ -1,0 +1,14 @@
+
+{
+    name : Main
+    Int i = 0
+    Int incr = 1
+
+    while : {
+        condition : ${ i < 10000 }
+        console : ( i , '\n')
+        i += incr
+    }
+    
+    println("\n All values printed succesfully!")
+}

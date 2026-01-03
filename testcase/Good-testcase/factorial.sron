@@ -1,0 +1,24 @@
+A sample SRON code to take user input and find factorial of a code.
+
+{
+    name: factorial
+    
+    args : (Int val)
+
+    Int fac=1
+    
+    for:{
+        
+        
+        range: (Int i = 2,${ val+1 })
+        fac *= i
+    }
+    return : fac
+
+}
+
+{
+    name: Main
+    
+    println("\nFactorial ", " = ", factorial(inputInt("Enter the value :- ") ))
+}

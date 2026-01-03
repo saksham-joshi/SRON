@@ -1,0 +1,14 @@
+{
+    name : getInt
+    type : Int
+    return : 27062003
+}
+
+{
+    name : Main
+    console : (getInt())
+
+    Any value = "Saksham Rapid Object Notation"
+
+    println("\n Type of '", value , "' = ", typeof(value), " -- ", isLiteralString(value) )
+}

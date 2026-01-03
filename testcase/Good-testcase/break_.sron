@@ -1,0 +1,28 @@
+
+
+
+{
+    name : Main
+  
+    for : {
+        range : (Int i = 0 , 5)
+        Int j
+        while : {
+            condition : ${ j < 100 }
+            if : {
+                condition : ${ j != 5 }
+
+                println(j)
+                
+                j = ${ j+1 }
+
+                continue
+            }
+            @else : {
+                break
+            @}
+            
+        }
+    }
+    println("^^^")
+}

@@ -1,0 +1,8 @@
+{
+    name : Main
+
+    foreach : {
+        on : (Any x, "SRON")
+        print(x, '-')
+    }
+}

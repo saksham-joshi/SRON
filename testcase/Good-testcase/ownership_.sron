@@ -1,0 +1,15 @@
+
+
+{
+    name : Main
+    
+    List lst = [1,2,3]
+
+    Any val = at(lst, 0)
+
+    println(val)
+
+    clear(lst)
+
+    println(val)
+}

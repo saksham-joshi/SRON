@@ -1,0 +1,19 @@
+{
+    name : Main
+    
+    FileReader file = freader("file.txt")
+
+    Int cur_pos = fcurPos(file)
+
+    println("Current Position= ", cur_pos)
+
+    @ calling freadChar() 5 times
+    for : {
+        range : (Int i = 0, 5)
+        freadChar(file)
+    }
+
+    cur_pos = fcurPos(file)
+
+    println("Current Position= ", cur_pos)
+}

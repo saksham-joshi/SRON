@@ -1,0 +1,21 @@
+A sample code to find if a given number is odd or even
+
+{
+    name: odd_even
+    args : (Int val)
+    return : ${ val%2 == 0 }
+}
+
+{
+    name : Main
+
+    Int val = inputInt("Enter the value :- ")
+
+    if :{
+        condition : odd_even(val)
+        println("Even")
+    }
+    else : {
+        println("Odd")
+    }
+}

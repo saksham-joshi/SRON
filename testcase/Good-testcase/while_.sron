@@ -1,0 +1,22 @@
+{
+    
+    name : Main
+
+    Int val = 0, Int lim = 0
+
+
+    while :{
+        condition : ${ val < 10 }
+
+        if : {
+
+            condition : ${ val == 6 }
+            break
+        }
+        console : (val)
+
+        val += 1
+    }
+
+    println("\nExecution Done Succesfully!")
+}

@@ -1,0 +1,27 @@
+{
+    name : Main
+
+    FileReader file = freader("../File-testcase/file.txt")
+
+    if : {
+        condition : fisOpen(file)
+        println("File is loaded")
+    }
+    else :{
+        println("File is not loaded")
+    }
+
+    String str = freadWhole(file)
+
+    println(">" , str, "<")
+
+    println("FileName= \"", fgetName(file), "\"")
+
+    fclose(file)
+
+    println("File Closed:")
+
+    println("Full content= >", freadWhole(file), "<")
+
+    println("File name= '", fgetName(file), "'")
+}

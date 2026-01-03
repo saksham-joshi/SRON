@@ -1,0 +1,16 @@
+{
+    name : Main
+
+    Int a, Bool b, Char c, Double d, String e, List f
+
+    foreach :{
+        on : (Any i, [a,b,c,d,e,f,Void])
+
+        println( sizeof(i))
+    }
+
+    FileReader g, FileWriter h
+
+    println(sizeof(g))
+    println(sizeof(h))
+}

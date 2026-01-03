@@ -1,0 +1,30 @@
+{
+    name : Main 
+
+    FileWriter file = fwriter("file.txt", false)
+
+    if : {
+        condition : fisOpen(file)
+
+        println("File Created Succesfully")
+
+        fwriteString(file, "Hi Saksham! Hope you are doing great!")
+
+        println("String written")
+
+        fwriteChar(file, '\n')
+
+        println("Char Written")
+
+        fwriteString(file, "Welcome to SRON\n")
+
+        println("String written again")
+
+        fclose(file)
+
+        println("Closed file")
+    }
+    else : {
+        console: ("File Not Opened")
+    }   
+}

@@ -1,0 +1,47 @@
+{
+    name : calculator
+
+    Double d1, Double d2, Char operator
+
+    d1 = inputDouble("Number:- ")
+    
+    while : {
+
+        condition : true
+
+        operator = inputChar("Operator:- ")
+
+         d2 = inputDouble("Number:- ")
+
+        if : {
+            condition : ${ operator == '+' }
+             d1 = ${ d1+d2 }
+        }
+        elif : {
+            condition : ${ operator == '-' }
+             d1 = ${ d1-d2 }
+        }
+        elif : {
+            condition : ${ operator == '*' }
+             d1 = ${ d1*d2 }
+        }
+        elif : {
+            condition : ${ operator == '/' }
+             d1 = ${ d1/d2 }
+        }
+        elif : {
+            condition : ${ operator == '%'}
+            d1 = ${d1 % d2}
+        }
+        else : {
+             println("Invalid Operator Found!")
+             break 
+        }
+        println("Answer:- ",d1)
+    }
+}
+
+{
+    name : Main
+    calculator()
+}

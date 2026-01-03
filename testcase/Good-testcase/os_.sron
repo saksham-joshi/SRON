@@ -1,0 +1,15 @@
+{
+    name : Main
+
+    OBUFFER += "\n You are using '"
+
+    windows : {
+        OBUFFER += "Windows'"
+    }
+
+    linux : {
+        OBUFFER += "Linux'"
+    }
+
+    console : (OBUFFER)
+}

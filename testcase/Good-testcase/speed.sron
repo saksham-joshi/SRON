@@ -1,0 +1,17 @@
+{
+    name : printer
+
+    args : (Any val )
+
+    console : ( val , '\n')
+}
+
+ {
+    name : Main
+    for : {
+        range : (Int i = 0, 10000)
+        printer(i)
+    }
+
+    println("\nTime taken= ", getExecTime() , " ms.")
+}

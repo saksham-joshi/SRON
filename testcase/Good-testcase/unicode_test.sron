@@ -1,0 +1,12 @@
+{
+
+    name : Main
+
+    beep ( 1000, 1000)
+
+    println(  CLI_DESIGN_BG_GREEN, CLI_COLOR_BLACK, "🅵🅰🅽🅲🆈 🆃🅴🆇🆃 🅶🅴🅽🅴🆁🅰🆃🅾🆁", CLI_DESIGN_RESET)
+
+    
+
+    @console : ( ch , '✅')
+}

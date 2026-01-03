@@ -1,0 +1,9 @@
+{
+    name : Main
+    Int val = 14
+     println(${ true && !(val == 15) })
+
+     println(${ "Time taken = "+ (getExecTime()) + '|' })
+
+     println(${ [1,2,3]+[2,3,4] })
+}

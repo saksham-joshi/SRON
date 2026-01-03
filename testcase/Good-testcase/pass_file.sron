@@ -1,0 +1,26 @@
+{
+    name : get_length_of_file
+
+    args : (FileWriter_s file)
+
+    println ("Len= ", len(file))
+
+    fwriteString(file, "\nThis is SRON")
+
+    return : len(file)
+}
+
+{
+    name : Main 
+
+    Any file = fwriter("file.txt", true)
+
+    if : {
+        condition : fisOpen(file)
+
+        console : (get_length_of_file(file))
+    }
+    else :{
+        println("File load fail")
+    }
+}

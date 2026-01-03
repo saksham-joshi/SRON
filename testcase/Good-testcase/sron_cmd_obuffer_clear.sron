@@ -1,0 +1,9 @@
+{
+    name : Main 
+
+    OBUFFER += "Hello there! Saksham Joshi"
+
+    sron_cmd(SRON_CMD_OBUFFER_CLEAR)
+
+    console : ( '>' , OBUFFER , '<')
+}

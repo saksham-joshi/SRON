@@ -1,0 +1,12 @@
+{
+    name : getPi
+    setPrecision(7)
+    return : PI
+}
+
+
+{
+    name : Main
+
+    console : ( "Value of Pi= ", getPi())
+}

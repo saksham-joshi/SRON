@@ -1,0 +1,15 @@
+{
+    name : Main
+
+    List l = [1,2,3,4, Void, true, false , 'S' , "Joshi"]
+
+    println(l)
+
+    Any val = copy(l)
+
+    println(val)
+
+    push(val, 5393.334)
+
+    println(val, "\n", l)
+}

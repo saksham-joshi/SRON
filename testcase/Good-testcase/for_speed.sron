@@ -1,0 +1,12 @@
+{
+    name : Main
+
+    for : {
+
+        range : ( Int i = 0 , 10000 )
+        
+        console : ( i , '\n')
+    }
+
+    println("\n Time taken= ", getExecTime(), "ms")
+}

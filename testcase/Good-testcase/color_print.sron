@@ -1,0 +1,13 @@
+{
+    name : Main
+
+    println(CLI_COLOR_YELLOW, CLI_DESIGN_ITALIC, CLI_DESIGN_BLINK ,"Welcome to SRON")
+
+    console : (CLI_COLOR_BRIGHT_CYAN, CLI_DESIGN_UNDERLINE, "Saksham Rapid Object Notation", CLI_DESIGN_RESET)
+
+    println( cliBgColor(41,44,81), cliTextColor(2, 214, 214), "
+
+        HOPE YOU ARE ENJOING SRON
+
+    ")
+}

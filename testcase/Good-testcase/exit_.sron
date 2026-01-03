@@ -1,0 +1,31 @@
+{
+    name : Fnc1
+
+    exit(0)
+
+    println("In FNC 1")
+}
+
+{
+    name : Fnc2
+
+    Fnc1()
+
+    println("In FNC 2")
+}
+
+{
+    name : Fnc3
+
+    Fnc2()
+
+    println("In FNC 3")
+}
+
+{
+    name : Main
+
+    Fnc3()
+
+    println("In Main!!")
+}
