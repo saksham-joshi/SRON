@@ -1,3 +1,0 @@
-> Reason: Unknown exception !
-
-	||> Solution: Mail your source code along with your SRON's version to sron.language@gmail.com

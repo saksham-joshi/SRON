@@ -1,6 +1,0 @@
-> Reason 1 : You are trying a long recursion.
-    > Reason 2 : A deadlock like state is created where function A is calling B and B is calling A.
-
-    ||> Solution 1 : Always go with loops when recursion could be long.
-    ||> Solution 2 : You can even use a function argument which can count recursion limit as passed 
-                     arguments are by default pass by reference in SRON.

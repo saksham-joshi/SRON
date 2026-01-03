@@ -1,4 +1,0 @@
-> Reason 1: The specified bytecode file doesn't exists.
-    > Reason 2 : The specified bytecode file is accessed by other application so OS is not allowing to access it.
-    > Reason 3 : The name of the bytecode file is wrong.
-    > Reason 4 : The bytecode file is not ending with ".srb" extension.

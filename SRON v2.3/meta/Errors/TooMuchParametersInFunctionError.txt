@@ -1,2 +1,0 @@
-> Reason 1 : A function can only have less than 32 parameters.
-    > Reason 2 : If you have mentioned more than 32 parameters in the "args" attribute, then this error arises.

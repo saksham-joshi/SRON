@@ -1,7 +1,0 @@
-{
-    name : Main 
-
-    Bool is_file_available = sron_cmd( SRON_CMD_IS_FILE_AVAILABLE , "printer.srb" )
-
-    println( is_file_available )
-}

@@ -1,9 +1,0 @@
-{
-    name : Main
-
-    OBUFFER += 2003      @four characters only
-
-    Int len = sron_cmd( SRON_CMD_SIZEOF_OBUFFER )
-
-    println( len )
-}

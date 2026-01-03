@@ -1,5 +1,0 @@
-> Reason : The condition you have given is returning a non-bool value.
-
-    > Solution 1 : Check the type of the values you are using in the statement.
-    > Solution 2 : Make sure you are using the logical operators like(&& , || , !) and 
-                   keyword like true or false which returns the 'Bool' type values.

@@ -1,9 +1,0 @@
-{
-    name : Main 
-
-    println("Going for sleep")
-
-    sleep(1000)
-
-    println("Time Taken= ", get_exec_time() , " ms")
-}

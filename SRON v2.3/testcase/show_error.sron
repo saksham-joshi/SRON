@@ -1,7 +1,0 @@
-{
-
-    name : Main
-
-    throw_exception(IndexNotWithinRangeException)
-
-}

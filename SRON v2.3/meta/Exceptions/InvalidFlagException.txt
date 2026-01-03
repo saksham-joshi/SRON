@@ -1,3 +1,0 @@
-> Reason : There must be some problem with the compiler or the interpreter.
-
-    ||> Solution : Mail this source code along with the version of SRON at sron.language@gmail.com.

@@ -1,3 +1,0 @@
-> Reason : Interpreter misunderstood the value.
-
-	||> Solution : Contact the issue at "sron.language@gmail.com".

@@ -1,8 +1,0 @@
-> Reason 1 : Specified Variable not found !
-    > Reason 2 : Specified variable is freed up before.
-    > Reason 3 : Maybe you used the variable before declaring.
-    > Reason 4 : Maybe you are trying to declare and use the variable in the same line.
-    > Reason 5 : If the specified variable is declared within the scope of 'if', 'elif', 'else', 
-                 'for' or 'while' attribute and you are using  them outside their scope.
-
-    ||> Solution: Input a valid variable that already exists.
