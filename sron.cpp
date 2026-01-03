@@ -27,8 +27,14 @@ int main(int argc, char **argv)
             arglist->pushWithoutCopy(new LiteralString(argv[i]), SronTypeNum::TYPE_LITERAL_STR);
         }
 
-        // starting the execution of the code
-        ExecutionEngine::MAIN(GarbageCollector::registerMemory(arglist , SronTypeNum::TYPE_LIST));
+        /*
+            Calling ExecutionEngine::MAIN will execute the bytecode file with insane speed.
+
+            Now, the ExecutionEngine is not open-sourced, so to contribute, you can test
+            and optimize the inbuilt functions, datatypes and other compoenets of SRON's
+            interpreter.
+        */
+        // ExecutionEngine::MAIN(GarbageCollector::registerMemory(arglist , SronTypeNum::TYPE_LIST));
 
         checkSignalStatus;
     }
