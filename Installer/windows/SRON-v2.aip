@@ -14,7 +14,7 @@
     <ROW Property="ARPCONTACT" Value="sron.language@gmail.com"/>
     <ROW Property="ARPHELPLINK" Value="https://sron.gitbook.io/docs/"/>
     <ROW Property="ARPNOREPAIR" Value="1"/>
-    <ROW Property="ARPPRODUCTICON" Value="Sronroundedcorner.exe" Type="8"/>
+    <ROW Property="ARPPRODUCTICON" Value="Sronroundedcorner_1.exe" Type="8"/>
     <ROW Property="ARPSYSTEMCOMPONENT" Value="1"/>
     <ROW Property="ARPURLINFOABOUT" Value="mailto:sron.language@gmail.com"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/saksham-joshi/SRON/releases"/>
@@ -56,96 +56,95 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_CustomARPName" ComponentId="{F8E4B461-B9F2-4ED5-9245-98BEE4939EE2}" Directory_="APPDIR" Attributes="260" KeyPath="DisplayName" Options="1"/>
     <ROW Component="APPDIR" ComponentId="{FB275964-5A92-4A79-9B24-595652775756}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="ArgumentException.txt" ComponentId="{C8E04ABE-4F11-46C8-BD4C-C4E160017F20}" Directory_="Exceptions_Dir" Attributes="0" KeyPath="ArgumentException.txt" Type="0"/>
-    <ROW Component="ByteCodeCannotBeSavedError.txt" ComponentId="{5D731380-A31F-4718-B53A-9F1A12AA880A}" Directory_="Errors_Dir" Attributes="0" KeyPath="ByteCodeCannotBeSavedError.txt" Type="0"/>
+    <ROW Component="ArgumentException.txt" ComponentId="{109A843F-5D0C-4BF5-AF75-3792217FE77B}" Directory_="Exceptions_Dir" Attributes="0" KeyPath="ArgumentException.txt" Type="0"/>
+    <ROW Component="ByteCodeCannotBeSavedError.txt" ComponentId="{42195082-4FE5-4FCA-9BD2-CBC4C9D8AE0E}" Directory_="Errors_Dir" Attributes="0" KeyPath="ByteCodeCannotBeSavedError.txt" Type="0"/>
     <ROW Component="ProductInformation" ComponentId="{50A452F6-73DD-4129-B4E1-EE0A93124890}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
-    <ROW Component="__cache__lib" ComponentId="{4AD12B8E-8E96-4F1E-AE46-1711E2F1E3C9}" Directory_="meta_Dir" Attributes="0" KeyPath="__cache__lib" Type="0"/>
-    <ROW Component="sron.exe" ComponentId="{055F9092-0C35-4F41-8763-49104BC7C8C3}" Directory_="APPDIR" Attributes="256" KeyPath="sron.exe"/>
-    <ROW Component="sronFncList.exe" ComponentId="{CFA93329-1446-44AB-BF57-82FBDDB7950B}" Directory_="APPDIR" Attributes="256" KeyPath="sronFncList.exe"/>
-    <ROW Component="sronc.exe" ComponentId="{D8F21F98-C1EF-47C5-99C3-521E069F867B}" Directory_="APPDIR" Attributes="256" KeyPath="sronc.exe"/>
-    <ROW Component="srondocs.exe" ComponentId="{5075ADB3-B5D0-4F01-8E6F-BEEBE5C4F069}" Directory_="APPDIR" Attributes="256" KeyPath="srondocs.exe"/>
+    <ROW Component="__function_lib" ComponentId="{C698EB7D-900C-44CB-B36C-46BF691D80E3}" Directory_="meta_Dir" Attributes="0" KeyPath="__function_lib" Type="0"/>
+    <ROW Component="sron.exe" ComponentId="{4F36FF38-9659-4BDF-9E7B-19DD305642DB}" Directory_="APPDIR" Attributes="256" KeyPath="sron.exe"/>
+    <ROW Component="sronFncList.exe" ComponentId="{22744637-6972-4826-A0F9-3ACD8E4505FA}" Directory_="APPDIR" Attributes="256" KeyPath="sronFncList.exe"/>
+    <ROW Component="sronc.exe" ComponentId="{686CE195-2E61-4F98-8C26-B36B1D4452A0}" Directory_="APPDIR" Attributes="256" KeyPath="sronc.exe"/>
+    <ROW Component="srondocs.exe" ComponentId="{75F873E2-C709-47C8-BCFD-C583D44D625A}" Directory_="APPDIR" Attributes="256" KeyPath="srondocs.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="__cache__lib" Component_="__cache__lib" FileName="__CACH~1|__cache__lib" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\__cache__lib" SelfReg="false"/>
-    <ROW File="__function_lib" Component_="__cache__lib" FileName="__FUNC~1|__function_lib" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\__function_lib" SelfReg="false"/>
-    <ROW File="sron.exe" Component_="sron.exe" FileName="sron.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\sron.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="sronc.exe" Component_="sronc.exe" FileName="sronc.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\sronc.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="srondocs.exe" Component_="srondocs.exe" FileName="SRON-D~1.EXE|sron-docs.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\sron-docs.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="sronFncList.exe" Component_="sronFncList.exe" FileName="SRON-F~1.EXE|sron-FncList.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\sron-FncList.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="ByteCodeCannotBeSavedError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="BYTECO~1.TXT|ByteCodeCannotBeSavedError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\ByteCodeCannotBeSavedError.txt" SelfReg="false"/>
-    <ROW File="BytecodeMetaNotValidError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="BYTECO~2.TXT|BytecodeMetaNotValidError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\BytecodeMetaNotValidError.txt" SelfReg="false"/>
-    <ROW File="CompilerError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="COMPIL~1.TXT|CompilerError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\CompilerError.txt" SelfReg="false"/>
-    <ROW File="DatatypeConversionError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="DATATY~1.TXT|DatatypeConversionError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\DatatypeConversionError.txt" SelfReg="false"/>
-    <ROW File="DivisionByZeroError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="DIVISI~1.TXT|DivisionByZeroError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\DivisionByZeroError.txt" SelfReg="false"/>
-    <ROW File="DoubleOverFlowError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="DOUBLE~1.TXT|DoubleOverFlowError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\DoubleOverFlowError.txt" SelfReg="false"/>
-    <ROW File="EmptyAttributeCodeError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="EMPTYA~1.TXT|EmptyAttributeCodeError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\EmptyAttributeCodeError.txt" SelfReg="false"/>
-    <ROW File="FileNameNotSpecifiedError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="FILENA~1.TXT|FileNameNotSpecifiedError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\FileNameNotSpecifiedError.txt" SelfReg="false"/>
-    <ROW File="FileNotFoundError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="FILENO~1.TXT|FileNotFoundError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\FileNotFoundError.txt" SelfReg="false"/>
-    <ROW File="FunctionNotFoundError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="FUNCTI~1.TXT|FunctionNotFoundError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\FunctionNotFoundError.txt" SelfReg="false"/>
-    <ROW File="IncorrectOsAttributeError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INCORR~1.TXT|IncorrectOsAttributeError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\IncorrectOsAttributeError.txt" SelfReg="false"/>
-    <ROW File="IntegerOverFlowError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INTEGE~1.TXT|IntegerOverFlowError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\IntegerOverFlowError.txt" SelfReg="false"/>
-    <ROW File="InvalidArgsSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~1.TXT|InvalidArgsSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidArgsSyntaxError.txt" SelfReg="false"/>
-    <ROW File="InvalidAttributeError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~2.TXT|InvalidAttributeError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidAttributeError.txt" SelfReg="false"/>
-    <ROW File="InvalidAttributeSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~3.TXT|InvalidAttributeSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidAttributeSyntaxError.txt" SelfReg="false"/>
-    <ROW File="InvalidCommentSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~4.TXT|InvalidCommentSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidCommentSyntaxError.txt" SelfReg="false"/>
-    <ROW File="InvalidConditionalStatementError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~5.TXT|InvalidConditionalStatementError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidConditionalStatementError.txt" SelfReg="false"/>
-    <ROW File="InvalidForLoopSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~6.TXT|InvalidForLoopSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidForLoopSyntaxError.txt" SelfReg="false"/>
-    <ROW File="InvalidFunctionCallSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~7.TXT|InvalidFunctionCallSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidFunctionCallSyntaxError.txt" SelfReg="false"/>
-    <ROW File="InvalidFunctionNameError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~8.TXT|InvalidFunctionNameError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidFunctionNameError.txt" SelfReg="false"/>
-    <ROW File="InvalidOBufferSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~9.TXT|InvalidOBufferSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidOBufferSyntaxError.txt" SelfReg="false"/>
-    <ROW File="InvalidRangeSyntax.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~10.TXT|InvalidRangeSyntax.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidRangeSyntax.txt" SelfReg="false"/>
-    <ROW File="InvalidScopeError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~11.TXT|InvalidScopeError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidScopeError.txt" SelfReg="false"/>
-    <ROW File="InvalidTokenError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~12.TXT|InvalidTokenError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidTokenError.txt" SelfReg="false"/>
-    <ROW File="InvalidTypeError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~13.TXT|InvalidTypeError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidTypeError.txt" SelfReg="false"/>
-    <ROW File="InvalidVariableNameError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~14.TXT|InvalidVariableNameError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidVariableNameError.txt" SelfReg="false"/>
-    <ROW File="InvalidVariableSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~15.TXT|InvalidVariableSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\InvalidVariableSyntaxError.txt" SelfReg="false"/>
-    <ROW File="MathBlockSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="MATHBL~1.TXT|MathBlockSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\MathBlockSyntaxError.txt" SelfReg="false"/>
-    <ROW File="NoValidCodeFoundError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="NOVALI~1.TXT|NoValidCodeFoundError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\NoValidCodeFoundError.txt" SelfReg="false"/>
-    <ROW File="ScopeBasedError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="SCOPEB~1.TXT|ScopeBasedError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\ScopeBasedError.txt" SelfReg="false"/>
-    <ROW File="SourceCodeChangedError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="SOURCE~1.TXT|SourceCodeChangedError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\SourceCodeChangedError.txt" SelfReg="false"/>
-    <ROW File="SystemOutofMemoryError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="SYSTEM~1.TXT|SystemOutofMemoryError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\SystemOutofMemoryError.txt" SelfReg="false"/>
-    <ROW File="TooLargeNumberError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="TOOLAR~1.TXT|TooLargeNumberError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\TooLargeNumberError.txt" SelfReg="false"/>
-    <ROW File="TooLargeStringError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="TOOLAR~2.TXT|TooLargeStringError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\TooLargeStringError.txt" SelfReg="false"/>
-    <ROW File="TooMuchArgumentsInFunctionCallError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="TOOMUC~1.TXT|TooMuchArgumentsInFunctionCallError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\TooMuchArgumentsInFunctionCallError.txt" SelfReg="false"/>
-    <ROW File="TooMuchParametersInFunctionError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="TOOMUC~2.TXT|TooMuchParametersInFunctionError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\TooMuchParametersInFunctionError.txt" SelfReg="false"/>
-    <ROW File="TypeConversionError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="TYPECO~1.TXT|TypeConversionError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\TypeConversionError.txt" SelfReg="false"/>
-    <ROW File="VariableExistAlreadyError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="VARIAB~1.TXT|VariableExistAlreadyError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\VariableExistAlreadyError.txt" SelfReg="false"/>
-    <ROW File="VariableNotFoundError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="VARIAB~2.TXT|VariableNotFoundError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\VariableNotFoundError.txt" SelfReg="false"/>
-    <ROW File="WaveCountIsNotEvenError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="WAVECO~1.TXT|WaveCountIsNotEvenError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\WaveCountIsNotEvenError.txt" SelfReg="false"/>
-    <ROW File="WrongSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="WRONGS~1.TXT|WrongSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Errors\WrongSyntaxError.txt" SelfReg="false"/>
-    <ROW File="ArgumentException.txt" Component_="ArgumentException.txt" FileName="ARGUME~1.TXT|ArgumentException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\ArgumentException.txt" SelfReg="false"/>
-    <ROW File="BytecodeNotFoundException.txt" Component_="ArgumentException.txt" FileName="BYTECO~1.TXT|BytecodeNotFoundException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\BytecodeNotFoundException.txt" SelfReg="false"/>
-    <ROW File="CallStackOverflowException.txt" Component_="ArgumentException.txt" FileName="CALLST~1.TXT|CallStackOverflowException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\CallStackOverflowException.txt" SelfReg="false"/>
-    <ROW File="DatatypeConversionException.txt" Component_="ArgumentException.txt" FileName="DATATY~1.TXT|DatatypeConversionException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\DatatypeConversionException.txt" SelfReg="false"/>
-    <ROW File="DivisionByZeroException.txt" Component_="ArgumentException.txt" FileName="DIVISI~1.TXT|DivisionByZeroException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\DivisionByZeroException.txt" SelfReg="false"/>
-    <ROW File="FileNotFoundException.txt" Component_="ArgumentException.txt" FileName="FILENO~1.TXT|FileNotFoundException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\FileNotFoundException.txt" SelfReg="false"/>
-    <ROW File="FileReaderException.txt" Component_="ArgumentException.txt" FileName="FILERE~1.TXT|FileReaderException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\FileReaderException.txt" SelfReg="false"/>
-    <ROW File="FileWriterException.txt" Component_="ArgumentException.txt" FileName="FILEWR~1.TXT|FileWriterException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\FileWriterException.txt" SelfReg="false"/>
-    <ROW File="FunctionNotFoundException.txt" Component_="ArgumentException.txt" FileName="FUNCTI~1.TXT|FunctionNotFoundException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\FunctionNotFoundException.txt" SelfReg="false"/>
-    <ROW File="ImplicitConversionException.txt" Component_="ArgumentException.txt" FileName="IMPLIC~1.TXT|ImplicitConversionException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\ImplicitConversionException.txt" SelfReg="false"/>
-    <ROW File="IndexNotWithinRangeException.txt" Component_="ArgumentException.txt" FileName="INDEXN~1.TXT|IndexNotWithinRangeException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\IndexNotWithinRangeException.txt" SelfReg="false"/>
-    <ROW File="InputTypeException.txt" Component_="ArgumentException.txt" FileName="INPUTT~1.TXT|InputTypeException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\InputTypeException.txt" SelfReg="false"/>
-    <ROW File="InsertionException.txt" Component_="ArgumentException.txt" FileName="INSERT~1.TXT|InsertionException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\InsertionException.txt" SelfReg="false"/>
-    <ROW File="InterpretationException.txt" Component_="ArgumentException.txt" FileName="INTERP~1.TXT|InterpretationException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\InterpretationException.txt" SelfReg="false"/>
-    <ROW File="InvalidByteCodeException.txt" Component_="ArgumentException.txt" FileName="INVALI~1.TXT|InvalidByteCodeException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\InvalidByteCodeException.txt" SelfReg="false"/>
-    <ROW File="InvalidConditionalStatement.txt" Component_="ArgumentException.txt" FileName="INVALI~2.TXT|InvalidConditionalStatement.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\InvalidConditionalStatement.txt" SelfReg="false"/>
-    <ROW File="InvalidFlagException.txt" Component_="ArgumentException.txt" FileName="INVALI~3.TXT|InvalidFlagException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\InvalidFlagException.txt" SelfReg="false"/>
-    <ROW File="InvalidObjectExtractionException.txt" Component_="ArgumentException.txt" FileName="INVALI~4.TXT|InvalidObjectExtractionException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\InvalidObjectExtractionException.txt" SelfReg="false"/>
-    <ROW File="InvalidTypeException.txt" Component_="ArgumentException.txt" FileName="INVALI~5.TXT|InvalidTypeException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\InvalidTypeException.txt" SelfReg="false"/>
-    <ROW File="InvalidValueException.txt" Component_="ArgumentException.txt" FileName="INVALI~6.TXT|InvalidValueException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\InvalidValueException.txt" SelfReg="false"/>
-    <ROW File="MathEvaluationException.txt" Component_="ArgumentException.txt" FileName="MATHEV~1.TXT|MathEvaluationException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\MathEvaluationException.txt" SelfReg="false"/>
-    <ROW File="NullAccessingException.txt" Component_="ArgumentException.txt" FileName="NULLAC~1.TXT|NullAccessingException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\NullAccessingException.txt" SelfReg="false"/>
-    <ROW File="SourceCodeChangedException.txt" Component_="ArgumentException.txt" FileName="SOURCE~1.TXT|SourceCodeChangedException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\SourceCodeChangedException.txt" SelfReg="false"/>
-    <ROW File="StringIndexException.txt" Component_="ArgumentException.txt" FileName="STRING~1.TXT|StringIndexException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\StringIndexException.txt" SelfReg="false"/>
-    <ROW File="StringTooLongException.txt" Component_="ArgumentException.txt" FileName="STRING~2.TXT|StringTooLongException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\StringTooLongException.txt" SelfReg="false"/>
-    <ROW File="TypeConversionException.txt" Component_="ArgumentException.txt" FileName="TYPECO~1.TXT|TypeConversionException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\TypeConversionException.txt" SelfReg="false"/>
-    <ROW File="UnknownException.txt" Component_="ArgumentException.txt" FileName="UNKNOW~1.TXT|UnknownException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\UnknownException.txt" SelfReg="false"/>
-    <ROW File="UnknownIdentifierException.txt" Component_="ArgumentException.txt" FileName="UNKNOW~2.TXT|UnknownIdentifierException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\UnknownIdentifierException.txt" SelfReg="false"/>
-    <ROW File="VariableNotFoundException.txt" Component_="ArgumentException.txt" FileName="VARIAB~1.TXT|VariableNotFoundException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\meta\Exceptions\VariableNotFoundException.txt" SelfReg="false"/>
+    <ROW File="sron.exe" Component_="sron.exe" FileName="sron.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\sron.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="sronc.exe" Component_="sronc.exe" FileName="sronc.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\sronc.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="srondocs.exe" Component_="srondocs.exe" FileName="SRON-D~1.EXE|sron-docs.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\sron-docs.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="sronFncList.exe" Component_="sronFncList.exe" FileName="SRON-F~1.EXE|sron-FncList.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\sron-FncList.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="__function_lib" Component_="__function_lib" FileName="__FUNC~1|__function_lib" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\__function_lib" SelfReg="false"/>
+    <ROW File="ByteCodeCannotBeSavedError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="BYTECO~1.TXT|ByteCodeCannotBeSavedError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\ByteCodeCannotBeSavedError.txt" SelfReg="false"/>
+    <ROW File="BytecodeMetaNotValidError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="BYTECO~2.TXT|BytecodeMetaNotValidError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\BytecodeMetaNotValidError.txt" SelfReg="false"/>
+    <ROW File="CompilerError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="COMPIL~1.TXT|CompilerError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\CompilerError.txt" SelfReg="false"/>
+    <ROW File="DatatypeConversionError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="DATATY~1.TXT|DatatypeConversionError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\DatatypeConversionError.txt" SelfReg="false"/>
+    <ROW File="DivisionByZeroError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="DIVISI~1.TXT|DivisionByZeroError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\DivisionByZeroError.txt" SelfReg="false"/>
+    <ROW File="DoubleOverFlowError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="DOUBLE~1.TXT|DoubleOverFlowError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\DoubleOverFlowError.txt" SelfReg="false"/>
+    <ROW File="EmptyAttributeCodeError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="EMPTYA~1.TXT|EmptyAttributeCodeError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\EmptyAttributeCodeError.txt" SelfReg="false"/>
+    <ROW File="FileNameNotSpecifiedError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="FILENA~1.TXT|FileNameNotSpecifiedError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\FileNameNotSpecifiedError.txt" SelfReg="false"/>
+    <ROW File="FileNotFoundError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="FILENO~1.TXT|FileNotFoundError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\FileNotFoundError.txt" SelfReg="false"/>
+    <ROW File="FunctionNotFoundError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="FUNCTI~1.TXT|FunctionNotFoundError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\FunctionNotFoundError.txt" SelfReg="false"/>
+    <ROW File="IncorrectOsAttributeError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INCORR~1.TXT|IncorrectOsAttributeError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\IncorrectOsAttributeError.txt" SelfReg="false"/>
+    <ROW File="IntegerOverFlowError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INTEGE~1.TXT|IntegerOverFlowError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\IntegerOverFlowError.txt" SelfReg="false"/>
+    <ROW File="InvalidArgsSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~1.TXT|InvalidArgsSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidArgsSyntaxError.txt" SelfReg="false"/>
+    <ROW File="InvalidAttributeError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~2.TXT|InvalidAttributeError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidAttributeError.txt" SelfReg="false"/>
+    <ROW File="InvalidAttributeSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~3.TXT|InvalidAttributeSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidAttributeSyntaxError.txt" SelfReg="false"/>
+    <ROW File="InvalidCommentSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~4.TXT|InvalidCommentSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidCommentSyntaxError.txt" SelfReg="false"/>
+    <ROW File="InvalidConditionalStatementError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~5.TXT|InvalidConditionalStatementError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidConditionalStatementError.txt" SelfReg="false"/>
+    <ROW File="InvalidForLoopSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~6.TXT|InvalidForLoopSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidForLoopSyntaxError.txt" SelfReg="false"/>
+    <ROW File="InvalidFunctionCallSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~7.TXT|InvalidFunctionCallSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidFunctionCallSyntaxError.txt" SelfReg="false"/>
+    <ROW File="InvalidFunctionNameError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~8.TXT|InvalidFunctionNameError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidFunctionNameError.txt" SelfReg="false"/>
+    <ROW File="InvalidOBufferSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVALI~9.TXT|InvalidOBufferSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidOBufferSyntaxError.txt" SelfReg="false"/>
+    <ROW File="InvalidRangeSyntax.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~10.TXT|InvalidRangeSyntax.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidRangeSyntax.txt" SelfReg="false"/>
+    <ROW File="InvalidScopeError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~11.TXT|InvalidScopeError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidScopeError.txt" SelfReg="false"/>
+    <ROW File="InvalidTokenError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~12.TXT|InvalidTokenError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidTokenError.txt" SelfReg="false"/>
+    <ROW File="InvalidTypeError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~13.TXT|InvalidTypeError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidTypeError.txt" SelfReg="false"/>
+    <ROW File="InvalidVariableNameError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~14.TXT|InvalidVariableNameError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidVariableNameError.txt" SelfReg="false"/>
+    <ROW File="InvalidVariableSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="INVAL~15.TXT|InvalidVariableSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\InvalidVariableSyntaxError.txt" SelfReg="false"/>
+    <ROW File="MathBlockSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="MATHBL~1.TXT|MathBlockSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\MathBlockSyntaxError.txt" SelfReg="false"/>
+    <ROW File="NoValidCodeFoundError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="NOVALI~1.TXT|NoValidCodeFoundError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\NoValidCodeFoundError.txt" SelfReg="false"/>
+    <ROW File="ScopeBasedError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="SCOPEB~1.TXT|ScopeBasedError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\ScopeBasedError.txt" SelfReg="false"/>
+    <ROW File="SourceCodeChangedError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="SOURCE~1.TXT|SourceCodeChangedError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\SourceCodeChangedError.txt" SelfReg="false"/>
+    <ROW File="SystemOutofMemoryError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="SYSTEM~1.TXT|SystemOutofMemoryError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\SystemOutofMemoryError.txt" SelfReg="false"/>
+    <ROW File="TooLargeNumberError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="TOOLAR~1.TXT|TooLargeNumberError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\TooLargeNumberError.txt" SelfReg="false"/>
+    <ROW File="TooLargeStringError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="TOOLAR~2.TXT|TooLargeStringError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\TooLargeStringError.txt" SelfReg="false"/>
+    <ROW File="TooMuchArgumentsInFunctionCallError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="TOOMUC~1.TXT|TooMuchArgumentsInFunctionCallError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\TooMuchArgumentsInFunctionCallError.txt" SelfReg="false"/>
+    <ROW File="TooMuchParametersInFunctionError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="TOOMUC~2.TXT|TooMuchParametersInFunctionError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\TooMuchParametersInFunctionError.txt" SelfReg="false"/>
+    <ROW File="TypeConversionError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="TYPECO~1.TXT|TypeConversionError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\TypeConversionError.txt" SelfReg="false"/>
+    <ROW File="VariableExistAlreadyError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="VARIAB~1.TXT|VariableExistAlreadyError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\VariableExistAlreadyError.txt" SelfReg="false"/>
+    <ROW File="VariableNotFoundError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="VARIAB~2.TXT|VariableNotFoundError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\VariableNotFoundError.txt" SelfReg="false"/>
+    <ROW File="WaveCountIsNotEvenError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="WAVECO~1.TXT|WaveCountIsNotEvenError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\WaveCountIsNotEvenError.txt" SelfReg="false"/>
+    <ROW File="WrongSyntaxError.txt" Component_="ByteCodeCannotBeSavedError.txt" FileName="WRONGS~1.TXT|WrongSyntaxError.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Errors\WrongSyntaxError.txt" SelfReg="false"/>
+    <ROW File="ArgumentException.txt" Component_="ArgumentException.txt" FileName="ARGUME~1.TXT|ArgumentException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\ArgumentException.txt" SelfReg="false"/>
+    <ROW File="BytecodeNotFoundException.txt" Component_="ArgumentException.txt" FileName="BYTECO~1.TXT|BytecodeNotFoundException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\BytecodeNotFoundException.txt" SelfReg="false"/>
+    <ROW File="CallStackOverflowException.txt" Component_="ArgumentException.txt" FileName="CALLST~1.TXT|CallStackOverflowException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\CallStackOverflowException.txt" SelfReg="false"/>
+    <ROW File="DatatypeConversionException.txt" Component_="ArgumentException.txt" FileName="DATATY~1.TXT|DatatypeConversionException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\DatatypeConversionException.txt" SelfReg="false"/>
+    <ROW File="DivisionByZeroException.txt" Component_="ArgumentException.txt" FileName="DIVISI~1.TXT|DivisionByZeroException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\DivisionByZeroException.txt" SelfReg="false"/>
+    <ROW File="FileNotFoundException.txt" Component_="ArgumentException.txt" FileName="FILENO~1.TXT|FileNotFoundException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\FileNotFoundException.txt" SelfReg="false"/>
+    <ROW File="FileReaderException.txt" Component_="ArgumentException.txt" FileName="FILERE~1.TXT|FileReaderException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\FileReaderException.txt" SelfReg="false"/>
+    <ROW File="FileWriterException.txt" Component_="ArgumentException.txt" FileName="FILEWR~1.TXT|FileWriterException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\FileWriterException.txt" SelfReg="false"/>
+    <ROW File="FunctionNotFoundException.txt" Component_="ArgumentException.txt" FileName="FUNCTI~1.TXT|FunctionNotFoundException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\FunctionNotFoundException.txt" SelfReg="false"/>
+    <ROW File="ImplicitConversionException.txt" Component_="ArgumentException.txt" FileName="IMPLIC~1.TXT|ImplicitConversionException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\ImplicitConversionException.txt" SelfReg="false"/>
+    <ROW File="IndexNotWithinRangeException.txt" Component_="ArgumentException.txt" FileName="INDEXN~1.TXT|IndexNotWithinRangeException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\IndexNotWithinRangeException.txt" SelfReg="false"/>
+    <ROW File="InputTypeException.txt" Component_="ArgumentException.txt" FileName="INPUTT~1.TXT|InputTypeException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\InputTypeException.txt" SelfReg="false"/>
+    <ROW File="InsertionException.txt" Component_="ArgumentException.txt" FileName="INSERT~1.TXT|InsertionException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\InsertionException.txt" SelfReg="false"/>
+    <ROW File="InterpretationException.txt" Component_="ArgumentException.txt" FileName="INTERP~1.TXT|InterpretationException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\InterpretationException.txt" SelfReg="false"/>
+    <ROW File="InvalidByteCodeException.txt" Component_="ArgumentException.txt" FileName="INVALI~1.TXT|InvalidByteCodeException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\InvalidByteCodeException.txt" SelfReg="false"/>
+    <ROW File="InvalidConditionalStatement.txt" Component_="ArgumentException.txt" FileName="INVALI~2.TXT|InvalidConditionalStatement.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\InvalidConditionalStatement.txt" SelfReg="false"/>
+    <ROW File="InvalidFlagException.txt" Component_="ArgumentException.txt" FileName="INVALI~3.TXT|InvalidFlagException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\InvalidFlagException.txt" SelfReg="false"/>
+    <ROW File="InvalidObjectExtractionException.txt" Component_="ArgumentException.txt" FileName="INVALI~4.TXT|InvalidObjectExtractionException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\InvalidObjectExtractionException.txt" SelfReg="false"/>
+    <ROW File="InvalidTypeException.txt" Component_="ArgumentException.txt" FileName="INVALI~5.TXT|InvalidTypeException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\InvalidTypeException.txt" SelfReg="false"/>
+    <ROW File="InvalidValueException.txt" Component_="ArgumentException.txt" FileName="INVALI~6.TXT|InvalidValueException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\InvalidValueException.txt" SelfReg="false"/>
+    <ROW File="MathEvaluationException.txt" Component_="ArgumentException.txt" FileName="MATHEV~1.TXT|MathEvaluationException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\MathEvaluationException.txt" SelfReg="false"/>
+    <ROW File="NullAccessingException.txt" Component_="ArgumentException.txt" FileName="NULLAC~1.TXT|NullAccessingException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\NullAccessingException.txt" SelfReg="false"/>
+    <ROW File="SourceCodeChangedException.txt" Component_="ArgumentException.txt" FileName="SOURCE~1.TXT|SourceCodeChangedException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\SourceCodeChangedException.txt" SelfReg="false"/>
+    <ROW File="StringIndexException.txt" Component_="ArgumentException.txt" FileName="STRING~1.TXT|StringIndexException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\StringIndexException.txt" SelfReg="false"/>
+    <ROW File="StringTooLongException.txt" Component_="ArgumentException.txt" FileName="STRING~2.TXT|StringTooLongException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\StringTooLongException.txt" SelfReg="false"/>
+    <ROW File="TypeConversionException.txt" Component_="ArgumentException.txt" FileName="TYPECO~1.TXT|TypeConversionException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\TypeConversionException.txt" SelfReg="false"/>
+    <ROW File="UnknownException.txt" Component_="ArgumentException.txt" FileName="UNKNOW~1.TXT|UnknownException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\UnknownException.txt" SelfReg="false"/>
+    <ROW File="UnknownIdentifierException.txt" Component_="ArgumentException.txt" FileName="UNKNOW~2.TXT|UnknownIdentifierException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\UnknownIdentifierException.txt" SelfReg="false"/>
+    <ROW File="VariableNotFoundException.txt" Component_="ArgumentException.txt" FileName="VARIAB~1.TXT|VariableNotFoundException.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\..\meta\Exceptions\VariableNotFoundException.txt" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrapperUISequenceComponent">
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="249"/>
@@ -159,7 +158,7 @@
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
-    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" UseSha256="1" Store="User\MY"/>
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" UseSha256="1" Subject="CN=SAKSHAM_JOSHI" Store="User\MY"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
@@ -182,7 +181,7 @@
     <ROW Name="viewer.exe" SourcePath="&lt;AI_CUSTACTS&gt;viewer.exe" DigSign="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
-    <ROW Dialog_="LicenseAgreementDlg" Control="AgreementText" Type="ScrollableText" X="35" Y="127" Width="321" Height="132" Attributes="3" Property="EulaRead" Text="LICENSE.rtf" Order="900" MsiKey="LicenseAgreementDlg#AgreementText"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control="AgreementText" Type="ScrollableText" X="35" Y="127" Width="321" Height="132" Attributes="3" Property="EulaRead" Text="..\LICENSE.rtf" Order="900" MsiKey="LicenseAgreementDlg#AgreementText"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
     <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL" Ordering="1"/>
@@ -236,22 +235,22 @@
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiEnvComponent">
-    <ROW Environment="SRON_PATH" Name="=-*Path" Value="[~];[APPDIR]" Component_="APPDIR"/>
+    <ROW Environment="SRON_PATH" Name="=-*PATH" Value="[~];[APPDIR]" Component_="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
     <ROW Feature_="MainFeature" Component_="ProductInformation"/>
     <ROW Feature_="MainFeature" Component_="AI_CustomARPName"/>
-    <ROW Feature_="MainFeature" Component_="__cache__lib"/>
     <ROW Feature_="MainFeature" Component_="sron.exe"/>
     <ROW Feature_="MainFeature" Component_="sronc.exe"/>
+    <ROW Feature_="MainFeature" Component_="ByteCodeCannotBeSavedError.txt"/>
     <ROW Feature_="MainFeature" Component_="srondocs.exe"/>
     <ROW Feature_="MainFeature" Component_="sronFncList.exe"/>
-    <ROW Feature_="MainFeature" Component_="ByteCodeCannotBeSavedError.txt"/>
+    <ROW Feature_="MainFeature" Component_="__function_lib"/>
     <ROW Feature_="MainFeature" Component_="ArgumentException.txt"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
-    <ROW Name="Sronroundedcorner.exe" SourcePath="..\Pictures\Sron-rounded-corner.ico" Index="0"/>
+    <ROW Name="Sronroundedcorner_1.exe" SourcePath="..\..\Pictures\Sron-rounded-corner.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
