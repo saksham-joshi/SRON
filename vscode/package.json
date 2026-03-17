@@ -2,7 +2,7 @@
   "name": "sron",
   "displayName": "SRON",
   "description": "Language Support + Syntax Highlighting + Formatter + Runner for SRON programming language (Saksham Rapid Object Notation).",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "publisher": "SAKSHAMJOSHI",
   "author": {
     "name": "SakshamJoshi",
