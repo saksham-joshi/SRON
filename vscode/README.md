@@ -1,15 +1,16 @@
 <div align="center">
 
-<img src="images/sron.png" alt="SRON Logo" width="140"/>
+<img src="https://raw.githubusercontent.com/saksham-joshi/SRON/main/vscode/images/sron.png" alt="SRON Logo" width="140"/>
 
 # SRON Language Support
 
 **The official VS Code extension for the SRON programming language**
 *Saksham Rapid Object Notation*
 
-<!-- [![Version](https://img.shields.io/visual-studio-marketplace/v/SAKSHAMJOSHI.sron?style=for-the-badge&color=24aedd&label=version)](https://marketplace.visualstudio.com/items?itemName=sakshamjoshi.sron) -->
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/SAKSHAMJOSHI.sron?style=for-the-badge&color=brightgreen)](https://marketplace.visualstudio.com/items?itemName=SAKSHAMJOSHI.sron)
-[![Rating](https://img.shields.io/visual-studio-marketplace/r/SAKSHAMJOSHI.sron?style=for-the-badge&color=orange)](https://marketplace.visualstudio.com/items?itemName=SAKSHAMJOSHI.sron)
+[![Version](https://vsmarketplacebadges.dev/version/SAKSHAMJOSHI.sron.svg)](https://marketplace.visualstudio.com/items?itemName=SAKSHAMJOSHI.sron)
+[![Installs](https://vsmarketplacebadges.dev/installs/SAKSHAMJOSHI.sron.svg)](https://marketplace.visualstudio.com/items?itemName=SAKSHAMJOSHI.sron)
+[![Rating](https://vsmarketplacebadges.dev/rating-star/SAKSHAMJOSHI.sron.svg)](https://marketplace.visualstudio.com/items?itemName=SAKSHAMJOSHI.sron)
+[![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
 
 </div>
 
@@ -69,7 +70,7 @@ Found a bug or have a feature request? Please open an issue on [GitHub](https://
 <tr>
 <td align="center">
 
-<img src="images/sakshamjoshi.png" width="100" style="border-radius: 50%;" alt="Saksham Joshi">
+<img src="https://raw.githubusercontent.com/saksham-joshi/SRON/main/vscode/images/sakshamjoshi.png" width="100" style="border-radius: 50%;" alt="Saksham Joshi">
 
 ### Saksham Joshi
 
