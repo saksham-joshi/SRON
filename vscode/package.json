@@ -1,0 +1,94 @@
+{
+  "name": "sron",
+  "displayName": "SRON",
+  "description": "Language Support + Syntax Highlighting + Formatter + Runner for SRON programming language (Saksham Rapid Object Notation).",
+  "version": "0.0.1",
+  "publisher": "SAKSHAMJOSHI",
+  "author": {
+    "name": "SakshamJoshi",
+    "email": "social.sakshamjoshi@gmail.com"
+  },
+  "icon": "images/sron.png",
+  "engines": {
+    "vscode": "^1.0.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Formatters",
+    "Snippets",
+    "Language Packs"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onLanguage:sron"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "sron",
+        "aliases": [
+          "SRON",
+          "sron"
+        ],
+        "extensions": [
+          ".sron"
+        ],
+        "icon": {
+          "light": "./images/sron.svg",
+          "dark": "./images/sron.svg"
+        },
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "sron",
+        "scopeName": "source.sron",
+        "path": "./syntaxes/sron.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "sron.run",
+        "title": "Run SRON",
+        "icon": "$(play)"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "sron.run",
+          "when": "resourceExtname == .sron",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "bugs": {
+    "email": "social.sakshamjoshi@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saksham-joshi/SRON.g"
+  },
+  "homepage": "README.md",
+  "keywords": [
+    "sron",
+    "sron language",
+    "sron programming language",
+    "sron syntax highlighting",
+    "sron formatter",
+    "sron runner",
+    "sron autocompletion",
+    "sron snippets",
+    "sron language support",
+    "sron extension",
+    "sron vs code extension",
+    "sron vs code",
+    "saksham language"
+  ],
+  "pricing": "Free",
+  "sponsor": {
+    "url": "https://github.com/sponsors/saksham-joshi"
+  }
+}

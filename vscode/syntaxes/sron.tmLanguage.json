@@ -1,0 +1,171 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "SRON",
+  "scopeName": "source.sron",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#characters" },
+    { "include": "#math-block" },
+    { "include": "#constants" },
+    { "include": "#attributes" },
+    { "include": "#control-keywords" },
+    { "include": "#type-keywords" },
+    { "include": "#builtin-constants" },
+    { "include": "#builtin-functions" },
+    { "include": "#boolean-literals" },
+    { "include": "#numeric-literals" },
+    { "include": "#operators" },
+    { "include": "#identifiers" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.at-sign.sron",
+          "match": "@.*$"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.sron",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.sron",
+          "match": "\\\\[ntrb'\"\\\\]"
+        }
+      ]
+    },
+    "characters": {
+      "name": "string.quoted.single.sron",
+      "begin": "'",
+      "end": "'",
+      "patterns": [
+        {
+          "name": "constant.character.escape.sron",
+          "match": "\\\\[ntrb'\"\\\\]"
+        }
+      ]
+    },
+    "math-block": {
+      "name": "meta.math-block.sron",
+      "begin": "\\$\\{",
+      "end": "\\}",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.math-block.begin.sron" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.math-block.end.sron" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#strings" },
+        { "include": "#characters" },
+        { "include": "#builtin-functions" },
+        { "include": "#boolean-literals" },
+        { "include": "#numeric-literals" },
+        { "include": "#operators" },
+        { "include": "#builtin-constants" },
+        { "include": "#identifiers" }
+      ]
+    },
+    "attributes": {
+      "patterns": [
+        {
+          "name": "keyword.other.attribute.sron",
+          "match": "\\b(name|args|type|return|console|condition|range|on|rotate|foreach|free)\\b"
+        }
+      ]
+    },
+    "control-keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.sron",
+          "match": "\\b(if|elif|else|for|foreach|while|break|continue|return|windows|linux)\\b"
+        }
+      ]
+    },
+    "type-keywords": {
+      "patterns": [
+        {
+          "name": "storage.type.sron",
+          "match": "\\b(Any|Bool|Bool_s|Char|Char_s|Double|Double_s|FileReader|FileReader_s|FileWriter|FileWriter_s|Int|Int_s|List|List_s|LiteralString|String|String_s|Void|Main)\\b"
+        }
+      ]
+    },
+    "builtin-constants": {
+      "patterns": [
+        {
+          "name": "variable.other.constant.sron",
+          "match": "\\b(CLI_COLOR_BLACK|CLI_COLOR_RED|CLI_COLOR_GREEN|CLI_COLOR_YELLOW|CLI_COLOR_BLUE|CLI_COLOR_MAGENTA|CLI_COLOR_CYAN|CLI_COLOR_WHITE|CLI_COLOR_BRIGHT_BLACK|CLI_COLOR_BRIGHT_RED|CLI_COLOR_BRIGHT_GREEN|CLI_COLOR_BRIGHT_YELLOW|CLI_COLOR_BRIGHT_BLUE|CLI_COLOR_BRIGHT_MAGENTA|CLI_COLOR_BRIGHT_CYAN|CLI_COLOR_BRIGHT_WHITE|CLI_DESIGN_BG_BRIGHT_BLACK|CLI_DESIGN_BG_BRIGHT_BLUE|CLI_DESIGN_BG_BRIGHT_CYAN|CLI_DESIGN_BG_BRIGHT_GREEN|CLI_DESIGN_BG_BRIGHT_MAGENTA|CLI_DESIGN_BG_BRIGHT_RED|CLI_DESIGN_BG_BRIGHT_WHITE|CLI_DESIGN_BG_BRIGHT_YELLOW|CLI_DESIGN_BG_BLACK|CLI_DESIGN_BG_BLUE|CLI_DESIGN_BG_CYAN|CLI_DESIGN_BG_GREEN|CLI_DESIGN_BG_MAGENTA|CLI_DESIGN_BG_RED|CLI_DESIGN_BG_WHITE|CLI_DESIGN_BG_YELLOW|CLI_DESIGN_BLINK|CLI_DESIGN_BLINK_FAST|CLI_DESIGN_BOLD|CLI_DESIGN_DIM|CLI_DESIGN_HIDDEN|CLI_DESIGN_ITALIC|CLI_DESIGN_RESET|CLI_DESIGN_STRIKE|CLI_DESIGN_UNDERLINE|OBUFFER|PI|SRON_CMD_GC_STACK_LEN|SRON_CMD_IS_BYTECODE_CACHED|SRON_CMD_IS_FILE_AVAILABLE|SRON_CMD_IS_OBUFFER_EMPTY|SRON_CMD_NO_OF_BYTECODE_CACHED|SRON_CMD_OBUFFER_CLEAR|SRON_CMD_SIZEOF_OBUFFER|ArgumentException|DivisionByZeroException|IndexNotWithinRangeException|InputTypeException)\\b"
+        }
+      ]
+    },
+    "builtin-functions": {
+      "patterns": [
+        {
+          "name": "entity.name.function.builtin.sron",
+          "match": "\\b(print|println|inputInt|inputDouble|inputChar|inputString|toBool|toDouble|toInt|toString|isVoid|isInt|isDouble|isChar|isBool|isCollective|isString|isList|isFileReader|isFileWriter|isLiteralString|abs|cbrt|ceil|cos|floor|log|log2|log10|max|min|sin|sqrt|tan|ascii|isAlphabet|isAlphaNum|isConsonant|isDigit|isLower|isUpper|isVowel|toLower|toUpper|freader|fwriter|fclose|fisOpen|fisEnd|fgetName|freset|fcurPos|fsetSeek|freadChar|freadLine|freadWhole|fwriteChar|fwriteString|at|clear|count|delete|index|insert|len|push|pop|replace|reverse|reverseSort|rindex|sort|split|subPart|update|trim|beep|cliTextColor|cliBgColor|copy|exit|getExecTime|randInt|randDouble|randRange|setPrecision|sizeof|sleep|sronCmd|sysCmd|throwException|typeof|version)(?=\\s*\\()"
+        }
+      ]
+    },
+    "boolean-literals": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.sron",
+          "match": "\\b(true|false)\\b"
+        }
+      ]
+    },
+    "numeric-literals": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.sron",
+          "match": "\\b[0-9]+\\.[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.sron",
+          "match": "\\b[0-9]+\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.sron",
+          "match": "===|==|!=|<=|>=|<|>"
+        },
+        {
+          "name": "keyword.operator.logical.sron",
+          "match": "&&|\\|\\||!"
+        },
+        {
+          "name": "keyword.operator.assignment.sron",
+          "match": "\\+=|-=|\\*=|/=|%=|\\^=|="
+        },
+        {
+          "name": "keyword.operator.arithmetic.sron",
+          "match": "\\+|-|\\*|/|%|\\^"
+        },
+        {
+          "name": "keyword.operator.bitwise.word.sron",
+          "match": "\\b(and|or|not|xor|lsft|rsft)\\b"
+        }
+      ]
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "name": "entity.name.function.call.sron",
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)(?=\\s*\\()"
+        },
+        {
+          "name": "variable.other.sron",
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    }
+  }
+}
