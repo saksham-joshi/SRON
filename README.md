@@ -15,6 +15,7 @@
 [![Language: C++](https://img.shields.io/badge/Language-C%2B%2B-00599C?style=flat-square&logo=cplusplus)](https://github.com/saksham-joshi/SRON)
 [![Language: C](https://img.shields.io/badge/Language-C-A8B9CC?style=flat-square&logo=c)](https://github.com/saksham-joshi/SRON)
 
+[![Get SRON Extension](https://img.shields.io/badge/⚡_Get_SRON-VS_Code_Extension-24aedd?style=for-the-badge)](https://marketplace.visualstudio.com/items?itemName=SAKSHAMJOSHI.SRON)
 
 [📘 Documentation](https://sron.gitbook.io/docs) • [🌐 Official Website](https://sronlang.github.io/) • [📖 Learn More](#-what-is-sron)
 
