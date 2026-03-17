@@ -69,7 +69,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/saksham-joshi/SRON.g"
+    "url": "https://github.com/saksham-joshi/SRON.git",
+    "directory": "vscode"
   },
   "homepage": "README.md",
   "keywords": [
